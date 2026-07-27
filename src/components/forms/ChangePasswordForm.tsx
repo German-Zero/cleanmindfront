@@ -6,23 +6,22 @@ import IconOccultPassword from "../ui/icons/IconOccultPassword"
 export default function ChangePasswordForm() {
     return (
         <div className="
-            w-100 h-auto bg-surface
+            w-full max-w-100 h-auto bg-surface
             border border-border rounded-xl
             flex justify-center items-center
         ">
-            <div className="w-max h-max bg-surface/20"/>
-            <div className="flex flex-col py-12.5 px-6.25 gap-7.5">
+            <div className="flex w-full flex-col gap-7.5 px-5 py-8 sm:px-6.25 sm:py-12.5">
                 <div className="flex flex-col items-center gap-2.5">
                     <h1 className="
                         bg-linear-to-br from-primary via-secondary to-accent 
-                        bg-clip-text text-[32px] text-transparent
-                        font-semibold
+                        bg-clip-text text-2xl text-transparent
+                        text-center font-semibold sm:text-[32px]
                     ">Cambiar Contraseña</h1>
-                    <h2 className="w-[320px] text-center text-text-secondary font-semibold text-[13px] tracking-[5%]">
+                    <p className="w-full max-w-80 text-center text-[13px] font-semibold tracking-[0.05em] text-text-secondary">
                         Elige una contraseña de al menos 8 caracteres (con letras y numeros)
-                    </h2>
+                    </p>
                 </div>
-                <form className="flex flex-col gap-3.75">
+                <form className="flex w-full flex-col gap-3.75">
 
                     <div className="flex flex-col gap-1">
                         <label 
@@ -31,7 +30,7 @@ export default function ChangePasswordForm() {
                         >
                             Contraseña Actual
                         </label>
-                        <div className="relative w-87.5">
+                        <div className="relative w-full">
                             <input 
                                 required
                                 type="password"
@@ -40,12 +39,12 @@ export default function ChangePasswordForm() {
                                     w-full pl-3.75 pr-10 py-3.75 bg-card/70
                                     border border-border rounded-sm
                                     placeholder:text-text-secondary placeholder:text-[13px]
-                                    text-text-primary text-[13px]
+                                    text-base text-text-primary sm:text-[13px]
                                 "/>
                             <button 
                                 type="button"
                                 aria-label="Mostrar Contraseña"
-                                className="absolute right-3.75 top-1/2 -translate-y-1/2">
+                                className="absolute inset-y-0 right-0 flex w-11 items-center justify-center">
                                 <IconViewPassword />
                             </button>
                         </div>
@@ -58,7 +57,7 @@ export default function ChangePasswordForm() {
                         >
                             Nueva Contraseña
                         </label>
-                        <div className="relative w-87.5">
+                        <div className="relative w-full">
                             <input 
                                 required
                                 type="password"
@@ -67,12 +66,12 @@ export default function ChangePasswordForm() {
                                     w-full pl-3.75 pr-10 py-3.75 bg-card/70
                                     border border-border rounded-sm
                                     placeholder:text-text-secondary placeholder:text-[13px]
-                                    text-text-primary text-[13px]
+                                    text-base text-text-primary sm:text-[13px]
                                 "/>
                             <button 
                                 type="button"
                                 aria-label="Mostrar Contraseña"
-                                className="absolute right-3.75 top-1/2 -translate-y-1/2">
+                                className="absolute inset-y-0 right-0 flex w-11 items-center justify-center">
                                 <IconViewPassword />
                             </button>
                         </div>
@@ -85,7 +84,7 @@ export default function ChangePasswordForm() {
                         >
                             Confirmar Contraseña
                         </label>
-                        <div className="relative w-87.5">
+                        <div className="relative w-full">
                             <input 
                                 required
                                 type="password"
@@ -94,12 +93,12 @@ export default function ChangePasswordForm() {
                                     w-full pl-3.75 pr-10 py-3.75 bg-card/70
                                     border border-border rounded-sm
                                     placeholder:text-text-secondary placeholder:text-[13px]
-                                    text-text-primary text-[13px]
+                                    text-base text-text-primary sm:text-[13px]
                                 "/>
                             <button 
                                 type="button"
                                 aria-label="Mostrar Contraseña"
-                                className="absolute right-3.75 top-1/2 -translate-y-1/2">
+                                className="absolute inset-y-0 right-0 flex w-11 items-center justify-center">
                                 <IconOccultPassword />
                             </button>
                         </div>

@@ -1,25 +1,30 @@
 'use client'
 
+import Link from "next/link"
+
 export default function ForgotPasswordForm() {
     return (
         <div className="
-            w-100 h-auto bg-surface
+            w-full max-w-100 h-auto bg-surface
             border border-border rounded-xl
             flex justify-center items-center
         ">
-            <div className="w-max h-max bg-surface/20"/>
-            <div className="flex flex-col py-12.5 px-6.25 gap-7.5">
+            <div className="flex w-full flex-col gap-6 px-5 py-8 sm:gap-7.5 sm:px-6.25 sm:py-12.5">
                 <div className="flex flex-col items-center gap-2.5">
                     <h1 className="
                         bg-linear-to-br from-primary via-secondary to-accent 
-                        bg-clip-text text-[23px] text-transparent
+                        bg-clip-text text-xl text-transparent text-center
                         font-semibold
+                        sm:text-[23px]
                     ">¿Olvidaste tu Contraseña?</h1>
-                    <h2 className="w-[320px] text-center text-text-secondary font-semibold text-[13px] tracking-[5%]">
+                    <p className="w-full max-w-80 text-center text-text-secondary font-semibold text-[13px] tracking-[0.05em]">
                         Te enviaremos un código a tu correo para verificar que existe una cuenta en CleanMind
-                    </h2>
+                    </p>
                 </div>
-                <form className="flex flex-col gap-3.75">
+                <form
+                    className="flex w-full flex-col gap-3.75"
+                    onSubmit={(event) => event.preventDefault()}
+                >
 
                     <div className="flex flex-col gap-1">
                         <label 
@@ -28,26 +33,25 @@ export default function ForgotPasswordForm() {
                         >
                             Email
                         </label>
-                        <div className="relative w-87.5">
+                        <div className="w-full">
                             <input 
                                 required
+                                id="email"
+                                name="email"
                                 type="email"
+                                autoComplete="email"
                                 placeholder="tu@email.com" 
                                 className="
-                                    w-full pl-3.75 pr-10 py-3.75 bg-card/70
+                                    w-full px-3.75 py-3.75 bg-card/70
                                     border border-border rounded-sm
-                                    placeholder:text-text-secondary placeholder:text-[13px]
-                                    text-text-primary text-[13px]
+                                    placeholder:text-text-secondary placeholder:text-base
+                                    text-base text-text-primary
+                                    sm:placeholder:text-[13px] sm:text-[13px]
                                 "/>
-                            <button 
-                                type="button"
-                                aria-label="Mostrar Contraseña"
-                                className="absolute right-3.75 top-1/2 -translate-y-1/2">
-                            </button>
                         </div>
                     </div>
                     <button 
-                        type="submit"
+                        type="button"
                         className="
                         h-11.75 rounded-sm border border-border
                         bg-linear-to-r from-primary via-accent to-secondary
@@ -55,15 +59,16 @@ export default function ForgotPasswordForm() {
                     ">
                         Siguiente
                     </button>
-                    <button 
-                        type="submit"
+                    <Link
+                        href="/login"
                         className="
                         h-11.75 rounded-sm border border-border
                         bg-secondary/60
+                        flex items-center justify-center
                         text-text-primary text-sm
                     ">
-                        Atras
-                    </button>
+                        Atrás
+                    </Link>
                 </form>
             </div>
         </div>

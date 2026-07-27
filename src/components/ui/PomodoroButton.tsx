@@ -5,9 +5,8 @@ import IconPomodoro from "./icons/IconPomodoro"
 export default function PomodoroButton() {
     return (
         <div className="
-            w-9 h-9 bg-primary
-            rounded-tl-md rounded-tr-xl rounded-br-md
-            flex justify-center items-center
+            flex size-9 items-center justify-center
+            xl:rounded-tl-md xl:rounded-tr-xl xl:rounded-br-md xl:bg-primary
         ">
             <IconPomodoro />
         </div>

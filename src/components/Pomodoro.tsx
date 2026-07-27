@@ -19,16 +19,16 @@ export default function Pomodoro() {
     ];
 
     return (
-        <div className="text-text-primary p-6 flex justify-center items-start">
-            <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="bg-surface rounded-2xl p-6">
+        <div className="flex w-full min-w-0 items-start justify-center p-3 text-text-primary sm:p-4 md:p-6 xl:p-6">
+            <div className="grid w-full min-w-0 max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
+                <div className="min-w-0 rounded-2xl bg-surface p-4 sm:p-6 xl:p-6">
                     <div>
                         <span className="text-xs font-semibold text-text-secondary uppercase tracking-wider block">Vista General</span>
-                        <h2 className="text-3xl font-bold mt-1 mb-6">Tu Progreso</h2>
+                        <h2 className="mt-1 mb-6 text-2xl font-bold sm:text-3xl">Tu Progreso</h2>
 
                         <div className="grid grid-cols-2 gap-3 mb-6">
                             {stats.map((stat, index) => (
-                                <div key={index} className="bg-card p-4 rounded-xl ring ring-border flex flex-col justify-between w-37.5 h-24">
+                                <div key={index} className="flex h-20 min-w-0 w-full flex-col justify-between rounded-xl bg-card p-3 ring ring-border sm:h-24 sm:p-4 xl:h-24 xl:w-37.5 xl:p-4">
                                     <span className="text-3xl font-bold">{stat.value}</span>
                                     <span className="text-xs text-text-secondary">{stat.label}</span>
                                 </div>
@@ -69,8 +69,8 @@ export default function Pomodoro() {
 
                 <div className="flex flex-col gap-5">
                     <>
-                        <div className="bg-surface rounded-2xl p-6 flex flex-col items-center justify-center">
-                            <div className="relative w-48 h-48 flex items-center justify-center">
+                        <div className="flex flex-col items-center justify-center rounded-2xl bg-surface p-4 sm:p-6 xl:p-6">
+                            <div className="relative flex h-40 w-40 items-center justify-center sm:h-48 sm:w-48">
                                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="42" stroke="var(--card)" strokeWidth="6" fill="transparent" />
                                     <circle 
@@ -88,7 +88,7 @@ export default function Pomodoro() {
                                 <IconStop />
                             </div>
                         </div>
-                        <div className="bg-surface rounded-2xl p-6 flex-1 min-h-50">
+                        <div className="min-h-50 flex-1 rounded-2xl bg-surface p-4 sm:p-6 xl:p-6">
                             <span className="text-xs font-semibold text-text-secondary uppercase tracking-wider block">Últimos 7 días</span>
                             <h3 className="text-xl font-bold mt-1">Historial Pomodoro</h3>
                             <span className="text-2xl font-semibold text-accent block mt-1">00:00</span>

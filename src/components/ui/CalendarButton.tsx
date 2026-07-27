@@ -5,9 +5,8 @@ import IconCalendar from "./icons/IconCalendar"
 export default function CalendarButton() {
     return (
         <div className="
-            w-9 h-9 bg-primary
-            rounded-bl-md rounded-br-xl rounded-tr-md
-            flex justify-center items-center
+            flex size-9 items-center justify-center
+            xl:rounded-tr-md xl:rounded-br-xl xl:rounded-bl-md xl:bg-primary
         ">
             <IconCalendar />
         </div>

@@ -7,21 +7,20 @@ export default function MfaActivation() {
     return (
         <div className="
             relative
-            w-100 h-auto bg-surface
+            w-full max-w-100 h-auto bg-surface
             border border-border rounded-xl
             flex justify-center items-center
         ">
-            <div className="w-max h-max bg-surface/20"/>
-            <div className="flex flex-col py-12.5 px-6.25 gap-3.5">
+            <div className="flex w-full flex-col gap-3.5 px-5 py-8 sm:px-6.25 sm:py-12.5">
                 <div className="flex flex-col items-center gap-2.5">
                     <h1 className="
                         bg-linear-to-br from-primary via-secondary to-accent 
                         bg-clip-text text-[23px] text-transparent text-center
                         font-semibold
                     ">Activar la verificación en dos pasos</h1>
-                    <h2 className="text-text-secondary font-semibold text-[11px] tracking-[5%] text-center">
+                    <p className="max-w-80 text-center text-[11px] font-semibold tracking-[0.05em] text-text-secondary">
                         Cuando uses una contraseña, confirma que eres tú mediante un código de verificación
-                    </h2>
+                    </p>
                 </div>
                 <button className="
                     p-2.5 flex gap-2.5

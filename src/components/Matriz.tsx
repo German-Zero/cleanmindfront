@@ -2,8 +2,8 @@
 
 export default function Matriz() {
     return (
-        <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-surface">
-            <div className="bg-card border border-border rounded-xl min-h-62.5 flex flex-col gap-3 relative">
+        <div className="grid w-full min-w-0 max-w-6xl grid-cols-1 gap-3 rounded-xl bg-surface p-3 sm:gap-4 sm:p-4 md:grid-cols-2 xl:gap-4 xl:p-4">
+            <div className="relative flex min-h-44 flex-col gap-3 rounded-xl border border-border bg-card md:min-h-52 xl:min-h-62.5">
                 <span className="self-start bg-now text-sm font-semibold px-3 py-1 rounded-tl-xl rounded-br-md mb-2 text-text-primary tracking-[5%]">
                     Hacer Ahora...
                 </span>
@@ -24,7 +24,7 @@ export default function Matriz() {
                 </div>
             </div>
 
-            <div className="bg-card border border-border rounded-xl min-h-62.5 flex flex-col justify-between relative text-text-primary">
+            <div className="relative flex min-h-44 flex-col justify-between rounded-xl border border-border bg-card text-text-primary md:min-h-52 xl:min-h-62.5">
                 <div className="w-full flex justify-end">
                     <span className="bg-plan text-sm font-semibold px-3 py-1 rounded-tr-xl rounded-bl-md tracking-[5%]">
                         Planificar...
@@ -39,7 +39,7 @@ export default function Matriz() {
                 </div>
             </div>
 
-            <div className="bg-card border border-border rounded-xl min-h-62.5 flex flex-col justify-between relative text-text-primary">
+            <div className="relative flex min-h-44 flex-col justify-between rounded-xl border border-border bg-card text-text-primary md:min-h-52 xl:min-h-62.5">
                 <div className="flex flex-col gap-2 m-4">
                     <div className="grid grid-cols-4 gap-2">
                         <div className="bg-delegate h-5 rounded-md"></div>
@@ -60,7 +60,7 @@ export default function Matriz() {
                 </span>
             </div>
 
-            <div className="bg-card border border-border rounded-xl min-h-62.5 flex flex-col justify-between relative text-text-primary">
+            <div className="relative flex min-h-44 flex-col justify-between rounded-xl border border-border bg-card text-text-primary md:min-h-52 xl:min-h-62.5">
                 <div className="flex flex-col gap-2 m-3.5">
                     <div className="grid grid-cols-4 gap-2">
                         <div className="bg-delete h-5 rounded-md col-span-1"></div>

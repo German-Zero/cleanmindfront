@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={sora.variable} data-theme="DEEP_SERENITY" lang="es">
+    <html className={sora.variable} data-theme="LUNAR_MIND" lang="es">
       <body>
         {children}
         </body>

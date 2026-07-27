@@ -41,10 +41,11 @@ export default function ToolWhiteboardButton() {
     ];
 
 return (
-    <div className='flex relative w-max h-max'>
+    <div className="relative flex h-max w-max max-w-[100dvw]">
         <div className={`
-            w-40 bg-surface rounded-lg p-5 flex flex-col gap-4 
-            absolute left-[7.5%] -top-45 ring ring-border
+            no-scrollbar fixed right-2 bottom-24 flex max-h-[calc(100dvh-6.5rem)] w-40 max-w-[calc(100dvw-1rem)]
+            flex-col gap-4 overflow-y-auto rounded-lg bg-surface p-5 ring ring-border
+            xl:absolute xl:right-auto xl:bottom-auto xl:left-[7.5%] xl:-top-45 xl:max-h-none xl:overflow-visible
             ${isOpen ? '' : 'hidden'}
         `}>
             <div className="
@@ -79,7 +80,7 @@ return (
             </div>
         </div>
 
-        <div className="flex flex-col items-end gap-0.5 p-6 justify-center">
+        <div className="flex min-w-0 max-w-full flex-col items-end justify-center gap-0.5 p-2 sm:p-4 xl:p-6">
             <div className={`
                     flex flex-col gap-1 p-2
                     bg-surface rounded-t-lg rounded-bl-lg
@@ -96,13 +97,14 @@ return (
                 </button>
             </div>
 
-            <div className="flex items-center gap-0.5">
+            <div className="flex min-w-0 max-w-full items-center gap-0.5">
                 <div className={`
-                        flex items-center gap-2 px-2 py-1.5 
-                        bg-surface rounded-t-lg rounded-bl-lg
+                        no-scrollbar flex max-w-[calc(100dvw-5rem)] items-center gap-2 overflow-x-auto
+                        rounded-t-lg rounded-bl-lg bg-surface px-2 py-1.5
+                        xl:max-w-none xl:overflow-visible
                         ${isOpen ? '' : 'hidden'}
                 `}>
-                    <div className="grid grid-cols-4 gap-x-0.5 gap-y-1">
+                    <div className="grid shrink-0 grid-cols-4 gap-x-0.5 gap-y-1">
                         {colors.map((color: ColorItem) => (
                             <button
                                 key={color.id}
@@ -110,7 +112,7 @@ return (
                             />
                         ))}
                     </div>
-                    <div className="flex items-center gap-1 text-purple-500">
+                    <div className="flex shrink-0 items-center gap-1 text-purple-500">
                         <button>
                             <IconPalette />
                         </button>

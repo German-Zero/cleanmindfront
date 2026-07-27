@@ -31,7 +31,7 @@ export const Calendar: React.FC = () => {
         { numero: 13, esMesActual: true }, { numero: 14, esMesActual: true }, { numero: 15, esMesActual: true },
         { numero: 16, esMesActual: true },
         { numero: 17, esMesActual: true }, { numero: 18, esMesActual: true }, { numero: 19, esMesActual: true },
-        { numero: 20, esMesActual: true }, { numero: 21, esMesActual: true },
+        { numero: 20, esMesActual: true },
         { 
             numero: 21, 
             esMesActual: true, 
@@ -47,71 +47,93 @@ export const Calendar: React.FC = () => {
         { numero: 29, esMesActual: true },
         { numero: 30, esMesActual: true }, { numero: 31, esMesActual: true },
         { numero: 1, esMesActual: false }, { numero: 2, esMesActual: false }, { numero: 3, esMesActual: false },
-        { numero: 4, esMesActual: false }, { numero: 5, esMesActual: false },
+        { numero: 4, esMesActual: false }, { numero: 5, esMesActual: false }, { numero: 6, esMesActual: false },
     ];
 
     return (
-    <div className="w-7xl h-auto ">
-        <div className='bg-surface px-14 py-7.5 rounded-2xl'>
-            <div className="mx-auto flex flex-col gap-4">
-                <div className="flex items-center justify-between py-2 px-1">
-                    <div className='flex items-center gap-3'>
-                        <button>
+    <div className="h-full min-h-[36rem] w-full min-w-0 max-w-7xl xl:h-auto xl:min-h-0">
+        <div className="flex h-full w-full flex-col bg-transparent px-1 sm:px-2 xl:h-auto xl:rounded-2xl xl:bg-surface xl:px-10 xl:py-6 2xl:px-14 2xl:py-7.5">
+            <div className="mx-auto flex h-full min-h-0 w-full flex-col gap-1 sm:gap-2 xl:h-auto xl:gap-4">
+                <div className="flex h-16 shrink-0 items-center justify-between px-1 py-2 xl:h-auto">
+                    <div className="flex items-center gap-1 pl-14 sm:gap-3 sm:pl-16 xl:pl-0">
+                        <button type="button" aria-label="Mes anterior" className="hidden size-9 place-items-center xl:grid">
                             <IconLeftArrow />
                         </button>
-                        <h1 className="text-2xl font-bold text-text-primary">Mayo 2026</h1>
-                        <button>
+                        <h1 className="flex items-center gap-1.5 text-lg font-bold text-text-primary xl:text-2xl">
+                            <span className="xl:hidden">Mayo</span>
+                            <span className="hidden xl:inline">Mayo 2026</span>
+                            <span
+                                aria-hidden="true"
+                                className="mb-1 size-1.5 rotate-45 border-r border-b border-text-secondary xl:hidden"
+                            />
+                        </h1>
+                        <button type="button" aria-label="Mes siguiente" className="hidden size-9 place-items-center xl:grid">
                             <IconRigthArrow />
                         </button>
 
                     </div>
-                    <button>
+                    <button type="button" aria-label="Crear nueva tarea" className="grid size-11 place-items-center">
                         <IconNewTask />
                     </button>
                 </div>
 
-                <div className='flex flex-col gap-y-2'>
-                    <div className="grid grid-cols-7 gap-2">
+                <div className="flex min-h-0 flex-1 flex-col gap-y-1 xl:flex-none xl:gap-y-2">
+                    <div className="grid shrink-0 grid-cols-7 gap-0.5 sm:gap-1 xl:gap-2">
                         {diasSemana.map((dia) => (
                         <div 
-                            key={dia} 
+                            key={dia}
+                            aria-label={dia}
                             className="
-                            bg-card ring ring-border rounded-xs
-                            text-center text-text-primary text-[12px]
-                            font-semibold py-1
-                        ">
-                            {dia}
+                                py-1 text-center text-[8px] font-semibold text-text-secondary
+                                sm:text-[10px]
+                                xl:rounded-xs xl:bg-card xl:text-xs xl:text-text-primary
+                                xl:ring xl:ring-border
+                            "
+                        >
+                            <span className="xl:hidden" aria-hidden="true">{dia.slice(0, 3).toLowerCase()}.</span>
+                            <span className="hidden xl:inline" aria-hidden="true">{dia}</span>
                         </div>
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-7 gap-2 auto-rows-[minmax(90px,1fr)] bg-card/">
+                    <div className="grid min-h-0 flex-1 grid-cols-7 grid-rows-6 gap-0.5 sm:gap-1 xl:flex-none xl:grid-rows-none xl:auto-rows-[minmax(4.5rem,1fr)] xl:gap-2 2xl:auto-rows-[minmax(5.625rem,1fr)]">
                         {diasEjemplo.map((dia, index) => (
                         <div
                             key={index}
                             className={`
-                                p-2 ring ring-border flex rounded-sm flex-col justify-between relative
+                                relative flex min-h-0 min-w-0 flex-col justify-start overflow-hidden
+                                rounded-[3px] p-1 ring ring-border sm:p-1.5
+                                xl:justify-between xl:rounded-sm xl:p-2
                                 ${dia.esMesActual ? 'bg-card' : 'bg-card/10'}
                             `}
                         >
 
-                            <div className="flex items-start justify-between">
+                            <div className="flex items-start justify-center xl:justify-between">
                                 <span 
                                     className={`
-                                        text-xs px-1.5 py-0.5
+                                        inline-grid h-5 min-w-5 place-items-center px-1
+                                        text-[10px] sm:h-6 sm:min-w-6 sm:text-xs
                                         ${!dia.esMesActual ? 'text-text-secondary' : 'text-secondary'}
-                                        ${dia.hoy ? 'bg-primary rounded-full text-text-primary ' : ''}
+                                        ${dia.hoy ? 'rounded-full bg-primary text-text-primary' : ''}
                                     `}
                                 >
                                     {dia.numero}
                                 </span>
                             </div>
 
-                            <div className="mt-2 space-y-1 z-10 w-full">
+                            <div className="z-10 mt-1 w-full space-y-0.5 xl:mt-2 xl:space-y-1">
                                 {dia.eventos?.map((evento) => (
                                     <div
                                         key={evento.id}
-                                        className={`text-[10px] px-2 py-1 rounded-md truncate w-full ${evento.color}`}
+                                        title={evento.titulo}
+                                        className={`
+                                            w-full truncate rounded-sm px-0.5 py-0.5
+                                            text-[6px] leading-none
+                                            sm:px-1 sm:text-[8px]
+                                            xl:rounded-md xl:px-1.5 xl:text-[9px] xl:leading-normal
+                                            2xl:px-2 2xl:py-1 2xl:text-[10px]
+                                            ${evento.color}
+                                        `}
                                     >
                                     {evento.titulo}
                                     </div>

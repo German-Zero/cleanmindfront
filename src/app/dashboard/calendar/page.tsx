@@ -1,26 +1,9 @@
 import { Calendar } from "@/components/Calendar";
-import Sidebar from "@/components/shared/Sidebar";
-import MatrizButton from "@/components/ui/MatrizButton";
-import PomodoroButton from "@/components/ui/PomodoroButton";
-import WhiteboardButton from "@/components/ui/WhiteboardButton";
-import Link from "next/link";
 
 export default function CalendarPage() {
     return (
-        <div className="w-screen h-screen flex">
-            <Sidebar />
-            <div className="relative h-screen w-screen items-center justify-center flex">
-                <Link href={"/dashboard/matriz"} className="absolute top-0 right-0">
-                    <MatrizButton />
-                </Link>
-                <Link href={"/dashboard/whiteboard"} className="absolute bottom-0 right-0">
-                    <WhiteboardButton />
-                </Link>
-                <Link href={"/dashboard/pomodoro"} className="absolute bottom-0 left-0">
-                    <PomodoroButton />
-                </Link>
-                <Calendar />
-            </div>
+        <div className="relative flex h-full min-h-0 w-full items-stretch justify-center p-1 sm:p-2 xl:items-center xl:p-6 2xl:p-8">
+            <Calendar />
         </div>
     )
-}   
+}

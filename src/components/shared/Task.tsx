@@ -7,10 +7,10 @@ import IconEdit from "../ui/icons/IconEdit"
 export default function Task() {
 
     return (
-        <div className="relative w-[320px] hover:bg-card-hover bg-card h-auto border border-border rounded-lg">
+        <div className="relative h-auto w-full max-w-[320px] shrink-0 rounded-lg border border-border bg-card hover:bg-card-hover">
             <div className="
                 
-                flex flex-wrap gap-1 max-w-65
+                flex max-w-[calc(100%_-_3.125rem)] flex-wrap gap-1 xl:max-w-65
                 mt-2.5 ml-2.5 mr-12.5 mb-12.5
             ">
                 <h1 className="
@@ -30,13 +30,13 @@ export default function Task() {
                 flex
                 absolute bottom-2.5 right-2.5
             ">
-                <button>
+                <button type="button" aria-label="Editar tarea" className="grid size-11 place-items-center xl:size-auto">
                     <IconEdit />
                 </button>
-                <button>
+                <button type="button" aria-label="Completar tarea" className="grid size-11 place-items-center xl:size-auto">
                     <IconCompleteTask />
                 </button>
-                <button>
+                <button type="button" aria-label="Cancelar tarea" className="grid size-11 place-items-center xl:size-auto">
                     <IconCancel />
                 </button>
             </div>

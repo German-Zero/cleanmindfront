@@ -7,26 +7,25 @@ export default function ConfirmUserForm() {
     return (
         <div className="
             relative
-            w-100 h-auto bg-surface
+            w-full max-w-100 h-auto bg-surface
             border border-border rounded-xl
             flex justify-center items-center
         ">
-            <div className="w-max h-max bg-surface/20"/>
             <button className="absolute top-2.5 right-2.5">
                 <IconCancel />
             </button>
-            <div className="flex flex-col py-12.5 px-6.25 gap-7.5">
+            <div className="flex w-full flex-col gap-7.5 px-5 py-8 sm:px-6.25 sm:py-12.5">
                 <div className="flex flex-col items-center gap-2.5">
                     <h1 className="
                         bg-linear-to-br from-primary via-secondary to-accent 
                         bg-clip-text text-[16px] text-transparent text-center
                         font-semibold
                     ">Para continuar, necesitamos verificar tu identidad</h1>
-                    <h2 className="text-text-secondary font-semibold text-[11px] tracking-[5%]">
+                    <p className="text-[11px] font-semibold tracking-[0.05em] text-text-secondary">
                         tu@email.com
-                    </h2>
+                    </p>
                 </div>
-                <form className="flex flex-col gap-3.75">
+                <form className="flex w-full flex-col gap-3.75">
 
                         <div className="flex flex-col gap-1">
                             <label 
@@ -35,7 +34,7 @@ export default function ConfirmUserForm() {
                             >
                                 Tu Contraseña
                             </label>
-                            <div className="relative w-87.5">
+                            <div className="relative w-full">
                                 <input 
                                     required
                                     type="password"
@@ -44,12 +43,12 @@ export default function ConfirmUserForm() {
                                         w-full pl-3.75 pr-10 py-3.75 bg-card/70
                                         border border-border rounded-sm
                                         placeholder:text-text-secondary placeholder:text-[13px]
-                                        text-text-primary text-[13px]
+                                        text-base text-text-primary sm:text-[13px]
                                     "/>
                                 <button 
                                     type="button"
                                     aria-label="Contraseña"
-                                    className="absolute right-3.75 top-1/2 -translate-y-1/2">
+                                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center">
                                     <IconViewPassword />
                                 </button>
                             </div>

@@ -16,11 +16,8 @@ export default function DeleteTaskModal({
     onCancel,
 }: DeleteTaskModalProps) {
     return (
-        <div className="
-            w-full max-w-90 h-auto bg-surface
-            border border-border rounded-lg
-        ">
-            <div className="flex flex-col gap-6.25 px-5 py-7.5 sm:px-10">
+        <div className="calm-panel h-auto w-full max-w-90">
+            <div className="flex flex-col gap-6 px-5 py-7 sm:px-8">
                 <h3 id={titleId} className="
                     text-text-primary text-center text-[13px]
                     font-semibold 
@@ -33,10 +30,9 @@ export default function DeleteTaskModal({
                         disabled={isPending}
                         onClick={onConfirm}
                         className="
-                        h-auto flex-1 py-1.25 sm:px-12 rounded-xs
-                        text-center text-text-primary text-[13px]
-                        font-semibold
-                        bg-success
+                        min-h-11 flex-1 rounded-[10px] border border-error/40
+                        bg-error/10 px-4 py-2.5 text-center
+                        text-[13px] font-semibold text-error
                         disabled:cursor-wait disabled:opacity-50
                     "
                     >
@@ -48,10 +44,8 @@ export default function DeleteTaskModal({
                         disabled={isPending}
                         onClick={onCancel}
                         className="
-                        h-auto flex-1 py-1.25 sm:px-12 rounded-xs
-                        text-center text-text-primary text-[13px]
-                        font-semibold
-                        bg-error
+                        calm-button-secondary h-auto flex-1
+                        text-center text-[13px] font-semibold
                         disabled:opacity-50
                     "
                     >

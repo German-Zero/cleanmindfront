@@ -56,13 +56,13 @@ export default function RecoverPasswordForm({
     }
 
     return (
-        <div className="flex h-auto w-full max-w-100 items-center justify-center rounded-xl border border-border bg-surface">
-            <div className="flex w-full flex-col gap-6 px-5 py-8 sm:gap-7.5 sm:px-6.25 sm:py-12.5">
-                <div className="flex flex-col items-center gap-2.5">
-                    <h1 className="bg-linear-to-br from-primary via-secondary to-accent bg-clip-text text-center text-2xl font-semibold text-transparent sm:text-[30px]">
+        <div className="calm-panel flex h-auto w-full max-w-105 items-center justify-center">
+            <div className="flex w-full flex-col gap-6 px-5.5 py-8.5 sm:px-7.5 sm:py-10.5">
+                <div className="flex flex-col items-center gap-2">
+                    <h1 className="text-center text-[25px] font-semibold text-text-primary sm:text-[28px]">
                         Recuperar Contraseña
                     </h1>
-                    <p className="w-full max-w-80 text-center text-[13px] font-semibold tracking-wider text-text-secondary">
+                    <p className="w-full max-w-[320px] text-center text-[12px] leading-4.75 text-text-secondary">
                         {isComplete
                             ? "Tu contraseña fue actualizada correctamente."
                             : "Elige una nueva contraseña para tu cuenta."}
@@ -70,7 +70,7 @@ export default function RecoverPasswordForm({
                 </div>
 
                 {!token && (
-                    <p role="alert" className="text-center text-xs text-error">
+                    <p role="alert" className="calm-feedback text-center text-error">
                         El enlace de recuperación no es válido.
                     </p>
                 )}
@@ -99,14 +99,14 @@ export default function RecoverPasswordForm({
                             disabled={isPending}
                         />
                         {error && (
-                            <p role="alert" className="text-xs text-error">
+                            <p role="alert" className="calm-feedback text-error">
                                 {error}
                             </p>
                         )}
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-wait disabled:opacity-50"
+                            className="calm-button disabled:cursor-wait disabled:opacity-50"
                         >
                             {isPending
                                 ? "Guardando…"
@@ -117,7 +117,7 @@ export default function RecoverPasswordForm({
 
                 <Link
                     href={token && !isComplete ? "/forgot-password" : "/login"}
-                    className="flex h-11.75 items-center justify-center rounded-sm border border-border bg-secondary/60 text-sm text-text-primary"
+                    className="calm-button-secondary flex items-center justify-center"
                 >
                     {token && !isComplete
                         ? "Solicitar otro enlace"

@@ -142,27 +142,27 @@ export default function Pomodoro() {
         : phaseLabel
 
     return (
-        <div className="flex w-full min-w-0 items-start justify-center p-3 text-text-primary sm:p-4 md:p-6 xl:p-6">
-            <div className="grid w-full min-w-0 max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
-                <section className="min-w-0 rounded-2xl bg-surface p-4 sm:p-6">
-                    <span className="block text-xs font-semibold uppercase tracking-wider text-text-secondary">
+        <div className="flex w-full min-w-0 items-start justify-center p-3 text-text-primary sm:p-4 md:p-6">
+            <div className="grid w-full min-w-0 max-w-245 grid-cols-1 gap-4 md:grid-cols-2">
+                <section className="calm-panel min-w-0 p-4.5 sm:p-6">
+                    <span className="calm-eyebrow block">
                         Vista General
                     </span>
-                    <h1 className="mt-1 mb-6 text-2xl font-bold sm:text-3xl">
+                    <h1 className="mt-1 mb-6 text-[24px] font-semibold sm:text-[30px]">
                         Tu Progreso
                     </h1>
 
-                    <div className="mb-6 grid grid-cols-2 gap-3">
+                    <div className="mb-6 grid grid-cols-2 gap-2.5">
                         {stats.map((stat) => (
                             <div
                                 key={stat.label}
                                 className="
-                                    flex h-20 min-w-0 w-full flex-col justify-between
-                                    rounded-xl bg-card p-3 ring ring-border
-                                    sm:h-24 sm:p-4
+                                    calm-card flex h-20.5 min-w-0 w-full
+                                    flex-col justify-between p-3
+                                    sm:h-23 sm:p-3.75
                                 "
                             >
-                                <span className="text-3xl font-bold">
+                                <span className="text-[28px] font-semibold">
                                     {stat.value}
                                 </span>
                                 <span className="text-xs text-text-secondary">
@@ -179,7 +179,7 @@ export default function Pomodoro() {
                                 {taskProgress}%
                             </span>
                         </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-card">
+                        <div className="h-1.75 w-full overflow-hidden rounded-full bg-card">
                             <div
                                 className="h-full bg-now transition-[width] duration-300"
                                 style={{ width: `${taskProgress}%` }}
@@ -188,7 +188,7 @@ export default function Pomodoro() {
                     </div>
 
                     <div className="mb-6">
-                        <h2 className="mb-3 text-sm font-semibold">
+                        <h2 className="mb-3 text-[13px] font-semibold">
                             Distribución Eisenhower
                         </h2>
                         <div className="space-y-2">
@@ -200,8 +200,9 @@ export default function Pomodoro() {
                                 <div
                                     key={quadrant}
                                     className={`
-                                        flex items-center justify-between rounded-lg
-                                        border-l-4 bg-card p-3 text-sm
+                                        flex items-center justify-between rounded-[9px]
+                                        border border-border/45 border-l-[3px]
+                                        bg-card/62 p-2.75 text-[12px]
                                         ${quadrantBorders[quadrant]}
                                     `}
                                 >
@@ -225,7 +226,7 @@ export default function Pomodoro() {
                         {taskDateStats.map((stat) => (
                             <div
                                 key={stat.label}
-                                className="rounded-lg bg-card py-3 text-center ring ring-border"
+                                className="calm-card py-3 text-center"
                             >
                                 <div className="mb-1 text-sm font-bold">
                                     {stat.value}
@@ -238,13 +239,13 @@ export default function Pomodoro() {
                     </div>
                 </section>
 
-                <div className="flex min-w-0 flex-col gap-5">
-                    <section className="flex flex-col items-center justify-center rounded-2xl bg-surface p-4 sm:p-6">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                <div className="flex min-w-0 flex-col gap-4">
+                    <section className="calm-panel flex flex-col items-center justify-center p-4.5 sm:p-6">
+                        <span className="calm-eyebrow text-center">
                             {visiblePhaseLabel}
                         </span>
 
-                        <div className="relative mt-3 flex h-40 w-40 items-center justify-center sm:h-48 sm:w-48">
+                        <div className="relative mt-3 flex h-44 w-44 items-center justify-center sm:h-48 sm:w-48">
                             <svg
                                 className="h-full w-full -rotate-90"
                                 viewBox="0 0 100 100"
@@ -276,7 +277,7 @@ export default function Pomodoro() {
                             </svg>
                             <span
                                 aria-live="polite"
-                                className="absolute text-3xl font-bold tracking-wider"
+                                className="absolute text-[31px] font-semibold tracking-[1px]"
                             >
                                 {formatTimer(remainingSeconds)}
                             </span>
@@ -300,11 +301,7 @@ export default function Pomodoro() {
                                 onChange={(event) =>
                                     setSelectedTaskId(event.target.value)
                                 }
-                                className="
-                                    mt-1.5 w-full rounded-lg border border-border
-                                    bg-card px-3 py-2 text-xs text-text-primary
-                                    disabled:opacity-60
-                                "
+                                className="calm-input mt-1.5 text-[11px] disabled:opacity-60"
                             >
                                 <option value="">
                                     {isLoading
@@ -338,7 +335,7 @@ export default function Pomodoro() {
                             <span className="text-xs text-text-secondary">
                                 Tipo de cronómetro
                             </span>
-                            <div className="mt-1.5 grid grid-cols-2 rounded-lg bg-card p-1 ring ring-border">
+                            <div className="mt-1.5 grid grid-cols-2 rounded-[10px] border border-border/65 bg-card/62 p-1">
                                 {(
                                     [
                                         ["AUTO", "Automático"],
@@ -356,7 +353,7 @@ export default function Pomodoro() {
                                             setTimerMode(value)
                                         }
                                         className={`
-                                            rounded-md px-2 py-1.5 text-[11px]
+                                            rounded-[7px] px-2 py-1.5 text-[11px]
                                             font-semibold transition-colors
                                             disabled:cursor-not-allowed
                                             ${
@@ -409,11 +406,7 @@ export default function Pomodoro() {
                                     pendingAction !== null
                                 }
                                 onClick={() => void start(selectedTaskId)}
-                                className="
-                                    mt-5 min-w-36 rounded-lg bg-primary px-5 py-2.5
-                                    text-sm font-semibold disabled:cursor-wait
-                                    disabled:opacity-50
-                                "
+                                className="calm-button mt-5 min-w-36 disabled:cursor-wait disabled:opacity-50"
                             >
                                 {pendingAction === "start"
                                     ? "Iniciando…"
@@ -438,7 +431,7 @@ export default function Pomodoro() {
                                         onClick={
                                             isPaused ? resume : pause
                                         }
-                                        className="grid size-11 place-items-center rounded-full bg-card ring ring-border disabled:opacity-50"
+                                        className="calm-icon-button size-11 rounded-full border-border/70 bg-card disabled:opacity-50"
                                     >
                                         {isPaused ? (
                                             <span
@@ -457,7 +450,7 @@ export default function Pomodoro() {
                                         onClick={() =>
                                             void interrupt()
                                         }
-                                        className="grid size-11 place-items-center rounded-full bg-card ring ring-border disabled:opacity-50"
+                                        className="calm-icon-button size-11 rounded-full border-border/70 bg-card disabled:opacity-50"
                                     >
                                         <IconStop />
                                     </button>
@@ -483,13 +476,13 @@ export default function Pomodoro() {
                         )}
                     </section>
 
-                    <section className="min-h-50 flex-1 rounded-2xl bg-surface p-4 sm:p-6">
-                        <span className="block text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                    <section className="calm-panel min-h-50 flex-1 p-4.5 sm:p-6">
+                        <span className="calm-eyebrow block">
                             Últimos 7 días
                         </span>
                         <div className="flex items-end justify-between gap-3">
                             <div>
-                                <h2 className="mt-1 text-xl font-bold">
+                                <h2 className="mt-1 text-[20px] font-semibold">
                                     Historial Pomodoro
                                 </h2>
                                 <span className="mt-1 block text-2xl font-semibold text-accent">

@@ -18,12 +18,12 @@ export default function SecurityPanelShell({
     children,
 }: SecurityPanelShellProps) {
     return (
-        <div className="no-scrollbar relative mx-auto max-h-[calc(100dvh-32px)] w-full max-w-100 overflow-y-auto rounded-xl border border-border bg-surface text-text-primary">
+        <div className="calm-panel no-scrollbar relative mx-auto max-h-[calc(100dvh-32px)] w-full max-w-105 overflow-y-auto text-text-primary">
             {onBack && (
                 <button
                     type="button"
                     onClick={onBack}
-                    className="absolute top-2 left-2 grid min-h-10 place-items-center rounded-lg px-3 text-xs text-text-secondary hover:bg-card hover:text-text-primary"
+                    className="absolute top-2.5 left-2.5 grid min-h-10 place-items-center rounded-[10px] px-3 text-[11px] text-text-secondary hover:bg-card hover:text-text-primary"
                 >
                     ← Volver
                 </button>
@@ -33,19 +33,19 @@ export default function SecurityPanelShell({
                     type="button"
                     aria-label="Cerrar configuración"
                     onClick={onClose}
-                    className="absolute top-2 right-2 grid size-10 place-items-center rounded-lg text-2xl leading-none text-text-secondary hover:bg-card hover:text-text-primary"
+                    className="calm-icon-button absolute top-2.5 right-2.5 text-[22px] leading-none"
                 >
                     <span aria-hidden="true">×</span>
                 </button>
             )}
 
-            <div className="flex w-full flex-col gap-7.5 px-5 py-14 sm:px-6.25 sm:py-12.5">
-                <div className="flex flex-col items-center gap-2.5">
+            <div className="flex w-full flex-col gap-7.5 px-5.5 py-14 sm:px-7 sm:py-12.5">
+                <div className="flex flex-col items-center gap-2">
                     <h1
                         id="settings-title"
                         tabIndex={-1}
                         autoFocus
-                        className="bg-linear-to-br from-primary via-secondary to-accent bg-clip-text text-center text-2xl font-semibold text-transparent sm:text-[28px]"
+                        className="text-center text-[24px] font-semibold tracking-[-0.3px] text-text-primary sm:text-[28px]"
                     >
                         {title}
                     </h1>

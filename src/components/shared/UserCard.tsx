@@ -37,33 +37,31 @@ export default function UserCard({ onOpenSettings }: UserCardProps) {
 
     return (
         <div className="
-                relative
-                flex h-16 w-full max-w-[320px] shrink-0
-                rounded-xl border border-border
-                bg-card hover:bg-card-hover"
+                calm-card relative flex min-h-16 w-full max-w-[320px]
+                shrink-0 items-center hover:border-accent/30"
         >
             {logoutError && (
                 <p
                     role="alert"
-                    className="absolute right-0 bottom-full left-0 mb-2 rounded-lg border border-error bg-surface p-2 text-[10px] text-error"
+                    className="calm-feedback absolute right-0 bottom-full left-0 mb-2 text-error"
                 >
                     {logoutError}
                 </p>
             )}
-            <div className="flex w-full min-w-0 items-center gap-2 px-2">
+            <div className="flex w-full min-w-0 items-center gap-2 px-2.5">
                 <div className="shrink-0">
                     <IconUser />
                 </div>
-                <div className="min-w-0 flex-1 xl:w-38 xl:flex-none">
-                    <h6 className="truncate font-sans text-[16px] font-semibold text-text-primary">
+                <div className="min-w-0 flex-1">
+                    <h6 className="truncate font-sans text-[14px] font-semibold text-text-primary">
                         {isLoading ? "Cargando…" : user?.name ?? "Usuario"}
                     </h6>
                 </div>
-                <div className="flex shrink-0 items-center justify-center gap-1">
+                <div className="flex shrink-0 items-center justify-center gap-0.5">
                     <Link
                         href="/dashboard/personalization"
                         aria-label="Personalización"
-                        className="grid size-11 place-items-center xl:size-auto"
+                        className="calm-icon-button"
                     >
                         <IconPersonalization />
                     </Link>
@@ -71,7 +69,7 @@ export default function UserCard({ onOpenSettings }: UserCardProps) {
                         type="button"
                         aria-label="Configuración"
                         onClick={onOpenSettings}
-                        className="grid size-11 place-items-center xl:size-auto"
+                        className="calm-icon-button"
                     >
                         <IconSettings />
                     </button>
@@ -81,7 +79,7 @@ export default function UserCard({ onOpenSettings }: UserCardProps) {
                         aria-busy={isLoggingOut}
                         disabled={isLoggingOut}
                         onClick={handleLogout}
-                        className="grid size-11 place-items-center disabled:cursor-wait disabled:opacity-50 xl:size-auto"
+                        className="calm-icon-button disabled:cursor-wait disabled:opacity-50"
                     >
                         <IconLogout />
                     </button>

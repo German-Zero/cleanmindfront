@@ -41,15 +41,12 @@ export default function ViewTaskCalendarModal({ task }: { task: Task }) {
     return (
         <div
             className="
-                relative h-auto w-full max-w-100 overflow-hidden
-                rounded-xl border border-border
-                bg-linear-to-br from-surface from-50% to-secondary
+                calm-panel relative h-auto w-full max-w-100 overflow-hidden
             "
         >
-            <div className={`h-17.5 w-full ${quadrantStyles[task.quadrant]}`} />
-            <div className="absolute top-0 h-17.5 w-full bg-black/30" />
+            <div className={`h-1.25 w-full opacity-80 ${quadrantStyles[task.quadrant]}`} />
 
-            <div className="flex flex-col gap-3 p-4">
+            <div className="flex flex-col gap-3.5 p-4">
                 <div>
                     <h2 className="text-sm font-semibold text-text-primary">
                         {task.title}
@@ -59,7 +56,7 @@ export default function ViewTaskCalendarModal({ task }: { task: Task }) {
                     </p>
                 </div>
 
-                <dl className="grid grid-cols-2 gap-2 text-[10px]">
+                <dl className="grid grid-cols-2 gap-2.5 rounded-[10px] border border-border/45 bg-card/38 p-3 text-[10px]">
                     <div>
                         <dt className="text-text-secondary">Fecha</dt>
                         <dd className="mt-0.5 text-text-primary">

@@ -61,10 +61,8 @@ export default function NewTaskForm({
 
     return (
         <div className="
-            relative
-            w-full max-w-100 h-auto bg-surface
-            border border-border rounded-xl
-            flex justify-center items-center
+            calm-panel relative flex h-auto w-full max-w-105
+            items-center justify-center
         ">
             <button
                 type="button"
@@ -73,18 +71,17 @@ export default function NewTaskForm({
                 }
                 disabled={isPending}
                 onClick={onClose}
-                className="absolute top-3 right-3 grid size-10 place-items-center rounded-lg text-2xl text-text-secondary hover:bg-card disabled:opacity-50"
+                className="calm-icon-button absolute top-3 right-3 text-[22px] disabled:opacity-50"
             >
                 <span aria-hidden="true">×</span>
             </button>
-            <div className="flex w-full flex-col gap-7.5 px-5 py-8 sm:px-6.25 sm:py-12.5">
-                <div className="flex flex-col items-center gap-2.5">
+            <div className="flex w-full flex-col gap-7 px-5 py-8 sm:px-7 sm:py-10.5">
+                <div className="flex flex-col items-center gap-2">
                     <h1 id={titleId} className="
-                        bg-linear-to-br from-primary via-secondary to-accent 
-                        bg-clip-text text-3xl text-transparent
-                        text-center font-semibold sm:text-4xl
+                        text-center text-[28px] font-semibold
+                        tracking-[-0.4px] text-text-primary sm:text-[32px]
                     ">{isEditing ? "Editar Tarea" : "Nueva Tarea"}</h1>
-                    <p className="text-center text-xs font-semibold tracking-wider text-text-secondary sm:text-[14px]">
+                    <p className="text-center text-[12px] leading-4.75 text-text-secondary">
                         {isEditing
                             ? "Actualiza los datos de la tarea"
                             : "¿Que tarea estamos planeando?"}
@@ -92,7 +89,7 @@ export default function NewTaskForm({
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex w-full flex-col gap-7.5"
+                    className="flex w-full flex-col gap-7"
                 >
                     <div className="flex flex-col gap-3.75">
 
@@ -112,12 +109,8 @@ export default function NewTaskForm({
                                     disabled={isPending}
                                     defaultValue={task?.title}
                                     placeholder="Titulo" 
-                                    className="
-                                    w-full pl-3.75 pr-10 py-3.75 bg-card/70
-                                    border border-border rounded-sm
-                                    placeholder:text-text-secondary placeholder:text-[13px]
-                                        text-base text-text-primary sm:text-[13px]
-                                    "/>
+                                    className="calm-input pr-10 text-[13px]"
+                                />
                             </div>
                         </div>
 
@@ -135,12 +128,8 @@ export default function NewTaskForm({
                                     disabled={isPending}
                                     defaultValue={task?.description ?? ""}
                                     placeholder="Descripcion" 
-                                    className="
-                                    min-h-24 w-full resize-y px-3.75 py-3.75 bg-card/70
-                                    border border-border rounded-sm
-                                    placeholder:text-text-secondary placeholder:text-[13px]
-                                    text-base text-text-primary sm:text-[13px]
-                                    "/>
+                                    className="calm-input min-h-24 resize-y text-[13px]"
+                                />
                             </div>
                         </div>
 
@@ -149,7 +138,7 @@ export default function NewTaskForm({
                                 Fecha
                             </label>
                             <div className="relative w-full">
-                                <div className="absolute inset-y-0 left-0 w-13 rounded-l-sm border-y border-l border-border bg-card flex items-center justify-center pointer-events-none z-10">
+                                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex w-13 items-center justify-center border-r border-border/70 text-text-secondary">
                                     <IconCalendar />
                                 </div>
                                 <input 
@@ -158,13 +147,8 @@ export default function NewTaskForm({
                                     type="date"
                                     disabled={isPending}
                                     defaultValue={taskDueDateKey(task?.dueDate ?? null) ?? ""}
-                                    className="
-                                    w-full pl-16 pr-4 py-3.75 bg-card/70
-                                    border border-border rounded-sm
-                                    text-base text-text-primary sm:text-[13px]
-                                    focus:outline-none focus:border-primary
-                                    hide-date-icon
-                                "/>
+                                    className="calm-input hide-date-icon pl-16 pr-4 text-[13px]"
+                                />
                             </div>
                         </div>
 
@@ -204,7 +188,7 @@ export default function NewTaskForm({
                     </div>
 
                     {error && (
-                        <p role="alert" className="text-xs text-error">
+                        <p role="alert" className="calm-feedback text-error">
                             {error}
                         </p>
                     )}
@@ -212,11 +196,8 @@ export default function NewTaskForm({
                     <button 
                         type="submit"
                         disabled={isPending}
-                        className="
-                        h-11.75 rounded-sm border border-border
-                        bg-linear-to-r from-primary via-accent to-secondary
-                        text-text-primary text-sm
-                    ">
+                        className="calm-button"
+                    >
                         {isPending
                             ? "Guardando…"
                             : isEditing

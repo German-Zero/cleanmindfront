@@ -110,13 +110,13 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     }, [isSettingsCloseLocked])
 
     return (
-        <div className="flex h-dvh w-full overflow-hidden">
+        <div className="flex h-dvh w-full overflow-hidden bg-background">
             {isSidebarOpen && (
                 <button
                     type="button"
                     aria-label="Cerrar panel de tareas"
                     onClick={() => setSidebarPath(null)}
-                    className="fixed inset-0 z-40 bg-black/60 xl:hidden"
+                    className="fixed inset-0 z-40 bg-black/55 backdrop-blur-[2px] xl:hidden"
                 />
             )}
 
@@ -135,9 +135,9 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                         aria-label="Cerrar panel de tareas"
                         onClick={() => setSidebarPath(null)}
                         className="
-                            absolute top-2 left-full ml-2 grid size-10 place-items-center
-                            rounded-xl border border-border bg-surface
-                            text-2xl leading-none text-text-primary xl:hidden
+                            calm-icon-button absolute top-3 left-full ml-3
+                            bg-surface text-[22px] leading-none
+                            text-text-primary shadow-lg xl:hidden
                         "
                     >
                         <span aria-hidden="true">×</span>
@@ -152,9 +152,9 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 aria-label="Abrir panel de tareas"
                 onClick={() => setSidebarPath(pathname)}
                 className="
-                    fixed top-4 left-4 z-30 grid size-11 place-items-center
-                    rounded-xl border border-border bg-surface text-text-primary
-                    xl:hidden
+                    calm-icon-button fixed top-4 left-4 z-30
+                    bg-surface/95 text-text-primary shadow-lg
+                    backdrop-blur xl:hidden
                 "
             >
                 <span className="flex w-5 flex-col gap-1.25" aria-hidden="true">
@@ -164,13 +164,14 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 </span>
             </button>
 
-            <main className="no-scrollbar relative h-dvh min-w-0 flex-1 overflow-auto pb-20 xl:pb-0">
+            <main className="no-scrollbar relative h-dvh min-w-0 flex-1 overflow-auto bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)] pb-20 xl:pb-0">
                 {children}
 
                 {pathname !== "/dashboard/calendar" && (
                     <NewTaskButton
                         className="
-                            fixed top-4 right-4 z-30 grid size-11 place-items-center
+                            calm-icon-button fixed top-4 right-4 z-30
+                            bg-surface/95 shadow-lg
                             xl:top-12 xl:right-6
                         "
                     />
@@ -180,9 +181,10 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     aria-label="Navegación del dashboard"
                     className="
                         fixed right-4 bottom-4 left-4 z-30 mx-auto
-                        flex max-w-sm items-center justify-around
-                        rounded-2xl border border-border bg-surface/95 p-2
-                        shadow-xl backdrop-blur xl:contents
+                        flex max-w-95 items-center justify-around
+                        rounded-2xl border border-border/70 bg-surface/94 p-1.5
+                        shadow-[0_16px_42px_rgb(0_0_0/28%)] backdrop-blur-xl
+                        xl:contents
                     "
                 >
                     {navigation.map((item) => {
@@ -195,10 +197,14 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                                 aria-label={item.label}
                                 aria-current={isActive ? "page" : undefined}
                                 className={`
-                                    grid size-12 place-items-center rounded-xl
+                                    grid size-12 place-items-center rounded-[11px]
                                     xl:absolute xl:z-10 xl:size-auto xl:rounded-none xl:ring-0
                                     ${item.position}
-                                    ${isActive ? "ring-2 ring-accent xl:hidden" : "xl:block"}
+                                    ${
+                                        isActive
+                                            ? "bg-primary/14 text-accent ring-1 ring-primary/35 xl:hidden"
+                                            : "text-text-secondary hover:bg-card hover:text-text-primary xl:block"
+                                    }
                                 `}
                             >
                                 {item.icon}

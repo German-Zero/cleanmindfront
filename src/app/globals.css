@@ -2,14 +2,14 @@
 
 :root,
 [data-theme="LUNAR_MIND"] {
-  --background: #0D0B1A;
-  --surface: #171327;
-  --card: #211B38;
-  --card-hover: #2B2348;
-  --border: #3C3261;
-  --primary: #6366F1;
-  --secondary: #8B5CF6;
-  --accent: #A78BFA;
+  --background: #0E0D16;
+  --surface: #161420;
+  --card: #1D1A29;
+  --card-hover: #252134;
+  --border: #363047;
+  --primary: #7C79E8;
+  --secondary: #8B78D1;
+  --accent: #A394E7;
   --error: #FB7185;
   --success: #4ADE80;
   --warning: #FACC15;
@@ -22,14 +22,14 @@
 }
 
 [data-theme="DEEP_SERENITY"] {
-  --background: #08141A;
-  --surface: #102028;
-  --card: #16303A;
-  --card-hover: #1E3E4B;
-  --border: #29515F;
-  --primary: #10B981;
-  --secondary: #14B8A6;
-  --accent: #0EA5E9;
+  --background: #0A1418;
+  --surface: #111E23;
+  --card: #18292F;
+  --card-hover: #20343B;
+  --border: #30474E;
+  --primary: #46B89A;
+  --secondary: #4CAEA4;
+  --accent: #5AADC7;
   --error: #F87171;
   --success: #34D399;
   --warning: #FBBF24;
@@ -42,14 +42,14 @@
 }
 
 [data-theme="CALM_TECH"] {
-  --background: #0B1020;
-  --surface: #121A2B;
-  --card: #1A2438;
-  --card-hover: #24314A;
-  --border: #2D3B55;
-  --primary: #60A5FA;
-  --secondary: #38BDF8;
-  --accent: #2DD4BF;
+  --background: #0C111C;
+  --surface: #131B28;
+  --card: #1A2533;
+  --card-hover: #223040;
+  --border: #314154;
+  --primary: #6A9ED8;
+  --secondary: #63A9C4;
+  --accent: #63B9AB;
   --error: #F87171;
   --success: #34D399;
   --warning: #FBBF24;
@@ -100,6 +100,133 @@ body {
   margin: 0;
   background: var(--background);
   font-family: var(--font-sora), sans-serif;
+  color: var(--text-primary);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 82%, white);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 42%, transparent);
+  color: var(--text-primary);
+}
+
+@layer components {
+  .calm-panel {
+    border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--surface) 96%, transparent);
+    box-shadow: 0 18px 48px rgb(0 0 0 / 16%);
+  }
+
+  .calm-card {
+    border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 82%, var(--surface));
+  }
+
+  .calm-input {
+    min-height: 44px;
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--card) 74%, var(--surface));
+    padding: 11px 13px;
+    color: var(--text-primary);
+  }
+
+  .calm-input::placeholder {
+    color: color-mix(in srgb, var(--text-secondary) 72%, transparent);
+  }
+
+  .calm-input:hover {
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  }
+
+  .calm-button {
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--primary) 75%, transparent);
+    border-radius: 10px;
+    background: var(--primary);
+    padding: 10px 16px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .calm-button:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--primary) 88%, white);
+    transform: translateY(-1px);
+  }
+
+  .calm-button-secondary {
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--card) 76%, var(--surface));
+    padding: 10px 16px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .calm-button-secondary:hover:not(:disabled),
+  .calm-icon-button:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    background: var(--card-hover);
+  }
+
+  .calm-icon-button {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--text-secondary);
+  }
+
+  .calm-eyebrow {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 650;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+
+  .calm-feedback {
+    border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+    border-radius: 9px;
+    background: color-mix(in srgb, currentColor 7%, transparent);
+    padding: 9px 11px;
+    font-size: 11px;
+  }
 }
 
 .themed-checkbox {
@@ -189,4 +316,15 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

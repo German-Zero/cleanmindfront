@@ -26,17 +26,17 @@ export default function Sidebar({ onOpenSettings }: SidebarProps) {
     return (
         <aside className="
             flex h-dvh w-[min(350px,calc(100vw-48px))] shrink-0
-            bg-surface xl:w-87.5 flex-col justify-between
-            px-3.75 py-6.25 gap-5
+            flex-col justify-between gap-5 border-r border-border/65
+            bg-surface/96 px-3.5 py-4.5 xl:w-87.5
         ">
-            <div className="no-scrollbar flex min-h-0 max-h-220 flex-1 flex-col items-center gap-2.5 overflow-y-auto rounded-xl">
+            <div className="no-scrollbar flex min-h-0 flex-1 flex-col items-center gap-2 overflow-y-auto rounded-xl">
                 {isLoading && (
-                    <p role="status" className="text-xs text-text-secondary">
+                    <p role="status" className="calm-feedback w-full text-text-secondary">
                         Cargando tareas…
                     </p>
                 )}
                 {error && (
-                    <p role="alert" className="text-xs text-error">
+                    <p role="alert" className="calm-feedback w-full text-error">
                         {error}
                     </p>
                 )}
@@ -45,10 +45,14 @@ export default function Sidebar({ onOpenSettings }: SidebarProps) {
                         key={section.quadrant}
                         className="contents"
                     >
-                        <div
-                            className={`w-full max-w-75 shrink-0 rounded-sm py-0.5 text-center text-[13px] text-text-primary ${section.color}`}
-                        >
-                            {section.label}
+                        <div className="mt-1.5 flex w-full max-w-[320px] shrink-0 items-center gap-2 px-0.75 py-1.25">
+                            <span
+                                aria-hidden="true"
+                                className={`size-1.75 rounded-full ${section.color}`}
+                            />
+                            <span className="text-[10px] font-semibold uppercase tracking-[1.3px] text-text-secondary">
+                                {section.label}
+                            </span>
                         </div>
                         {tasks
                             .filter(

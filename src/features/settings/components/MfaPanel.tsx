@@ -316,7 +316,7 @@ export default function MfaPanel({
                         type="button"
                         disabled={isPending}
                         onClick={showReauthentication}
-                        className="flex min-h-18 items-center gap-2.5 rounded-xl border border-border bg-linear-to-r from-primary/50 via-accent/50 to-secondary/50 p-2.5 text-left disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex min-h-18 items-center gap-2.5 rounded-xl border border-primary/35 bg-primary/8 p-2.5 text-left disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         <IconShield />
                         <span>
@@ -372,7 +372,7 @@ export default function MfaPanel({
                     <button
                         type="submit"
                         disabled={isPending || !email}
-                        className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isPending ? "Verificando…" : "Siguiente"}
                     </button>
@@ -380,7 +380,7 @@ export default function MfaPanel({
                         type="button"
                         disabled={isPending}
                         onClick={onRequestPassword}
-                        className="min-h-11 rounded-sm border border-border bg-card px-3 py-3 text-center text-xs text-text-primary hover:bg-card-hover disabled:opacity-50"
+                        className="calm-button-secondary text-center text-[12px] disabled:opacity-50"
                     >
                         ¿Ingresas con Google? Crea una contraseña local
                     </button>
@@ -437,7 +437,7 @@ export default function MfaPanel({
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isPending ? "Activando…" : "Activar verificación"}
                     </button>
@@ -485,7 +485,7 @@ export default function MfaPanel({
                         type="button"
                         disabled={!hasSavedCodes}
                         onClick={finishEnrollment}
-                        className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         Ir a iniciar sesión
                     </button>
@@ -517,7 +517,7 @@ export default function MfaPanel({
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isPending ? "Verificando…" : "Confirmar sesión"}
                     </button>
@@ -550,7 +550,7 @@ export default function MfaPanel({
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="h-11.75 rounded-sm border border-error bg-error/40 text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="min-h-11 rounded-[10px] border border-error/45 bg-error/10 px-4 text-[13px] font-semibold text-error disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isPending
                             ? "Desactivando…"
@@ -560,12 +560,12 @@ export default function MfaPanel({
             )}
 
             {error && (
-                <p role="alert" className="text-xs text-error">
+                <p role="alert" className="calm-feedback text-error">
                     {error}
                 </p>
             )}
             {message && (
-                <p role="status" className="text-xs text-success">
+                <p role="status" className="calm-feedback text-success">
                     {message}
                 </p>
             )}

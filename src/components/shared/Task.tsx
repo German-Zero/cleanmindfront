@@ -57,18 +57,18 @@ export default function Task({ task }: { task: TaskModel }) {
 
     return (
         <article
-            className="relative h-auto w-full max-w-[320px] shrink-0 rounded-lg border border-border bg-card hover:bg-card-hover"
+            className="calm-card relative h-auto w-full max-w-[320px] shrink-0 hover:border-accent/25 hover:bg-card-hover"
         >
             <div className={`
                 flex max-w-[calc(100%-50px)] flex-col items-start gap-1
                 xl:max-w-65
-                mt-2.5 ml-2.5 mr-12.5 mb-12.5
+                mt-3 ml-3 mr-12 mb-11.5
                 ${task.status === "COMPLETED" ? "opacity-60" : ""}
             `}>
-                <h2 className="w-full wrap-break-word text-sm font-semibold text-text-primary">
+                <h2 className="w-full wrap-break-word text-[13px] font-semibold leading-4.75 text-text-primary">
                     {task.title}
                 </h2>
-                <p className="w-full whitespace-pre-wrap wrap-break-word text-[10px] text-text-secondary">
+                <p className="w-full whitespace-pre-wrap wrap-break-word text-[10px] leading-4 text-text-secondary">
                     {task.description || "Sin descripción"}
                 </p>
                 {error && (
@@ -79,14 +79,14 @@ export default function Task({ task }: { task: TaskModel }) {
             </div>
             <div className="
                 flex
-                absolute bottom-2.5 right-2.5
+                absolute right-2 bottom-1.75
             ">
                 <button
                     type="button"
                     aria-label="Editar tarea"
                     disabled={isPending}
                     onClick={() => editDialogRef.current?.showModal()}
-                    className="grid size-11 place-items-center disabled:opacity-50 xl:size-auto"
+                    className="calm-icon-button disabled:opacity-50"
                 >
                     <IconEdit />
                 </button>
@@ -100,7 +100,7 @@ export default function Task({ task }: { task: TaskModel }) {
                     aria-busy={isPending}
                     disabled={isPending}
                     onClick={handleToggleCompleted}
-                    className="grid size-11 place-items-center disabled:cursor-wait disabled:opacity-50 xl:size-auto"
+                    className="calm-icon-button disabled:cursor-wait disabled:opacity-50"
                 >
                     {task.status === "COMPLETED" ? (
                         <IconReopenTask />
@@ -113,7 +113,7 @@ export default function Task({ task }: { task: TaskModel }) {
                     aria-label="Eliminar tarea"
                     disabled={isPending}
                     onClick={() => deleteDialogRef.current?.showModal()}
-                    className="grid size-11 place-items-center disabled:opacity-50 xl:size-auto"
+                    className="calm-icon-button disabled:opacity-50"
                 >
                     <IconCancel />
                 </button>

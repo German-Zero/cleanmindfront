@@ -4,6 +4,7 @@ import { toNotificationPreferencesRequest } from "../src/features/settings/notif
 
 const settings = {
     theme: "LUNAR_MIND" as const,
+    backgroundMotion: "NONE" as const,
     emailNotifications: true,
     whatsappNotifications: false,
     discordNotifications: true,

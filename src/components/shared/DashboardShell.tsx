@@ -110,7 +110,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     }, [isSettingsCloseLocked])
 
     return (
-        <div className="flex h-dvh w-full overflow-hidden bg-background">
+        <div className="relative isolate flex h-dvh w-full overflow-hidden bg-background">
+            <div className="ambient-background" aria-hidden="true" />
             {isSidebarOpen && (
                 <button
                     type="button"
@@ -164,7 +165,18 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 </span>
             </button>
 
-            <main className="no-scrollbar relative h-dvh min-w-0 flex-1 overflow-auto bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)] pb-20 xl:pb-0">
+            <main
+                className={`
+                    no-scrollbar relative z-[1] h-dvh min-w-0 flex-1
+                    bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)]
+                    pb-20 xl:pb-0
+                    ${
+                        pathname === "/dashboard/personalization"
+                            ? "overflow-hidden"
+                            : "overflow-auto"
+                    }
+                `}
+            >
                 {children}
 
                 {pathname !== "/dashboard/calendar" && (

@@ -23,6 +23,25 @@ export default function IconTheme({ theme }: { theme: Theme }) {
                 <path d="M3 10h2m-2 4h2m5 -11v2m4 -2v2m7 5h-2m2 4h-2m-5 7v-2m-4 2v-2" />
             </>
         ),
+        SOFT_DAWN: (
+            <>
+                <path d="M4 18h16" />
+                <path d="M6 14a6 6 0 0 1 12 0" />
+                <path d="M12 3v3m-6.4 2.6l2.1 2.1m10.7 -2.1l-2.1 2.1" />
+            </>
+        ),
+        MINT_BREEZE: (
+            <>
+                <path d="M4 14c4 -4 8 -6 16 -6c-1 7 -5 11 -11 11c-2.5 0 -4 -1 -5 -2" />
+                <path d="M5 20c2 -5 6 -8 11 -9" />
+            </>
+        ),
+        CLEAR_SKY: (
+            <>
+                <path d="M7 17a4 4 0 1 1 1 -7.9a5 5 0 0 1 9.7 1.7a3.2 3.2 0 0 1 -.7 6.2z" />
+                <path d="M15 4v-1m4 3l1 -1m-1 5h2" />
+            </>
+        ),
     } satisfies Record<Theme, ReactNode>
 
     return (

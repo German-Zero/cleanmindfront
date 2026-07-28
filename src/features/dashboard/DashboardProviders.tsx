@@ -62,7 +62,12 @@ export function DashboardProviders({ children }: { children: ReactNode }) {
 
     return (
         <CurrentUserProvider initialUser={bootstrap.user}>
-            <ThemeProvider initialTheme={bootstrap.settings.theme}>
+            <ThemeProvider
+                initialTheme={bootstrap.settings.theme}
+                initialBackgroundMotion={
+                    bootstrap.settings.backgroundMotion
+                }
+            >
                 <TasksProvider initialTasks={bootstrap.tasks}>
                     {children}
                 </TasksProvider>

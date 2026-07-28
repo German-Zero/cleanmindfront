@@ -8,11 +8,23 @@ export const notificationFrequencies = [
 export type NotificationFrequency =
     (typeof notificationFrequencies)[number]
 
-export type Theme = "LUNAR_MIND" | "DEEP_SERENITY" | "CALM_TECH"
+export type Theme =
+    | "LUNAR_MIND"
+    | "DEEP_SERENITY"
+    | "CALM_TECH"
+    | "SOFT_DAWN"
+    | "MINT_BREEZE"
+    | "CLEAR_SKY"
+export type BackgroundMotion =
+    | "NONE"
+    | "STAR_RAIN"
+    | "ORBITAL_GALAXY"
+    | "SOFT_AURORA"
 export type MotivationFrequency = "DAILY" | "WEEKLY" | "DISABLED"
 
 export interface UserSettings {
     theme: Theme
+    backgroundMotion: BackgroundMotion
     emailNotifications: boolean
     whatsappNotifications: boolean
     discordNotifications: boolean

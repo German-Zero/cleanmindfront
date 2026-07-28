@@ -10,6 +10,8 @@ type PasswordFieldProps = {
     label: string
     placeholder: string
     autoComplete: "current-password" | "new-password"
+    minLength?: number
+    disabled?: boolean
 }
 
 export default function PasswordField({
@@ -18,6 +20,8 @@ export default function PasswordField({
     label,
     placeholder,
     autoComplete,
+    minLength,
+    disabled = false,
 }: PasswordFieldProps) {
     const [isVisible, setIsVisible] = useState(false)
 
@@ -36,6 +40,8 @@ export default function PasswordField({
                     name={name}
                     type={isVisible ? "text" : "password"}
                     autoComplete={autoComplete}
+                    minLength={minLength}
+                    disabled={disabled}
                     placeholder={placeholder}
                     className="
                         w-full pl-3.75 pr-10 py-3.75 bg-card/70
@@ -50,8 +56,9 @@ export default function PasswordField({
                     aria-controls={id}
                     aria-label={isVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
                     aria-pressed={isVisible}
+                    disabled={disabled}
                     onClick={() => setIsVisible((visible) => !visible)}
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center"
+                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isVisible ? <IconOccultPassword /> : <IconViewPassword />}
                 </button>

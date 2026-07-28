@@ -21,7 +21,7 @@ export default function RegisterPage() {
                         font-semibold
                         sm:text-5xl xl:text-6xl
                         ">CleanMind</h1>
-                    <p className="max-w-sm text-sm font-semibold tracking-[0.05em] text-text-secondary sm:text-lg xl:max-w-none xl:text-2xl">
+                    <p className="max-w-sm text-sm font-semibold tracking-wider text-text-secondary sm:text-lg xl:max-w-none xl:text-2xl">
                         Mente Limpia, Conciencia Tranquila
                     </p>
                 </div>

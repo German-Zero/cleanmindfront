@@ -17,7 +17,7 @@ export default function ForgotPasswordForm() {
                         font-semibold
                         sm:text-[23px]
                     ">¿Olvidaste tu Contraseña?</h1>
-                    <p className="w-full max-w-80 text-center text-text-secondary font-semibold text-[13px] tracking-[0.05em]">
+                    <p className="w-full max-w-80 text-center text-text-secondary font-semibold text-[13px] tracking-wider">
                         Te enviaremos un código a tu correo para verificar que existe una cuenta en CleanMind
                     </p>
                 </div>

@@ -17,7 +17,7 @@ export default function RecoverPasswordForm() {
                         font-semibold
                         sm:text-[30px]
                     ">Recuperar Contraseña</h1>
-                    <p className="w-full max-w-80 text-center text-text-secondary font-semibold text-[13px] tracking-[0.05em]">
+                    <p className="w-full max-w-80 text-center text-text-secondary font-semibold text-[13px] tracking-wider">
                         Por favor, coloque una nueva contraseña para reemplazar a la anterior.
                     </p>
                 </div>

@@ -15,7 +15,7 @@ export default function VerifyEmailForm() {
                         font-semibold
                         sm:text-4xl
                     ">Verificar Correo</h1>
-                    <p className="w-full max-w-81.25 text-center text-text-secondary font-semibold text-[13px] tracking-[0.05em]">
+                    <p className="w-full max-w-81.25 text-center text-text-secondary font-semibold text-[13px] tracking-wider">
                         Por favor, introduce el código enviado a tu correo electrónico para verificar que eres tú
                     </p>
                 </div>

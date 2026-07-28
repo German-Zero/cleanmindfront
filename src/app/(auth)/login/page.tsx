@@ -1,6 +1,24 @@
-import LogInForm from "@/components/forms/LoginForm";
+import LoginForm from "@/features/auth/components/LoginForm";
 
-export default function LoginPage() {
+interface LoginPageProps {
+    searchParams: Promise<{
+        googleMfaChallenge?: string | string[]
+        googleMfaExpiresIn?: string | string[]
+    }>
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+    const params = await searchParams
+    const challengeToken =
+        typeof params.googleMfaChallenge === "string"
+            ? params.googleMfaChallenge
+            : null
+    const expiresIn = Number(params.googleMfaExpiresIn)
+    const initialChallenge =
+        challengeToken && Number.isSafeInteger(expiresIn) && expiresIn > 0
+            ? { mfaRequired: true as const, challengeToken, expiresIn }
+            : null
+
     return (
         <main className="
             w-full min-h-dvh
@@ -21,7 +39,7 @@ export default function LoginPage() {
                         font-semibold
                         sm:text-5xl xl:text-6xl
                         ">CleanMind</h1>
-                    <p className="max-w-sm text-sm font-semibold tracking-[0.05em] text-text-secondary sm:text-lg xl:max-w-none xl:text-2xl">
+                    <p className="max-w-sm text-sm font-semibold tracking-wider text-text-secondary sm:text-lg xl:max-w-none xl:text-2xl">
                         Mente Limpia, Conciencia Tranquila
                     </p>
                 </div>
@@ -32,7 +50,7 @@ export default function LoginPage() {
                 xl:h-screen xl:w-screen xl:max-w-187.5 xl:flex-initial
                 xl:px-0 xl:py-0
             ">
-                <LogInForm />
+                <LoginForm initialChallenge={initialChallenge} />
             </div>
         </main>
     )

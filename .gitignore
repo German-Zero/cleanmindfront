@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files
 .env*
+!.env.example
 
 AGENTS.md
 CLAUDE.md
@@ -43,3 +44,5 @@ CLAUDE.md
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.env.example
+THIRD_PARTY_NOTICES.md

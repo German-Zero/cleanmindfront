@@ -1,0 +1,62 @@
+import assert from "node:assert/strict"
+import test from "node:test"
+import {
+    isMfaCodeValid,
+    normalizeMfaCode,
+} from "../src/features/auth/mfa-code.ts"
+import {
+    validateChangePassword,
+    validateSetPassword,
+} from "../src/features/settings/security-validation.ts"
+
+test("valida el contrato de cambio de contraseña", () => {
+    assert.equal(
+        validateChangePassword({
+            currentPassword: "actual",
+            newPassword: "1234567",
+            confirmPassword: "1234567",
+        }),
+        "La nueva contraseña debe tener al menos 8 caracteres.",
+    )
+    assert.equal(
+        validateChangePassword({
+            currentPassword: "actual",
+            newPassword: "12345678",
+            confirmPassword: "abcdefgh",
+        }),
+        "Las contraseñas nuevas no coinciden.",
+    )
+    assert.equal(
+        validateChangePassword({
+            currentPassword: "actual",
+            newPassword: "12345678",
+            confirmPassword: "12345678",
+        }),
+        null,
+    )
+})
+
+test("valida el contrato para crear una contraseña local", () => {
+    assert.equal(
+        validateSetPassword({
+            password: "segura123",
+            confirmPassword: "segura123",
+        }),
+        null,
+    )
+    assert.match(
+        validateSetPassword({
+            password: "segura123",
+            confirmPassword: "distinta123",
+        }) ?? "",
+        /no coinciden/,
+    )
+})
+
+test("normaliza y valida códigos MFA admitidos por el backend", () => {
+    assert.equal(normalizeMfaCode(" cm-ab12-cd34-ef56-7890 "), "CM-AB12-CD34-EF56-7890")
+    assert.equal(isMfaCodeValid("123456"), true)
+    assert.equal(isMfaCodeValid("cm-ab12-cd34-ef56-7890"), true)
+    assert.equal(isMfaCodeValid("12345"), false)
+    assert.equal(isMfaCodeValid("CM-NOPE-CD34-EF56-7890"), false)
+})

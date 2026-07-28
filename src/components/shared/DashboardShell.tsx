@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
+import SettingsModal from "@/features/settings/components/SettingsModal"
+import NewTaskButton from "@/features/tasks/components/NewTaskButton"
 import CalendarButton from "../ui/CalendarButton"
 import MatrizButton from "../ui/MatrizButton"
 import PomodoroButton from "../ui/PomodoroButton"
@@ -38,19 +40,74 @@ const navigation = [
 
 export default function DashboardShell({ children }: { children: ReactNode }) {
     const pathname = usePathname()
+    const settingsDialogRef = useRef<HTMLDialogElement>(null)
     const [sidebarPath, setSidebarPath] = useState<string | null>(null)
+    const [settingsDialogKey, setSettingsDialogKey] = useState(0)
+    const [isSettingsCloseLocked, setIsSettingsCloseLocked] =
+        useState(false)
     const isSidebarOpen = sidebarPath === pathname
+
+    const clearSettingsQuery = () => {
+        const url = new URL(window.location.href)
+        url.searchParams.delete("settings")
+        url.searchParams.delete("discord")
+        window.history.replaceState(
+            null,
+            "",
+            `${url.pathname}${url.search}${url.hash}`,
+        )
+    }
+
+    const openSettings = () => {
+        if (!settingsDialogRef.current?.open) {
+            settingsDialogRef.current?.showModal()
+        }
+    }
 
     useEffect(() => {
         if (!isSidebarOpen) return
 
         const closeOnEscape = (event: KeyboardEvent) => {
-            if (event.key === "Escape") setSidebarPath(null)
+            if (
+                event.key === "Escape" &&
+                !settingsDialogRef.current?.open
+            ) {
+                setSidebarPath(null)
+            }
         }
 
         document.addEventListener("keydown", closeOnEscape)
         return () => document.removeEventListener("keydown", closeOnEscape)
     }, [isSidebarOpen])
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search)
+
+        if (
+            params.get("settings") === "open" ||
+            params.get("discord") === "connected"
+        ) {
+            if (!settingsDialogRef.current?.open) {
+                settingsDialogRef.current?.showModal()
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!isSettingsCloseLocked) return
+
+        const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
+            event.preventDefault()
+            event.returnValue = ""
+        }
+
+        window.addEventListener("beforeunload", warnBeforeLeaving)
+        return () =>
+            window.removeEventListener(
+                "beforeunload",
+                warnBeforeLeaving,
+            )
+    }, [isSettingsCloseLocked])
 
     return (
         <div className="flex h-dvh w-full overflow-hidden">
@@ -71,7 +128,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     xl:static xl:block
                 `}
             >
-                <Sidebar />
+                <Sidebar onOpenSettings={openSettings} />
                 {isSidebarOpen && (
                     <button
                         type="button"
@@ -110,6 +167,15 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             <main className="no-scrollbar relative h-dvh min-w-0 flex-1 overflow-auto pb-20 xl:pb-0">
                 {children}
 
+                {pathname !== "/dashboard/calendar" && (
+                    <NewTaskButton
+                        className="
+                            fixed top-4 right-4 z-30 grid size-11 place-items-center
+                            xl:top-12 xl:right-6
+                        "
+                    />
+                )}
+
                 <nav
                     aria-label="Navegación del dashboard"
                     className="
@@ -141,6 +207,43 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     })}
                 </nav>
             </main>
+
+            <dialog
+                ref={settingsDialogRef}
+                aria-labelledby="settings-title"
+                aria-describedby="settings-description"
+                onClose={() => {
+                    clearSettingsQuery()
+                    setIsSettingsCloseLocked(false)
+                    setSettingsDialogKey((key) => key + 1)
+                }}
+                onCancel={(event) => {
+                    if (isSettingsCloseLocked) event.preventDefault()
+                }}
+                onClick={(event) => {
+                    if (
+                        event.target === event.currentTarget &&
+                        !isSettingsCloseLocked
+                    ) {
+                        event.currentTarget.close()
+                    }
+                }}
+                className="
+                    fixed inset-0 m-auto max-h-dvh w-full max-w-none
+                    overflow-visible border-0 bg-transparent p-4
+                    text-inherit backdrop:bg-black/70
+                "
+            >
+                <SettingsModal
+                    key={settingsDialogKey}
+                    onClose={() => {
+                        if (!isSettingsCloseLocked) {
+                            settingsDialogRef.current?.close()
+                        }
+                    }}
+                    onCloseLockChange={setIsSettingsCloseLocked}
+                />
+            </dialog>
         </div>
     )
 }

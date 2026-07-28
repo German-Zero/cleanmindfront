@@ -7,6 +7,7 @@ import {
     useState,
     type ReactNode,
 } from "react"
+import { requestErrorMessage } from "@/lib/api"
 import { settingsService } from "./services/settings.service"
 import type { Theme } from "./types"
 
@@ -44,11 +45,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
             })
             .catch((requestError: unknown) => {
                 if (!isCurrent) return
-                setError(
-                    requestError instanceof Error
-                        ? requestError.message
-                        : "No se pudo cargar el tema.",
-                )
+                setError(requestErrorMessage(
+                    requestError,
+                    "No pudimos cargar tu tema.",
+                    {
+                        401: "Tu sesión venció. Inicia sesión nuevamente.",
+                    },
+                ))
             })
             .finally(() => {
                 if (isCurrent) setIsLoading(false)
@@ -75,11 +78,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         } catch (requestError: unknown) {
             setTheme(previousTheme)
             applyTheme(previousTheme)
-            setError(
-                requestError instanceof Error
-                    ? requestError.message
-                    : "No se pudo guardar el tema.",
-            )
+            setError(requestErrorMessage(
+                requestError,
+                "No pudimos guardar el tema.",
+                {
+                    400: "El tema seleccionado no es válido.",
+                    401: "Tu sesión venció. Inicia sesión nuevamente.",
+                },
+            ))
         } finally {
             setPendingTheme(null)
         }

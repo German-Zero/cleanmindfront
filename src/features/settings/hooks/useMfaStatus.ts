@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { requestErrorMessage } from "@/lib/api"
 import { accountSecurityService } from "../services/account-security.service"
 import type { MfaStatus } from "../types"
 
@@ -19,11 +20,13 @@ export function useMfaStatus() {
             })
             .catch((requestError: unknown) => {
                 if (!isCurrent) return
-                setError(
-                    requestError instanceof Error
-                        ? requestError.message
-                        : "No se pudo consultar la verificación en dos pasos.",
-                )
+                setError(requestErrorMessage(
+                    requestError,
+                    "No pudimos consultar la verificación en dos pasos.",
+                    {
+                        401: "Tu sesión venció. Inicia sesión nuevamente.",
+                    },
+                ))
             })
             .finally(() => {
                 if (isCurrent) setIsLoading(false)

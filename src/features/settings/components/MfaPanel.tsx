@@ -11,7 +11,7 @@ import {
 } from "@/features/auth/mfa-code"
 import { useCurrentUser } from "@/features/auth/CurrentUserProvider"
 import { authService } from "@/features/auth/services/auth.service"
-import { ApiError } from "@/lib/api"
+import { requestErrorMessage } from "@/lib/api"
 import { accountSecurityService } from "../services/account-security.service"
 import type { MfaSetup } from "../types"
 import SecurityPanelShell from "./SecurityPanelShell"
@@ -76,21 +76,16 @@ const stepCopy: Record<
 
 function mfaErrorMessage(
     error: unknown,
-    fallback = "No se pudo completar la configuración.",
+    fallback = "No pudimos completar la configuración.",
 ): string {
-    if (error instanceof ApiError && error.status === 403) {
-        return "Debes verificar tu email antes de activar esta función."
-    }
-
-    if (error instanceof ApiError && error.status === 409) {
-        return "La verificación ya está activa o la configuración no fue iniciada."
-    }
-
-    if (error instanceof ApiError && error.status === 401) {
-        return "El código o las credenciales ingresadas no son válidos."
-    }
-
-    return error instanceof Error ? error.message : fallback
+    return requestErrorMessage(error, fallback, {
+        400: "Revisa el código ingresado.",
+        401: "El código o las credenciales ingresadas no son válidos.",
+        403: "Debes verificar tu email antes de activar esta función.",
+        404: "No encontramos tu cuenta. Inicia sesión nuevamente.",
+        409: "La verificación ya está activa o todavía no completaste la configuración.",
+        429: "Realizaste varios intentos. Espera un momento.",
+    })
 }
 
 export default function MfaPanel({

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { requestErrorMessage } from "@/lib/api"
 import { toNotificationPreferencesRequest } from "../notification-preferences"
 import { settingsService } from "../services/settings.service"
 import type {
@@ -82,11 +83,14 @@ export function useNotificationSettings() {
             setSettings(updated)
             setMessage("Preferencias actualizadas.")
         } catch (requestError: unknown) {
-            setActionError(
-                requestError instanceof Error
-                    ? requestError.message
-                    : "No se pudieron guardar tus preferencias.",
-            )
+            setActionError(requestErrorMessage(
+                requestError,
+                "No pudimos guardar tus preferencias.",
+                {
+                    400: "Revisa la frecuencia seleccionada.",
+                    401: "Tu sesión venció. Inicia sesión nuevamente.",
+                },
+            ))
         } finally {
             setPendingAction(null)
         }
@@ -118,11 +122,14 @@ export function useNotificationSettings() {
                 await settingsService.createDiscordConnection()
             window.location.assign(authorizationUrl)
         } catch (requestError: unknown) {
-            setActionError(
-                requestError instanceof Error
-                    ? requestError.message
-                    : "No se pudo iniciar la vinculación con Discord.",
-            )
+            setActionError(requestErrorMessage(
+                requestError,
+                "No pudimos iniciar la vinculación con Discord.",
+                {
+                    401: "Tu sesión venció. Inicia sesión nuevamente.",
+                    409: "La cuenta de Discord ya está vinculada.",
+                },
+            ))
             setPendingAction(null)
         }
     }

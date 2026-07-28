@@ -26,10 +26,10 @@ export default function PasswordField({
     const [isVisible, setIsVisible] = useState(false)
 
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-[6px]">
             <label
                 htmlFor={id}
-                className="text-[14px] text-text-primary"
+                className="text-[13px] font-medium text-text-primary"
             >
                 {label}
             </label>
@@ -43,13 +43,7 @@ export default function PasswordField({
                     minLength={minLength}
                     disabled={disabled}
                     placeholder={placeholder}
-                    className="
-                        w-full pl-3.75 pr-10 py-3.75 bg-card/70
-                        border border-border rounded-sm
-                        placeholder:text-text-secondary placeholder:text-base
-                        text-base text-text-primary
-                        sm:placeholder:text-[13px] sm:text-[13px]
-                    "
+                    className="h-[48px] w-full rounded-[10px] border border-border bg-card/45 px-[14px] pr-[44px] text-[13px] text-text-primary outline-none transition-[border-color,background-color,box-shadow] duration-150 placeholder:text-[13px] placeholder:text-text-secondary hover:bg-card/60 focus:border-primary focus:ring-[3px] focus:ring-primary/10 disabled:cursor-not-allowed disabled:opacity-50"
                 />
                 <button
                     type="button"
@@ -58,7 +52,7 @@ export default function PasswordField({
                     aria-pressed={isVisible}
                     disabled={disabled}
                     onClick={() => setIsVisible((visible) => !visible)}
-                    className="absolute inset-y-0 right-0 flex w-11 items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
+                    className="absolute inset-y-0 right-0 flex w-[44px] items-center justify-center disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isVisible ? <IconOccultPassword /> : <IconViewPassword />}
                 </button>

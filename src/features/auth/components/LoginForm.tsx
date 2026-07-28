@@ -5,21 +5,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import IconGoogle from "@/components/forms/IconGoogle"
 import PasswordField from "@/components/forms/PasswordField"
-import { ApiError } from "@/lib/api"
+import { requestErrorMessage } from "@/lib/api"
 import { isMfaCodeValid, normalizeMfaCode } from "../mfa-code"
 import { authService } from "../services/auth.service"
 import type { MfaRequiredResponse } from "../types"
-
-function authErrorMessage(
-    error: unknown,
-    fallback: string,
-): string {
-    if (error instanceof ApiError && error.status === 401) {
-        return fallback
-    }
-
-    return error instanceof Error ? error.message : fallback
-}
 
 interface LoginFormProps {
     initialChallenge?: MfaRequiredResponse | null
@@ -56,9 +45,14 @@ export default function LoginForm({
             router.refresh()
         } catch (requestError: unknown) {
             setError(
-                authErrorMessage(
+                requestErrorMessage(
                     requestError,
-                    "El email o la contraseña son incorrectos.",
+                    "No pudimos iniciar sesión.",
+                    {
+                        400: "Revisa el email y la contraseña.",
+                        401: "El email o la contraseña son incorrectos.",
+                        429: "Demasiados intentos. Espera un momento y vuelve a probar.",
+                    },
                 ),
             )
         } finally {
@@ -96,9 +90,14 @@ export default function LoginForm({
             router.refresh()
         } catch (requestError: unknown) {
             setError(
-                authErrorMessage(
+                requestErrorMessage(
                     requestError,
-                    "El código es incorrecto o el desafío expiró.",
+                    "No pudimos verificar el código.",
+                    {
+                        400: "Ingresa un código válido.",
+                        401: "El código es incorrecto o la verificación venció.",
+                        429: "Demasiados intentos. Espera un momento y vuelve a probar.",
+                    },
                 ),
             )
         } finally {

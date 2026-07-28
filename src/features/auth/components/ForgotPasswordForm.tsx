@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import Link from "next/link"
+import { requestErrorMessage } from "@/lib/api"
 import { authService } from "../services/auth.service"
 
 export default function ForgotPasswordForm() {
@@ -24,10 +25,15 @@ export default function ForgotPasswordForm() {
             setMessage(
                 "Si existe una cuenta con ese email, recibirás un enlace válido durante 30 minutos.",
             )
-        } catch {
-            setError(
+        } catch (requestError: unknown) {
+            setError(requestErrorMessage(
+                requestError,
                 "No pudimos enviar el enlace. Inténtalo nuevamente.",
-            )
+                {
+                    400: "Ingresa un email válido.",
+                    429: "Solicitaste varios enlaces. Espera un momento antes de intentarlo nuevamente.",
+                },
+            ))
         } finally {
             setIsPending(false)
         }

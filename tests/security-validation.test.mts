@@ -6,6 +6,10 @@ import {
 } from "../src/features/auth/mfa-code.ts"
 import { validatePasswordConfirmation } from "../src/features/auth/password-validation.ts"
 import {
+    ApiError,
+    requestErrorMessage,
+} from "../src/lib/api.ts"
+import {
     validateChangePassword,
     validateSetPassword,
 } from "../src/features/settings/security-validation.ts"
@@ -71,4 +75,28 @@ test("normaliza y valida códigos MFA admitidos por el backend", () => {
     assert.equal(isMfaCodeValid("cm-ab12-cd34-ef56-7890"), true)
     assert.equal(isMfaCodeValid("12345"), false)
     assert.equal(isMfaCodeValid("CM-NOPE-CD34-EF56-7890"), false)
+})
+
+test("muestra errores esperados sin filtrar mensajes técnicos", () => {
+    assert.equal(
+        requestErrorMessage(
+            new ApiError("Ya existe una cuenta con este email.", 409),
+            "No pudimos crear tu cuenta.",
+        ),
+        "Ya existe una cuenta con este email.",
+    )
+    assert.equal(
+        requestErrorMessage(
+            new ApiError("Database connection failed", 500),
+            "No pudimos crear tu cuenta.",
+        ),
+        "No pudimos crear tu cuenta.",
+    )
+    assert.equal(
+        requestErrorMessage(
+            new TypeError("Failed to fetch"),
+            "No pudimos conectar con el servidor.",
+        ),
+        "No pudimos conectar con el servidor.",
+    )
 })

@@ -8,6 +8,17 @@ export class ApiError extends Error {
     }
 }
 
+export function requestErrorMessage(
+    error: unknown,
+    fallback: string,
+    messages: Partial<Record<number, string>> = {},
+): string {
+    if (!(error instanceof ApiError)) return fallback
+
+    return messages[error.status] ??
+        (error.status < 500 ? error.message : fallback)
+}
+
 export async function apiRequest<T>(
     path: string,
     init: RequestInit = {},
@@ -36,7 +47,7 @@ export async function apiRequest<T>(
             ? rawMessage.map(String).join(" ")
             : rawMessage !== null
               ? String(rawMessage)
-              : `La solicitud falló con estado ${response.status}.`
+              : "No pudimos completar la solicitud."
 
         throw new ApiError(message, response.status)
     }

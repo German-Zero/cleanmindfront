@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react"
 import Link from "next/link"
 import PasswordField from "@/components/forms/PasswordField"
-import { ApiError } from "@/lib/api"
+import { requestErrorMessage } from "@/lib/api"
 import { validatePasswordConfirmation } from "../password-validation"
 import { authService } from "../services/auth.service"
 
@@ -42,12 +42,14 @@ export default function RecoverPasswordForm({
             await authService.resetPassword({ token, password })
             setIsComplete(true)
         } catch (requestError: unknown) {
-            setError(
-                requestError instanceof ApiError &&
-                    requestError.status === 401
-                    ? "El enlace no es válido o ya venció."
-                    : "No pudimos restablecer la contraseña.",
-            )
+            setError(requestErrorMessage(
+                requestError,
+                "No pudimos restablecer la contraseña.",
+                {
+                    400: "La contraseña debe tener al menos 8 caracteres.",
+                    401: "El enlace no es válido o ya venció.",
+                },
+            ))
         } finally {
             setIsPending(false)
         }

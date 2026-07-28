@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react"
 import PasswordField from "@/components/forms/PasswordField"
 import { useCurrentUser } from "@/features/auth/CurrentUserProvider"
-import { ApiError } from "@/lib/api"
+import { requestErrorMessage } from "@/lib/api"
 import {
     validateChangePassword,
     validateSetPassword,
@@ -21,19 +21,19 @@ function passwordErrorMessage(
     error: unknown,
     mode: "change" | "set",
 ): string {
-    if (error instanceof ApiError && error.status === 401) {
-        return "La contraseña actual es incorrecta."
-    }
-
-    if (error instanceof ApiError && error.status === 400) {
-        return mode === "change"
-            ? "Esta cuenta no tiene una contraseña local configurada."
-            : "Esta cuenta ya tiene una contraseña local configurada."
-    }
-
-    return error instanceof Error
-        ? error.message
-        : "No se pudo cambiar la contraseña."
+    return requestErrorMessage(
+        error,
+        mode === "change"
+            ? "No pudimos cambiar la contraseña."
+            : "No pudimos crear la contraseña.",
+        {
+            400: mode === "change"
+                ? "Revisa las contraseñas ingresadas."
+                : "La cuenta ya tiene una contraseña local.",
+            401: "La contraseña actual es incorrecta.",
+            404: "No encontramos tu cuenta. Inicia sesión nuevamente.",
+        },
+    )
 }
 
 export default function ChangePasswordPanel({

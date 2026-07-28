@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import Link from "next/link"
-import { ApiError } from "@/lib/api"
+import { requestErrorMessage } from "@/lib/api"
 import { authService } from "../services/auth.service"
 
 export default function VerifyEmailForm({
@@ -33,12 +33,15 @@ export default function VerifyEmailForm({
             await authService.verifyEmail({ code })
             setIsVerified(true)
         } catch (requestError: unknown) {
-            setError(
-                requestError instanceof ApiError &&
-                    requestError.status === 401
-                    ? "El código no es válido o ya venció."
-                    : "No pudimos verificar tu email.",
-            )
+            setError(requestErrorMessage(
+                requestError,
+                "No pudimos verificar tu email.",
+                {
+                    400: "El código debe tener 6 dígitos.",
+                    401: "El código no es válido o ya venció.",
+                    429: "Realizaste varios intentos. Espera un momento.",
+                },
+            ))
         } finally {
             setIsPending(false)
         }
@@ -53,40 +56,44 @@ export default function VerifyEmailForm({
             await authService.resendVerificationEmail()
             setCode("")
             setMessage("Enviamos un código nuevo a tu email.")
-        } catch {
-            setError(
-                "No pudimos reenviar el código. Inicia sesión e inténtalo nuevamente.",
-            )
+        } catch (requestError: unknown) {
+            setError(requestErrorMessage(
+                requestError,
+                "No pudimos reenviar el código.",
+                {
+                    401: "Tu sesión venció. Inicia sesión nuevamente para reenviar el código.",
+                    404: "No encontramos tu cuenta. Inicia sesión nuevamente.",
+                    429: "Solicitaste varios códigos. Espera un momento antes de pedir otro.",
+                },
+            ))
         } finally {
             setIsResending(false)
         }
     }
 
     return (
-        <div className="relative w-full max-w-115 overflow-hidden rounded-3xl border border-border bg-surface/95 p-1 shadow-2xl shadow-primary/10 backdrop-blur">
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -top-24 -right-20 size-56 rounded-full bg-primary/15 blur-3xl"
-            />
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-28 -left-20 size-56 rounded-full bg-secondary/15 blur-3xl"
-            />
-
-            <div className="relative flex flex-col items-center gap-7 rounded-[20px] border border-border/60 bg-card/35 px-6 py-10 text-center sm:px-10 sm:py-12">
-                <div className="grid size-16 place-items-center rounded-2xl border border-primary/30 bg-primary/10 text-primary shadow-lg shadow-primary/10">
+        <div className="w-full max-w-105 rounded-2xl border border-border bg-surface px-7 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.24)] sm:px-9 sm:py-9.5">
+            <div className="flex flex-col items-center text-center">
+                <div className="mb-5.5 grid h-13 w-13 place-items-center rounded-xl border border-border bg-card text-primary">
                     {isVerified ? (
-                        <span className="text-3xl" aria-hidden="true">
-                            ✓
-                        </span>
+                        <svg
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            className="h-6.25 w-6.25"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                        >
+                            <path d="m5 12 4 4L19 6" />
+                        </svg>
                     ) : (
                         <svg
                             aria-hidden="true"
                             viewBox="0 0 24 24"
-                            className="size-8"
+                            className="h-6.25 w-6.25"
                             fill="none"
                             stroke="currentColor"
-                            strokeWidth="1.7"
+                            strokeWidth="1.6"
                         >
                             <rect x="3" y="5" width="18" height="14" rx="3" />
                             <path d="m4 7 8 6 8-6" />
@@ -94,28 +101,23 @@ export default function VerifyEmailForm({
                     )}
                 </div>
 
-                <div className="flex flex-col items-center gap-2">
-                    <span className="rounded-full border border-border bg-surface/70 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-text-secondary uppercase">
-                        Seguridad de la cuenta
-                    </span>
-                    <h1 className="bg-linear-to-br from-primary via-secondary to-accent bg-clip-text text-3xl font-semibold text-transparent sm:text-4xl">
-                        {isVerified ? "Email verificado" : "Revisa tu correo"}
-                    </h1>
-                    <p className="max-w-85 text-[13px] font-medium leading-6 text-text-secondary">
-                        {isVerified
-                            ? "Tu cuenta está lista. Ya puedes continuar a CleanMind."
-                            : "Escribe el código de seis dígitos que enviamos a"}
+                <h1 className="text-[26px] font-semibold text-text-primary">
+                    {isVerified ? "Email verificado" : "Verifica tu email"}
+                </h1>
+                <p className="mt-2 max-w-82.5 text-[13px] leading-5 text-text-secondary">
+                    {isVerified
+                        ? "Tu cuenta está lista. Ya puedes continuar a CleanMind."
+                        : "Ingresa el código de seis dígitos que enviamos a tu correo."}
+                </p>
+                {!isVerified && email && (
+                    <p className="mt-1.5 max-w-full truncate text-[13px] font-medium text-text-primary">
+                        {email}
                     </p>
-                    {!isVerified && email && (
-                        <p className="max-w-full truncate text-sm font-semibold text-text-primary">
-                            {email}
-                        </p>
-                    )}
-                </div>
+                )}
 
                 {!isVerified ? (
                     <form
-                        className="flex w-full flex-col gap-4"
+                        className="mt-6.5 flex w-full flex-col"
                         onSubmit={handleSubmit}
                     >
                         <label htmlFor="verification-code" className="sr-only">
@@ -141,16 +143,22 @@ export default function VerifyEmailForm({
                             autoComplete="one-time-code"
                             disabled={isPending || isResending}
                             placeholder="000000"
-                            className="h-16 w-full rounded-xl border border-border bg-surface/80 px-4 text-center text-2xl font-semibold tracking-[0.45em] text-text-primary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10 disabled:opacity-50"
+                            className="h-14.5 w-full rounded-[10px] border border-border bg-card/45 px-4 text-center text-[22px] font-semibold tracking-[6px] text-text-primary outline-none transition-[border-color,box-shadow] duration-150 focus:border-primary focus:ring-[3px] focus:ring-primary/10 disabled:opacity-50"
                         />
 
                         {error && (
-                            <p role="alert" className="text-xs text-error">
+                            <p
+                                role="alert"
+                                className="mt-3 text-[12px] leading-4.5 text-error"
+                            >
                                 {error}
                             </p>
                         )}
                         {message && (
-                            <p role="status" className="text-xs text-success">
+                            <p
+                                role="status"
+                                className="mt-3 text-[12px] leading-4.5 text-success"
+                            >
                                 {message}
                             </p>
                         )}
@@ -158,7 +166,7 @@ export default function VerifyEmailForm({
                         <button
                             type="submit"
                             disabled={isPending || isResending}
-                            className="h-12 rounded-xl border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm font-semibold text-text-primary shadow-lg shadow-primary/10 disabled:cursor-wait disabled:opacity-50"
+                            className="mt-4 h-11.5 rounded-[10px] border border-primary bg-primary text-[13px] font-semibold text-text-primary transition-[background-color,opacity] duration-150 hover:bg-primary/90 disabled:cursor-wait disabled:opacity-50"
                         >
                             {isPending ? "Verificando…" : "Verificar email"}
                         </button>
@@ -166,7 +174,7 @@ export default function VerifyEmailForm({
                             type="button"
                             disabled={isPending || isResending}
                             onClick={resendCode}
-                            className="min-h-11 rounded-xl px-4 text-xs text-primary transition hover:bg-primary/10 disabled:cursor-wait disabled:opacity-50"
+                            className="mt-2.5 min-h-10 rounded-lg px-3 text-[12px] text-primary transition-colors duration-150 hover:bg-primary/8 disabled:cursor-wait disabled:opacity-50"
                         >
                             {isResending
                                 ? "Reenviando…"
@@ -176,7 +184,7 @@ export default function VerifyEmailForm({
                 ) : (
                     <Link
                         href="/dashboard/calendar"
-                        className="flex h-12 w-full items-center justify-center rounded-xl border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm font-semibold text-text-primary shadow-lg shadow-primary/10"
+                        className="mt-6.5 flex h-11.5 w-full items-center justify-center rounded-[10px] border border-primary bg-primary text-[13px] font-semibold text-text-primary hover:bg-primary/90"
                     >
                         Continuar al calendario
                     </Link>
@@ -184,7 +192,7 @@ export default function VerifyEmailForm({
 
                 <Link
                     href="/login"
-                    className="text-xs text-text-secondary transition hover:text-primary"
+                    className="mt-5 text-[12px] text-text-secondary transition-colors duration-150 hover:text-text-primary"
                 >
                     Volver al inicio de sesión
                 </Link>

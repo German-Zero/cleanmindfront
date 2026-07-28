@@ -5,13 +5,34 @@ import type {
     ForgotPasswordRequest,
     LoginRequest,
     LoginResponse,
+    RegisterRequest,
     ResetPasswordRequest,
+    VerifyEmailRequest,
     VerifyMfaLoginRequest,
 } from "../types"
 
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const authService = {
+    register: (request: RegisterRequest) =>
+        apiRequest<AuthResponse>("/api/auth/register", {
+            method: "POST",
+            headers: jsonHeaders,
+            body: JSON.stringify(request),
+        }),
+
+    verifyEmail: (request: VerifyEmailRequest) =>
+        apiRequest<void>("/api/auth/verify-email", {
+            method: "POST",
+            headers: jsonHeaders,
+            body: JSON.stringify(request),
+        }),
+
+    resendVerificationEmail: () =>
+        apiRequest<void>("/api/auth/resend-verification-email", {
+            method: "POST",
+        }),
+
     getCurrentUser: () =>
         apiRequest<CurrentUser>("/api/auth/me", { cache: "no-store" }),
 

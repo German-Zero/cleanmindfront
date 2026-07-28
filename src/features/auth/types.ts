@@ -23,6 +23,16 @@ export interface LoginRequest {
     password: string
 }
 
+export interface RegisterRequest {
+    name: string
+    email: string
+    password: string
+}
+
+export interface VerifyEmailRequest {
+    code: string
+}
+
 export interface ForgotPasswordRequest {
     email: string
 }

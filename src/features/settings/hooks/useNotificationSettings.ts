@@ -134,6 +134,30 @@ export function useNotificationSettings() {
         }
     }
 
+    const disconnectDiscord = async () => {
+        if (!discordConnection?.connected || pendingAction) return
+
+        setPendingAction("discord")
+        setActionError(null)
+        setMessage(null)
+
+        try {
+            await settingsService.disconnectDiscordConnection()
+            setDiscordConnection({ connected: false })
+            setMessage("La cuenta de Discord fue desvinculada.")
+        } catch (requestError: unknown) {
+            setActionError(requestErrorMessage(
+                requestError,
+                "No pudimos desvincular la cuenta de Discord.",
+                {
+                    401: "Tu sesión venció. Inicia sesión nuevamente.",
+                },
+            ))
+        } finally {
+            setPendingAction(null)
+        }
+    }
+
     const error = [loadError, actionError].filter(Boolean).join(" ") || null
 
     return {
@@ -146,5 +170,6 @@ export function useNotificationSettings() {
         setEmailNotifications,
         setTaskNotificationFrequency,
         connectDiscord,
+        disconnectDiscord,
     }
 }

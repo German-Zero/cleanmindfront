@@ -38,4 +38,9 @@ export const settingsService = {
             "/api/notifications/discord/connection",
             { method: "POST" },
         ),
+
+    disconnectDiscordConnection: () =>
+        apiRequest<void>("/api/notifications/discord/connection", {
+            method: "DELETE",
+        }),
 }

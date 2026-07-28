@@ -47,6 +47,7 @@ export default function SettingsModal({
         setEmailNotifications,
         setTaskNotificationFrequency,
         connectDiscord,
+        disconnectDiscord,
     } = useNotificationSettings()
     const {
         status: mfaStatus,
@@ -88,6 +89,7 @@ export default function SettingsModal({
             <DeleteAccountPanel
                 onBack={() => setView("settings")}
                 onClose={onClose}
+                onCloseLockChange={onCloseLockChange}
             />
         )
     }
@@ -296,20 +298,30 @@ export default function SettingsModal({
                             disabled={
                                 isLoading ||
                                 !discordConnection ||
-                                discordConnection.connected ||
                                 pendingAction !== null
                             }
-                            onClick={connectDiscord}
-                            className="
-                                calm-button-secondary self-start text-[11px]
+                            onClick={
+                                discordConnection?.connected
+                                    ? disconnectDiscord
+                                    : connectDiscord
+                            }
+                            className={`
+                                self-start text-[11px]
                                 disabled:cursor-not-allowed disabled:opacity-50
                                 sm:shrink-0 sm:self-auto
-                            "
+                                ${
+                                    discordConnection?.connected
+                                        ? "min-h-11 rounded-[10px] border border-error/35 bg-error/8 px-4 py-2.5 font-medium text-error hover:bg-error/14"
+                                        : "calm-button-secondary"
+                                }
+                            `}
                         >
                             {pendingAction === "discord"
-                                ? "Redirigiendo…"
+                                ? discordConnection?.connected
+                                    ? "Desvinculando…"
+                                    : "Redirigiendo…"
                                 : discordConnection?.connected
-                                  ? "Vinculado"
+                                  ? "Desvincular"
                                   : "Vincular"}
                         </button>
                     </div>

@@ -4,6 +4,7 @@ import {
     isMfaCodeValid,
     normalizeMfaCode,
 } from "../src/features/auth/mfa-code.ts"
+import { validatePasswordConfirmation } from "../src/features/auth/password-validation.ts"
 import {
     validateChangePassword,
     validateSetPassword,
@@ -49,6 +50,17 @@ test("valida el contrato para crear una contraseña local", () => {
             password: "segura123",
             confirmPassword: "distinta123",
         }) ?? "",
+        /no coinciden/,
+    )
+})
+
+test("valida la confirmación al recuperar la contraseña", () => {
+    assert.equal(
+        validatePasswordConfirmation("segura123", "segura123"),
+        null,
+    )
+    assert.match(
+        validatePasswordConfirmation("segura123", "distinta123") ?? "",
         /no coinciden/,
     )
 })

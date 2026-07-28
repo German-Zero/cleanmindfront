@@ -436,7 +436,7 @@ export default function MfaPanel({
                             pattern="[0-9]{6}"
                             maxLength={6}
                             disabled={isPending}
-                            className="w-full rounded-sm border border-border bg-card/70 px-3.75 py-3.75 text-base tracking-[0.3em] text-text-primary"
+                            className="w-full rounded-sm border border-border bg-card/70 px-3.75 py-3.75 text-base tracking-[4.8px] text-text-primary"
                         />
                     </div>
                     <button

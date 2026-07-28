@@ -8,11 +8,6 @@ import type {
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const tasksService = {
-    getAll: () =>
-        apiRequest<Task[]>("/api/tasks", {
-            cache: "no-store",
-        }),
-
     create: (request: CreateTaskRequest) =>
         apiRequest<Task>("/api/tasks", {
             method: "POST",

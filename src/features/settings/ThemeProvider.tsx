@@ -11,8 +11,6 @@ import { requestErrorMessage } from "@/lib/api"
 import { settingsService } from "./services/settings.service"
 import type { Theme } from "./types"
 
-const defaultTheme: Theme = "LUNAR_MIND"
-
 interface ThemeContextValue {
     theme: Theme
     isLoading: boolean
@@ -27,40 +25,20 @@ function applyTheme(theme: Theme) {
     document.documentElement.dataset.theme = theme
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>(defaultTheme)
-    const [isLoading, setIsLoading] = useState(true)
+export function ThemeProvider({
+    children,
+    initialTheme,
+}: {
+    children: ReactNode
+    initialTheme: Theme
+}) {
+    const [theme, setTheme] = useState<Theme>(initialTheme)
     const [pendingTheme, setPendingTheme] = useState<Theme | null>(null)
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
-        let isCurrent = true
-
-        void settingsService
-            .getSettings()
-            .then((settings) => {
-                if (!isCurrent) return
-                setTheme(settings.theme)
-                applyTheme(settings.theme)
-            })
-            .catch((requestError: unknown) => {
-                if (!isCurrent) return
-                setError(requestErrorMessage(
-                    requestError,
-                    "No pudimos cargar tu tema.",
-                    {
-                        401: "Tu sesión venció. Inicia sesión nuevamente.",
-                    },
-                ))
-            })
-            .finally(() => {
-                if (isCurrent) setIsLoading(false)
-            })
-
-        return () => {
-            isCurrent = false
-        }
-    }, [])
+        applyTheme(initialTheme)
+    }, [initialTheme])
 
     const selectTheme = async (nextTheme: Theme) => {
         if (nextTheme === theme || pendingTheme) return
@@ -95,7 +73,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         <ThemeContext
             value={{
                 theme,
-                isLoading,
+                isLoading: false,
                 pendingTheme,
                 error,
                 selectTheme,

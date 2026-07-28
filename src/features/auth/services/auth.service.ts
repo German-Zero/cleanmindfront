@@ -1,7 +1,6 @@
 import { apiRequest } from "@/lib/api"
 import type {
     AuthResponse,
-    CurrentUser,
     ForgotPasswordRequest,
     LoginRequest,
     LoginResponse,
@@ -32,9 +31,6 @@ export const authService = {
         apiRequest<void>("/api/auth/resend-verification-email", {
             method: "POST",
         }),
-
-    getCurrentUser: () =>
-        apiRequest<CurrentUser>("/api/auth/me", { cache: "no-store" }),
 
     forgotPassword: (request: ForgotPasswordRequest) =>
         apiRequest<void>("/api/auth/forgot-password", {

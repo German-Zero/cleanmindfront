@@ -3,12 +3,9 @@
 import {
     createContext,
     useContext,
-    useEffect,
     useState,
     type ReactNode,
 } from "react"
-import { useRouter } from "next/navigation"
-import { ApiError } from "@/lib/api"
 import { tasksService } from "./services/tasks.service"
 import type {
     CreateTaskRequest,
@@ -29,44 +26,14 @@ interface TasksContextValue {
 
 const TasksContext = createContext<TasksContextValue | null>(null)
 
-export function TasksProvider({ children }: { children: ReactNode }) {
-    const router = useRouter()
-    const [tasks, setTasks] = useState<Task[]>([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        let isCancelled = false
-
-        void tasksService
-            .getAll()
-            .then((response) => {
-                if (!isCancelled) setTasks(response)
-            })
-            .catch((requestError: unknown) => {
-                if (
-                    !isCancelled &&
-                    requestError instanceof ApiError &&
-                    requestError.status === 401
-                ) {
-                    router.replace("/login")
-                    router.refresh()
-                } else if (!isCancelled) {
-                    setError(
-                        requestError instanceof Error
-                            ? requestError.message
-                            : "No se pudieron cargar las tareas.",
-                    )
-                }
-            })
-            .finally(() => {
-                if (!isCancelled) setIsLoading(false)
-            })
-
-        return () => {
-            isCancelled = true
-        }
-    }, [router])
+export function TasksProvider({
+    children,
+    initialTasks,
+}: {
+    children: ReactNode
+    initialTasks: Task[]
+}) {
+    const [tasks, setTasks] = useState<Task[]>(initialTasks)
 
     const createTask = async (request: CreateTaskRequest) => {
         const task = await tasksService.create(request)
@@ -112,8 +79,8 @@ export function TasksProvider({ children }: { children: ReactNode }) {
         <TasksContext
             value={{
                 tasks,
-                isLoading,
-                error,
+                isLoading: false,
+                error: null,
                 createTask,
                 updateTask,
                 deleteTask,

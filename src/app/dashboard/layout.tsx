@@ -1,7 +1,5 @@
 import DashboardShell from "@/components/shared/DashboardShell";
-import { CurrentUserProvider } from "@/features/auth/CurrentUserProvider";
-import { ThemeProvider } from "@/features/settings/ThemeProvider";
-import { TasksProvider } from "@/features/tasks/TasksProvider";
+import { DashboardProviders } from "@/features/dashboard/DashboardProviders";
 
 export default function DashboardLayout({
     children,
@@ -9,12 +7,8 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <CurrentUserProvider>
-            <ThemeProvider>
-                <TasksProvider>
-                    <DashboardShell>{children}</DashboardShell>
-                </TasksProvider>
-            </ThemeProvider>
-        </CurrentUserProvider>
+        <DashboardProviders>
+            <DashboardShell>{children}</DashboardShell>
+        </DashboardProviders>
     );
 }

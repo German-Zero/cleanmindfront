@@ -23,6 +23,7 @@ interface TasksContextValue {
     createTask: (request: CreateTaskRequest) => Promise<Task>
     updateTask: (id: string, request: UpdateTaskRequest) => Promise<Task>
     deleteTask: (id: string) => Promise<void>
+    startTask: (id: string) => Promise<void>
     toggleTaskCompleted: (task: Task) => Promise<void>
 }
 
@@ -89,6 +90,13 @@ export function TasksProvider({ children }: { children: ReactNode }) {
         setTasks((current) => current.filter((task) => task.id !== id))
     }
 
+    const startTask = async (id: string) => {
+        const updated = await tasksService.start(id)
+        setTasks((current) =>
+            current.map((task) => (task.id === updated.id ? updated : task)),
+        )
+    }
+
     const toggleTaskCompleted = async (task: Task) => {
         const updated =
             task.status === "COMPLETED"
@@ -109,6 +117,7 @@ export function TasksProvider({ children }: { children: ReactNode }) {
                 createTask,
                 updateTask,
                 deleteTask,
+                startTask,
                 toggleTaskCompleted,
             }}
         >

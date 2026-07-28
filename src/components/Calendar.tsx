@@ -191,8 +191,10 @@ export function Calendar() {
                                     <div className="flex items-start justify-center xl:justify-between">
                                         <span
                                             className={`
-                                                inline-grid h-5 min-w-5 place-items-center px-1
-                                                text-[10px] sm:h-6 sm:min-w-6 sm:text-xs
+                                                inline-grid h-5.5 min-w-5.5 place-items-center px-1
+                                                text-[12px] font-medium
+                                                sm:h-6 sm:min-w-6 sm:text-[13px]
+                                                xl:text-[12px]
                                                 ${day.isCurrentMonth ? "text-secondary" : "text-text-secondary"}
                                                 ${day.isToday ? "rounded-full bg-primary text-text-primary" : ""}
                                             `}
@@ -251,8 +253,8 @@ export function Calendar() {
                                                 w-full truncate rounded-sm px-0.5 py-0.5
                                                         text-left focus-visible:outline-2
                                                         focus-visible:outline-offset-1 focus-visible:outline-accent
-                                                        text-[6px] leading-none
-                                                        sm:px-1 sm:text-[8px]
+                                                        text-[8px] leading-2.5
+                                                        sm:px-1 sm:text-[9px] sm:leading-2.75
                                                 xl:rounded-md xl:px-1.5 xl:text-[9px] xl:leading-normal
                                                 2xl:px-2 2xl:py-1 2xl:text-[10px]
                                                         ${taskColors[task.quadrant]}

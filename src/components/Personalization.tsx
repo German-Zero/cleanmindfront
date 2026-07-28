@@ -35,7 +35,7 @@ export default function Personalization() {
     const { theme, isLoading, pendingTheme, error, selectTheme } = useTheme()
 
     return (
-        <div className="calm-panel mx-4 flex w-full min-w-0 max-w-295 flex-col gap-9 px-5 py-7 text-text-primary sm:mx-6 sm:px-8 sm:py-9.5 xl:mx-8">
+        <div className="calm-panel flex w-full min-w-0 max-w-295 flex-col gap-9 px-5 py-7 text-text-primary sm:px-8 sm:py-9.5">
             <div className="flex max-w-155 flex-col gap-2">
                 <h3 className="calm-eyebrow">
                     Tu Ambiente

@@ -32,6 +32,11 @@ export const tasksService = {
             method: "DELETE",
         }),
 
+    start: (id: string) =>
+        apiRequest<Task>(`/api/tasks/${id}/start`, {
+            method: "PATCH",
+        }),
+
     complete: (id: string) =>
         apiRequest<Task>(`/api/tasks/${id}/complete`, {
             method: "PATCH",

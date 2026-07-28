@@ -22,6 +22,9 @@ interface SidebarProps {
 
 export default function Sidebar({ onOpenSettings }: SidebarProps) {
     const { tasks, isLoading, error } = useTasks()
+    const inProgressCount = tasks.filter(
+        (task) => task.status === "IN_PROGRESS",
+    ).length
 
     return (
         <aside className="
@@ -40,6 +43,27 @@ export default function Sidebar({ onOpenSettings }: SidebarProps) {
                         {error}
                     </p>
                 )}
+                <div
+                    className="
+                        flex w-full max-w-[320px] shrink-0 items-center
+                        justify-between rounded-[10px] border
+                        border-border/55 bg-card/45 px-3 py-2.25
+                    "
+                >
+                    <span className="text-[10px] font-semibold uppercase tracking-[1.2px] text-text-secondary">
+                        En curso
+                    </span>
+                    <strong
+                        aria-label={`${inProgressCount} tareas en curso`}
+                        className="
+                            grid min-w-6.5 place-items-center rounded-full
+                            bg-success/12 px-1.75 py-0.75 text-[11px]
+                            text-success
+                        "
+                    >
+                        {inProgressCount}
+                    </strong>
+                </div>
                 {sections.map((section) => (
                     <div
                         key={section.quadrant}

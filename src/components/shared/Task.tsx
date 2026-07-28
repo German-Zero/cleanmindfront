@@ -11,7 +11,7 @@ import IconEdit from "../ui/icons/IconEdit"
 import IconReopenTask from "../ui/icons/IconReopenTask"
 
 export default function Task({ task }: { task: TaskModel }) {
-    const { deleteTask, toggleTaskCompleted } = useTasks()
+    const { deleteTask, startTask, toggleTaskCompleted } = useTasks()
     const editDialogRef = useRef<HTMLDialogElement>(null)
     const deleteDialogRef = useRef<HTMLDialogElement>(null)
     const dialogId = useId()
@@ -32,6 +32,23 @@ export default function Task({ task }: { task: TaskModel }) {
                 requestError instanceof Error
                     ? requestError.message
                     : "No se pudo actualizar la tarea.",
+            )
+        } finally {
+            setIsPending(false)
+        }
+    }
+
+    const handleStart = async () => {
+        setIsPending(true)
+        setError(null)
+
+        try {
+            await startTask(task.id)
+        } catch (requestError: unknown) {
+            setError(
+                requestError instanceof Error
+                    ? requestError.message
+                    : "No se pudo empezar la tarea.",
             )
         } finally {
             setIsPending(false)
@@ -62,7 +79,7 @@ export default function Task({ task }: { task: TaskModel }) {
             <div className={`
                 flex max-w-[calc(100%-50px)] flex-col items-start gap-1
                 xl:max-w-65
-                mt-3 ml-3 mr-12 mb-11.5
+                mt-3 ml-3 mr-12 mb-13
                 ${task.status === "COMPLETED" ? "opacity-60" : ""}
             `}>
                 <h2 className="w-full wrap-break-word text-[13px] font-semibold leading-4.75 text-text-primary">
@@ -78,9 +95,45 @@ export default function Task({ task }: { task: TaskModel }) {
                 )}
             </div>
             <div className="
-                flex
-                absolute right-2 bottom-1.75
+                absolute right-2 bottom-1.75 flex items-center gap-0.5
             ">
+                {task.status === "TODO" && (
+                    <button
+                        type="button"
+                        aria-label="Empezar tarea"
+                        aria-busy={isPending}
+                        disabled={isPending}
+                        onClick={handleStart}
+                        className="
+                            mr-0.75 inline-flex min-h-8 items-center
+                            gap-1.5 rounded-[9px] border border-accent/30
+                            bg-accent/10 px-2.5 text-[10px] font-semibold
+                            text-accent hover:bg-accent/16
+                            disabled:cursor-wait disabled:opacity-50
+                        "
+                    >
+                        <span
+                            aria-hidden="true"
+                            className="
+                                h-0 w-0 border-y-4 border-l-[7px]
+                                border-y-transparent border-l-current
+                            "
+                        />
+                        Empezar
+                    </button>
+                )}
+                {task.status === "IN_PROGRESS" && (
+                    <span
+                        className="
+                            mr-0.75 inline-flex min-h-8 items-center
+                            rounded-[9px] border border-success/30
+                            bg-success/10 px-2.5 text-[10px]
+                            font-semibold text-success
+                        "
+                    >
+                        En curso
+                    </span>
+                )}
                 <button
                     type="button"
                     aria-label="Editar tarea"

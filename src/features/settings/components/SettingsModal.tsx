@@ -45,6 +45,7 @@ export default function SettingsModal({
         error,
         message,
         setEmailNotifications,
+        setDiscordNotifications,
         setTaskNotificationFrequency,
         connectDiscord,
         disconnectDiscord,
@@ -56,6 +57,9 @@ export default function SettingsModal({
     } = useMfaStatus()
 
     const emailNotifications = settings?.emailNotifications ?? false
+    const discordNotifications =
+        discordConnection?.connected &&
+        (settings?.discordNotifications ?? false)
     const discordName =
         discordConnection?.connected &&
         (discordConnection.globalName || discordConnection.username)
@@ -288,11 +292,46 @@ export default function SettingsModal({
                             </h4>
                             <p className="text-[11px] text-text-secondary">
                                 {discordConnection?.connected
-                                    ? `Cuenta vinculada: ${discordName}`
+                                    ? `Cuenta vinculada: ${discordName}. Notificaciones ${discordNotifications ? "activadas" : "desactivadas"}`
                                     : "Vincula Discord para recibir notificaciones en tu cuenta"}
                             </p>
                         </div>
-                        <button
+                        <div className="flex shrink-0 items-center gap-[10px] self-start sm:self-auto">
+                            {discordConnection?.connected && (
+                                <button
+                                    type="button"
+                                    role="switch"
+                                    aria-label="Notificaciones de Discord"
+                                    aria-checked={discordNotifications}
+                                    aria-busy={
+                                        pendingAction ===
+                                        "discordNotifications"
+                                    }
+                                    disabled={
+                                        isLoading ||
+                                        !settings ||
+                                        pendingAction !== null
+                                    }
+                                    onClick={() =>
+                                        setDiscordNotifications(
+                                            !discordNotifications,
+                                        )
+                                    }
+                                    className={`
+                                        flex h-[24px] w-[44px] shrink-0 rounded-full
+                                        ring ring-border transition-colors
+                                        disabled:cursor-not-allowed disabled:opacity-50
+                                        ${
+                                            discordNotifications
+                                                ? "justify-end bg-primary"
+                                                : "justify-start bg-card-hover"
+                                        }
+                                    `}
+                                >
+                                    <span className="size-[24px] rounded-full bg-text-primary ring ring-border" />
+                                </button>
+                            )}
+                            <button
                             type="button"
                             aria-busy={pendingAction === "discord"}
                             disabled={
@@ -323,7 +362,8 @@ export default function SettingsModal({
                                 : discordConnection?.connected
                                   ? "Desvincular"
                                   : "Vincular"}
-                        </button>
+                            </button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

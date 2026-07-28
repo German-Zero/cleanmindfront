@@ -42,3 +42,18 @@ test("cambia la frecuencia sin alterar los canales", () => {
         },
     )
 })
+
+test("activa Discord sin alterar las demás preferencias", () => {
+    assert.deepEqual(
+        toNotificationPreferencesRequest(
+            { ...settings, discordNotifications: false },
+            { discordNotifications: true },
+        ),
+        {
+            emailNotifications: true,
+            whatsappNotifications: false,
+            discordNotifications: true,
+            taskNotificationFrequency: "DAILY",
+        },
+    )
+})

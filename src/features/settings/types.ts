@@ -45,7 +45,9 @@ export interface UpdateNotificationPreferencesRequest {
 export type NotificationPreferenceChanges = Partial<
     Pick<
         UpdateNotificationPreferencesRequest,
-        "emailNotifications" | "taskNotificationFrequency"
+        | "emailNotifications"
+        | "discordNotifications"
+        | "taskNotificationFrequency"
     >
 >
 

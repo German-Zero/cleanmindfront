@@ -24,6 +24,7 @@ export default function RegisterForm() {
         const confirmPassword = String(
             formData.get("confirmPassword") ?? "",
         )
+        const acceptedTerms = formData.get("acceptedTerms") === "on"
         const validationError = validatePasswordConfirmation(
             password,
             confirmPassword,
@@ -39,11 +40,23 @@ export default function RegisterForm() {
             return
         }
 
+        if (!acceptedTerms) {
+            setError(
+                "Debes aceptar los términos y la política de privacidad.",
+            )
+            return
+        }
+
         setIsPending(true)
         setError(null)
 
         try {
-            await authService.register({ name, email, password })
+            await authService.register({
+                name,
+                email,
+                password,
+                acceptedTerms,
+            })
             router.replace(
                 `/verify-email?email=${encodeURIComponent(email)}`,
             )
@@ -52,7 +65,7 @@ export default function RegisterForm() {
                 requestError,
                 "No pudimos crear tu cuenta.",
                 {
-                    400: "Revisa los datos ingresados.",
+                    400: "Revisa los datos y confirma la aceptación de los términos.",
                     409: "Ya existe una cuenta con este email.",
                     429: "Creaste varias cuentas en poco tiempo. Espera un momento.",
                 },
@@ -132,6 +145,26 @@ export default function RegisterForm() {
                         minLength={8}
                         disabled={isPending}
                     />
+                    <label className="flex cursor-pointer items-start gap-2.5 rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.75 transition-colors hover:bg-card/50">
+                        <input
+                            required
+                            name="acceptedTerms"
+                            type="checkbox"
+                            disabled={isPending}
+                            className="mt-px size-4.5 shrink-0 cursor-pointer rounded-[5px] border-border accent-primary disabled:cursor-not-allowed"
+                        />
+                        <span className="text-[11px] leading-4.25 text-text-secondary">
+                            Acepto los{" "}
+                            <strong className="font-medium text-text-primary">
+                                Términos y condiciones
+                            </strong>{" "}
+                            y la{" "}
+                            <strong className="font-medium text-text-primary">
+                                Política de privacidad
+                            </strong>
+                            .
+                        </span>
+                    </label>
                     {error && (
                         <p role="alert" className="text-[12px] leading-4.5 text-error">
                             {error}

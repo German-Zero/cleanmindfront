@@ -11,7 +11,12 @@ import type {
     UserSettings,
 } from "../types"
 
-type PendingSettingsAction = "email" | "frequency" | "discord" | null
+type PendingSettingsAction =
+    | "email"
+    | "frequency"
+    | "discordNotifications"
+    | "discord"
+    | null
 
 export function useNotificationSettings() {
     const [settings, setSettings] = useState<UserSettings | null>(null)
@@ -110,6 +115,15 @@ export function useNotificationSettings() {
             "frequency",
         )
 
+    const setDiscordNotifications = (enabled: boolean) => {
+        if (!discordConnection?.connected) return
+
+        return saveNotificationPreferences(
+            { discordNotifications: enabled },
+            "discordNotifications",
+        )
+    }
+
     const connectDiscord = async () => {
         if (discordConnection?.connected || pendingAction) return
 
@@ -134,6 +148,40 @@ export function useNotificationSettings() {
         }
     }
 
+    const disconnectDiscord = async () => {
+        if (!discordConnection?.connected || pendingAction) return
+
+        setPendingAction("discord")
+        setActionError(null)
+        setMessage(null)
+
+        try {
+            if (settings?.discordNotifications) {
+                const updated =
+                    await settingsService.updateNotificationPreferences(
+                        toNotificationPreferencesRequest(settings, {
+                            discordNotifications: false,
+                        }),
+                    )
+                setSettings(updated)
+            }
+
+            await settingsService.disconnectDiscordConnection()
+            setDiscordConnection({ connected: false })
+            setMessage("La cuenta de Discord fue desvinculada.")
+        } catch (requestError: unknown) {
+            setActionError(requestErrorMessage(
+                requestError,
+                "No pudimos desvincular la cuenta de Discord.",
+                {
+                    401: "Tu sesión venció. Inicia sesión nuevamente.",
+                },
+            ))
+        } finally {
+            setPendingAction(null)
+        }
+    }
+
     const error = [loadError, actionError].filter(Boolean).join(" ") || null
 
     return {
@@ -144,7 +192,9 @@ export function useNotificationSettings() {
         error,
         message,
         setEmailNotifications,
+        setDiscordNotifications,
         setTaskNotificationFrequency,
         connectDiscord,
+        disconnectDiscord,
     }
 }

@@ -52,20 +52,19 @@ export default function Matriz() {
         <section
             aria-labelledby="eisenhower-matrix-title"
             className="
-                flex w-full max-w-[1600px] flex-col gap-4
-                rounded-2xl border border-border bg-surface/80 p-3
-                text-text-primary sm:p-5
+                calm-panel flex w-full max-w-250 flex-col gap-4.5
+                p-3.5 text-text-primary sm:p-5.5
                 xl:h-187.5 xl:min-h-0 xl:shrink-0
             "
         >
             <header className="flex flex-col gap-1 px-1 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-primary">
+                    <p className="calm-eyebrow">
                         Prioridades
                     </p>
                     <h1
                         id="eisenhower-matrix-title"
-                        className="mt-1 text-2xl font-semibold sm:text-3xl"
+                        className="mt-1 text-[24px] font-semibold sm:text-[30px]"
                     >
                         Matriz de Eisenhower
                     </h1>
@@ -78,7 +77,7 @@ export default function Matriz() {
             {(isLoading || error) && (
                 <p
                     role={error ? "alert" : "status"}
-                    className={`text-xs ${
+                    className={`calm-feedback ${
                         error ? "text-error" : "text-text-secondary"
                     }`}
                 >
@@ -98,15 +97,15 @@ export default function Matriz() {
                             aria-labelledby={`quadrant-${section.quadrant}`}
                             className="
                                 relative flex min-h-64 min-w-0 flex-col
-                                overflow-hidden rounded-xl border border-border
-                                bg-card/70 xl:min-h-0
+                                overflow-hidden rounded-xl border border-border/60
+                                bg-card/56 xl:min-h-0
                             "
                         >
                             <div
-                                className={`absolute inset-y-0 left-0 w-1 ${section.accent}`}
+                                className={`absolute inset-y-3 left-0 w-0.75 rounded-full opacity-75 ${section.accent}`}
                             />
 
-                            <header className="flex items-start justify-between gap-3 border-b border-border px-5 py-4">
+                            <header className="flex items-start justify-between gap-3 border-b border-border/55 px-5 py-4">
                                 <div>
                                     <h2
                                         id={`quadrant-${section.quadrant}`}
@@ -114,11 +113,11 @@ export default function Matriz() {
                                     >
                                         {section.label}
                                     </h2>
-                                    <p className="mt-1 text-[10px] text-text-secondary">
+                                    <p className="mt-1 text-[10px] leading-4 text-text-secondary">
                                         {section.description}
                                     </p>
                                 </div>
-                                <span className="grid min-w-7 place-items-center rounded-full bg-surface px-2 py-1 text-[10px] text-text-secondary">
+                                <span className="grid min-w-7 place-items-center rounded-full border border-border/55 bg-surface/65 px-2 py-1 text-[10px] text-text-secondary">
                                     {quadrantTasks.length}
                                 </span>
                             </header>
@@ -134,8 +133,8 @@ export default function Matriz() {
                                     <article
                                         key={task.id}
                                         className={`
-                                            rounded-lg border-l-2 bg-surface/70
-                                            px-3 py-2.5 ${section.border}
+                                            rounded-[9px] border border-border/45 border-l-2
+                                            bg-surface/62 px-3 py-2.5 ${section.border}
                                             ${task.status === "COMPLETED" ? "opacity-55" : ""}
                                         `}
                                     >

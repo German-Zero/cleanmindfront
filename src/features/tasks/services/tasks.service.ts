@@ -8,11 +8,6 @@ import type {
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const tasksService = {
-    getAll: () =>
-        apiRequest<Task[]>("/api/tasks", {
-            cache: "no-store",
-        }),
-
     create: (request: CreateTaskRequest) =>
         apiRequest<Task>("/api/tasks", {
             method: "POST",
@@ -30,6 +25,11 @@ export const tasksService = {
     delete: (id: string) =>
         apiRequest<void>(`/api/tasks/${id}`, {
             method: "DELETE",
+        }),
+
+    start: (id: string) =>
+        apiRequest<Task>(`/api/tasks/${id}/start`, {
+            method: "PATCH",
         }),
 
     complete: (id: string) =>

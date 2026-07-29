@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import IconGoogle from "@/components/forms/IconGoogle"
 import PasswordField from "@/components/forms/PasswordField"
 import { requestErrorMessage } from "@/lib/api"
+import AuthWelcome from "./AuthWelcome"
 import { isMfaCodeValid, normalizeMfaCode } from "../mfa-code"
 import { authService } from "../services/auth.service"
 import type { MfaRequiredResponse } from "../types"
@@ -22,6 +23,20 @@ export default function LoginForm({
         useState<MfaRequiredResponse | null>(initialChallenge)
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [welcomeName, setWelcomeName] = useState<string | null>(null)
+
+    const finishLogin = (name: string) => {
+        setWelcomeName(name)
+        const delay = window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? 0
+            : 1100
+
+        window.setTimeout(() => {
+            router.replace("/dashboard/calendar")
+            router.refresh()
+        }, delay)
+    }
 
     const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -41,8 +56,7 @@ export default function LoginForm({
                 return
             }
 
-            router.replace("/dashboard/calendar")
-            router.refresh()
+            finishLogin(response.user.name)
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(
@@ -82,12 +96,11 @@ export default function LoginForm({
         setError(null)
 
         try {
-            await authService.verifyMfa({
+            const response = await authService.verifyMfa({
                 challengeToken: challenge.challengeToken,
                 code,
             })
-            router.replace("/dashboard/calendar")
-            router.refresh()
+            finishLogin(response.user.name)
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(
@@ -105,6 +118,10 @@ export default function LoginForm({
         }
     }
 
+    if (welcomeName) {
+        return <AuthWelcome mode="login" name={welcomeName} />
+    }
+
     if (challenge) {
         return (
             <div className="flex h-auto w-full max-w-100 items-center justify-center">
@@ -116,12 +133,12 @@ export default function LoginForm({
                             setChallenge(null)
                             setError(null)
                         }}
-                        className="min-h-11 self-start rounded-lg px-3 text-xs text-text-secondary hover:bg-card hover:text-text-primary disabled:opacity-50"
+                        className="min-h-11 self-start rounded-[10px] px-3 text-[11px] text-text-secondary hover:bg-card hover:text-text-primary disabled:opacity-50"
                     >
                         ← Volver
                     </button>
                     <div className="flex flex-col items-center gap-2.5 text-center">
-                        <h2 className="bg-linear-to-br from-primary via-secondary to-accent bg-clip-text text-2xl font-semibold text-transparent">
+                        <h2 className="text-[24px] font-semibold text-text-primary">
                             Verificación en dos pasos
                         </h2>
                         <p className="max-w-80 text-[11px] font-semibold tracking-wider text-text-secondary">
@@ -150,18 +167,18 @@ export default function LoginForm({
                                 autoCapitalize="characters"
                                 maxLength={22}
                                 disabled={isPending}
-                                className="w-full rounded-sm border border-border bg-card/70 px-3.75 py-3.75 text-base text-text-primary sm:text-[13px]"
+                                className="calm-input text-[13px]"
                             />
                         </div>
                         {error && (
-                            <p role="alert" className="text-xs text-error">
+                            <p role="alert" className="calm-feedback text-error">
                                 {error}
                             </p>
                         )}
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                            className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {isPending ? "Verificando…" : "Verificar código"}
                         </button>
@@ -193,7 +210,7 @@ export default function LoginForm({
                             autoComplete="email"
                             disabled={isPending}
                             placeholder="Email"
-                            className="w-full rounded-sm border border-border bg-card/70 py-3.75 pr-10 pl-3.75 text-base text-text-primary placeholder:text-base placeholder:text-text-secondary sm:text-[13px] sm:placeholder:text-[13px]"
+                            className="calm-input pr-10 text-[13px]"
                         />
                     </div>
                     <PasswordField
@@ -214,14 +231,14 @@ export default function LoginForm({
                         </Link>
                     </div>
                     {error && (
-                        <p role="alert" className="text-xs text-error">
+                        <p role="alert" className="calm-feedback text-error">
                             {error}
                         </p>
                     )}
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isPending ? "Ingresando…" : "Iniciar Sesión"}
                     </button>
@@ -235,7 +252,7 @@ export default function LoginForm({
                 </div>
                 <a
                     href="/api/auth/google"
-                    className="flex min-h-11 items-center justify-center gap-1.25 rounded-sm border border-border bg-card/70 py-3 text-[15px] text-text-primary transition-colors hover:bg-card"
+                    className="calm-button-secondary flex min-h-11 items-center justify-center gap-1.25 text-[13px]"
                 >
                     <IconGoogle />
                     Google

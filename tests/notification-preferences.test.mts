@@ -4,6 +4,7 @@ import { toNotificationPreferencesRequest } from "../src/features/settings/notif
 
 const settings = {
     theme: "LUNAR_MIND" as const,
+    backgroundMotion: "NONE" as const,
     emailNotifications: true,
     whatsappNotifications: false,
     discordNotifications: true,
@@ -38,6 +39,21 @@ test("cambia la frecuencia sin alterar los canales", () => {
             whatsappNotifications: false,
             discordNotifications: true,
             taskNotificationFrequency: "WEEKLY",
+        },
+    )
+})
+
+test("activa Discord sin alterar las demás preferencias", () => {
+    assert.deepEqual(
+        toNotificationPreferencesRequest(
+            { ...settings, discordNotifications: false },
+            { discordNotifications: true },
+        ),
+        {
+            emailNotifications: true,
+            whatsappNotifications: false,
+            discordNotifications: true,
+            taskNotificationFrequency: "DAILY",
         },
     )
 })

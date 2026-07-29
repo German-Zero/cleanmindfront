@@ -55,17 +55,14 @@ export function usePomodoro({
     useEffect(() => {
         let isCurrent = true
 
-        void Promise.all([
-            pomodoroService.getSettings(),
-            pomodoroService.getActiveSession(),
-            pomodoroService.getSummary(),
-        ])
-            .then(([nextSettings, activeSession, nextSummary]) => {
+        void pomodoroService
+            .getState()
+            .then(({ settings, activeSession, summary }) => {
                 if (!isCurrent) return
 
-                setSettings(nextSettings)
+                setSettings(settings)
                 setSession(activeSession)
-                setSummary(nextSummary)
+                setSummary(summary)
                 setNow(Date.now())
             })
             .catch((requestError: unknown) => {

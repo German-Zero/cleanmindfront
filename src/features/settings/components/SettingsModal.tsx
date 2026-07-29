@@ -45,8 +45,10 @@ export default function SettingsModal({
         error,
         message,
         setEmailNotifications,
+        setDiscordNotifications,
         setTaskNotificationFrequency,
         connectDiscord,
+        disconnectDiscord,
     } = useNotificationSettings()
     const {
         status: mfaStatus,
@@ -55,6 +57,9 @@ export default function SettingsModal({
     } = useMfaStatus()
 
     const emailNotifications = settings?.emailNotifications ?? false
+    const discordNotifications =
+        discordConnection?.connected &&
+        (settings?.discordNotifications ?? false)
     const discordName =
         discordConnection?.connected &&
         (discordConnection.globalName || discordConnection.username)
@@ -88,28 +93,29 @@ export default function SettingsModal({
             <DeleteAccountPanel
                 onBack={() => setView("settings")}
                 onClose={onClose}
+                onCloseLockChange={onCloseLockChange}
             />
         )
     }
 
     return (
-        <div className="no-scrollbar relative mx-auto flex max-h-[calc(100dvh-32px)] w-full max-w-170 overflow-y-auto rounded-xl bg-surface text-text-primary ring ring-border">
+        <div className="calm-panel no-scrollbar relative mx-auto flex max-h-[calc(100dvh-32px)] w-full max-w-180 overflow-y-auto text-text-primary">
             <button
                 type="button"
                 aria-label="Cerrar configuración"
                 onClick={onClose}
                 className="
-                    absolute top-3 right-3 grid size-10 place-items-center
-                    rounded-lg text-2xl leading-none text-text-secondary
-                    hover:bg-card hover:text-text-primary
+                    calm-icon-button absolute top-3 right-3
+                    text-[22px] leading-none
                 "
             >
                 <span aria-hidden="true">×</span>
             </button>
 
-            <div className="flex w-full flex-col gap-7.5 p-5 pt-14 sm:p-8 sm:pt-12 lg:p-10">
+            <div className="flex w-full flex-col gap-8 p-5 pt-14 sm:p-8 sm:pt-12 lg:p-10">
                 <div className="flex flex-col gap-1.25">
-                    <h1 id="settings-title" className="text-2xl font-bold">
+                    <span className="calm-eyebrow">Tu cuenta</span>
+                    <h1 id="settings-title" className="text-[26px] font-semibold">
                         Perfil
                     </h1>
                     <p
@@ -147,7 +153,7 @@ export default function SettingsModal({
                                         : "set-password",
                                 )
                             }
-                            className="self-start rounded-[3px] border border-border px-2.5 py-1.25 text-[11px] disabled:cursor-not-allowed disabled:opacity-50 sm:shrink-0 sm:self-auto"
+                            className="calm-button-secondary self-start text-[11px] disabled:cursor-not-allowed disabled:opacity-50 sm:shrink-0 sm:self-auto"
                         >
                             {user?.hasPassword
                                 ? "Cambiar Contraseña"
@@ -178,7 +184,7 @@ export default function SettingsModal({
                                 !mfaStatus
                             }
                             onClick={() => setView("mfa")}
-                            className="self-start rounded-[3px] border border-border px-2.5 py-1.25 text-left text-[11px] disabled:cursor-not-allowed disabled:opacity-50 sm:shrink-0 sm:self-auto"
+                            className="calm-button-secondary self-start text-left text-[11px] disabled:cursor-not-allowed disabled:opacity-50 sm:shrink-0 sm:self-auto"
                         >
                             {mfaStatus?.enabled
                                 ? "Administrar Verificación"
@@ -200,7 +206,7 @@ export default function SettingsModal({
                         <button
                             type="button"
                             onClick={() => setView("delete")}
-                            className="self-start rounded-[3px] border border-error bg-error/40 px-2.5 py-1.25 text-[11px] sm:shrink-0 sm:self-auto"
+                            className="min-h-11 self-start rounded-[10px] border border-error/45 bg-error/8 px-4 py-2.5 text-[11px] font-medium text-error hover:bg-error/14 sm:shrink-0 sm:self-auto"
                         >
                             Eliminar mi Cuenta
                         </button>
@@ -208,7 +214,7 @@ export default function SettingsModal({
                 </div>
 
                 <div className="flex flex-col gap-1.25">
-                    <h2 className="text-2xl font-bold">Notificaciones</h2>
+                    <h2 className="text-[22px] font-semibold">Notificaciones</h2>
                     <p className="text-sm text-text-secondary">
                         Decide cuándo y cómo quieres recibir notificaciones
                     </p>
@@ -286,33 +292,78 @@ export default function SettingsModal({
                             </h4>
                             <p className="text-[11px] text-text-secondary">
                                 {discordConnection?.connected
-                                    ? `Cuenta vinculada: ${discordName}`
+                                    ? `Cuenta vinculada: ${discordName}. Notificaciones ${discordNotifications ? "activadas" : "desactivadas"}`
                                     : "Vincula Discord para recibir notificaciones en tu cuenta"}
                             </p>
                         </div>
-                        <button
+                        <div className="flex shrink-0 items-center gap-[10px] self-start sm:self-auto">
+                            {discordConnection?.connected && (
+                                <button
+                                    type="button"
+                                    role="switch"
+                                    aria-label="Notificaciones de Discord"
+                                    aria-checked={discordNotifications}
+                                    aria-busy={
+                                        pendingAction ===
+                                        "discordNotifications"
+                                    }
+                                    disabled={
+                                        isLoading ||
+                                        !settings ||
+                                        pendingAction !== null
+                                    }
+                                    onClick={() =>
+                                        setDiscordNotifications(
+                                            !discordNotifications,
+                                        )
+                                    }
+                                    className={`
+                                        flex h-[24px] w-[44px] shrink-0 rounded-full
+                                        ring ring-border transition-colors
+                                        disabled:cursor-not-allowed disabled:opacity-50
+                                        ${
+                                            discordNotifications
+                                                ? "justify-end bg-primary"
+                                                : "justify-start bg-card-hover"
+                                        }
+                                    `}
+                                >
+                                    <span className="size-[24px] rounded-full bg-text-primary ring ring-border" />
+                                </button>
+                            )}
+                            <button
                             type="button"
                             aria-busy={pendingAction === "discord"}
                             disabled={
                                 isLoading ||
                                 !discordConnection ||
-                                discordConnection.connected ||
                                 pendingAction !== null
                             }
-                            onClick={connectDiscord}
-                            className="
-                                self-start rounded-[3px] border border-border
-                                px-2.5 py-1.25 text-[11px]
+                            onClick={
+                                discordConnection?.connected
+                                    ? disconnectDiscord
+                                    : connectDiscord
+                            }
+                            className={`
+                                self-start text-[11px]
                                 disabled:cursor-not-allowed disabled:opacity-50
                                 sm:shrink-0 sm:self-auto
-                            "
+                                ${
+                                    discordConnection?.connected
+                                        ? "min-h-11 rounded-[10px] border border-error/35 bg-error/8 px-4 py-2.5 font-medium text-error hover:bg-error/14"
+                                        : "calm-button-secondary"
+                                }
+                            `}
                         >
                             {pendingAction === "discord"
-                                ? "Redirigiendo…"
+                                ? discordConnection?.connected
+                                    ? "Desvinculando…"
+                                    : "Redirigiendo…"
                                 : discordConnection?.connected
-                                  ? "Vinculado"
+                                  ? "Desvincular"
                                   : "Vincular"}
-                        </button>
+                            </button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -341,8 +392,7 @@ export default function SettingsModal({
                                 )
                             }
                             className="
-                                self-start rounded-[3px] border border-border
-                                bg-card px-2.5 py-1.25 text-[11px]
+                                calm-input w-auto self-start px-3 text-[11px]
                                 disabled:cursor-not-allowed disabled:opacity-50
                                 sm:shrink-0 sm:self-auto
                             "

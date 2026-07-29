@@ -12,6 +12,11 @@ import type {
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const accountSecurityService = {
+    deleteAccount: () =>
+        apiRequest<void>("/api/auth/account", {
+            method: "DELETE",
+        }),
+
     changePassword: (request: ChangePasswordRequest) =>
         apiRequest<void>("/api/auth/change-password", {
             method: "PATCH",

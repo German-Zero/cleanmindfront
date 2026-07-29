@@ -72,7 +72,7 @@ export default function VerifyEmailForm({
     }
 
     return (
-        <div className="w-full max-w-105 rounded-2xl border border-border bg-surface px-7 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.24)] sm:px-9 sm:py-9.5">
+        <div className="calm-panel w-full max-w-105 px-7 py-8 sm:px-9 sm:py-9.5">
             <div className="flex flex-col items-center text-center">
                 <div className="mb-5.5 grid h-13 w-13 place-items-center rounded-xl border border-border bg-card text-primary">
                     {isVerified ? (

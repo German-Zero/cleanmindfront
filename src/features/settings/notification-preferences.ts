@@ -12,7 +12,8 @@ export function toNotificationPreferencesRequest(
         emailNotifications:
             changes.emailNotifications ?? settings.emailNotifications,
         whatsappNotifications: settings.whatsappNotifications,
-        discordNotifications: settings.discordNotifications,
+        discordNotifications:
+            changes.discordNotifications ?? settings.discordNotifications,
         taskNotificationFrequency:
             changes.taskNotificationFrequency ??
             settings.taskNotificationFrequency,

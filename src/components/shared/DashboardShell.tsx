@@ -15,25 +15,21 @@ const navigation = [
     {
         href: "/dashboard/calendar",
         label: "Calendario",
-        position: "top-0 left-0",
         icon: <CalendarButton />,
     },
     {
         href: "/dashboard/matriz",
         label: "Matriz",
-        position: "top-0 right-0",
         icon: <MatrizButton />,
     },
     {
         href: "/dashboard/pomodoro",
         label: "Pomodoro",
-        position: "bottom-0 left-0",
         icon: <PomodoroButton />,
     },
     {
         href: "/dashboard/whiteboard",
         label: "Pizarra",
-        position: "bottom-0 right-0",
         icon: <WhiteboardButton />,
     },
 ]
@@ -110,13 +106,14 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     }, [isSettingsCloseLocked])
 
     return (
-        <div className="flex h-dvh w-full overflow-hidden">
+        <div className="relative isolate flex h-dvh w-full overflow-hidden bg-background">
+            <div className="ambient-background" aria-hidden="true" />
             {isSidebarOpen && (
                 <button
                     type="button"
                     aria-label="Cerrar panel de tareas"
                     onClick={() => setSidebarPath(null)}
-                    className="fixed inset-0 z-40 bg-black/60 xl:hidden"
+                    className="fixed inset-0 z-40 bg-black/55 backdrop-blur-[2px] xl:hidden"
                 />
             )}
 
@@ -135,9 +132,9 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                         aria-label="Cerrar panel de tareas"
                         onClick={() => setSidebarPath(null)}
                         className="
-                            absolute top-2 left-full ml-2 grid size-10 place-items-center
-                            rounded-xl border border-border bg-surface
-                            text-2xl leading-none text-text-primary xl:hidden
+                            calm-icon-button absolute top-3 left-full ml-3
+                            bg-surface text-[22px] leading-none
+                            text-text-primary shadow-lg xl:hidden
                         "
                     >
                         <span aria-hidden="true">×</span>
@@ -152,9 +149,9 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 aria-label="Abrir panel de tareas"
                 onClick={() => setSidebarPath(pathname)}
                 className="
-                    fixed top-4 left-4 z-30 grid size-11 place-items-center
-                    rounded-xl border border-border bg-surface text-text-primary
-                    xl:hidden
+                    calm-icon-button fixed top-4 left-4 z-30
+                    bg-surface/95 text-text-primary shadow-lg
+                    backdrop-blur xl:hidden
                 "
             >
                 <span className="flex w-5 flex-col gap-1.25" aria-hidden="true">
@@ -164,13 +161,25 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 </span>
             </button>
 
-            <main className="no-scrollbar relative h-dvh min-w-0 flex-1 overflow-auto pb-20 xl:pb-0">
+            <main
+                className={`
+                    no-scrollbar relative z-1 h-dvh min-w-0 flex-1
+                    bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)]
+                    pb-20 xl:pb-0
+                    ${
+                        pathname === "/dashboard/personalization"
+                            ? "overflow-hidden"
+                            : "overflow-auto"
+                    }
+                `}
+            >
                 {children}
 
                 {pathname !== "/dashboard/calendar" && (
                     <NewTaskButton
                         className="
-                            fixed top-4 right-4 z-30 grid size-11 place-items-center
+                            calm-icon-button fixed top-4 right-4 z-30
+                            bg-surface/95 shadow-lg
                             xl:top-12 xl:right-6
                         "
                     />
@@ -180,9 +189,15 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     aria-label="Navegación del dashboard"
                     className="
                         fixed right-4 bottom-4 left-4 z-30 mx-auto
-                        flex max-w-sm items-center justify-around
-                        rounded-2xl border border-border bg-surface/95 p-2
-                        shadow-xl backdrop-blur xl:contents
+                        flex max-w-95 items-center justify-around
+                        rounded-2xl border border-border/70 bg-surface/94 p-1.5
+                        shadow-[0_16px_42px_rgb(0_0_0/28%)] backdrop-blur-xl
+                        xl:top-1/2 xl:right-5.5 xl:bottom-auto xl:left-auto
+                        xl:mx-0 xl:max-w-none xl:-translate-y-1/2
+                        xl:flex-col xl:justify-center xl:gap-1.5
+                        xl:rounded-[20px] xl:border-border/65
+                        xl:bg-surface/82 xl:p-1.75
+                        xl:shadow-[0_20px_60px_rgb(0_0_0/34%),inset_0_1px_0_rgb(255_255_255/4%)]
                     "
                 >
                     {navigation.map((item) => {
@@ -195,13 +210,52 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                                 aria-label={item.label}
                                 aria-current={isActive ? "page" : undefined}
                                 className={`
-                                    grid size-12 place-items-center rounded-xl
-                                    xl:absolute xl:z-10 xl:size-auto xl:rounded-none xl:ring-0
-                                    ${item.position}
-                                    ${isActive ? "ring-2 ring-accent xl:hidden" : "xl:block"}
+                                    group relative grid size-12 place-items-center
+                                    rounded-xl transition-[background-color,color,box-shadow,transform]
+                                    xl:rounded-[13px]
+                                    ${
+                                        isActive
+                                            ? "bg-primary/14 text-accent ring-1 ring-primary/35 xl:bg-primary/16 xl:shadow-[0_8px_22px_rgb(0_0_0/18%)]"
+                                            : "text-text-secondary hover:bg-card hover:text-text-primary xl:hover:-translate-x-0.5 xl:hover:bg-card/85"
+                                    }
                                 `}
                             >
+                                <span
+                                    aria-hidden="true"
+                                    className={`
+                                        absolute top-1/2 right-14.25 hidden
+                                        -translate-y-1/2 rounded-[9px]
+                                        border border-border/65 bg-surface/96
+                                        px-2.5 py-1.5 text-[10px]
+                                        font-medium whitespace-nowrap
+                                        text-text-primary opacity-0
+                                        shadow-[0_10px_28px_rgb(0_0_0/28%)]
+                                        backdrop-blur-md
+                                        transition-[opacity,transform]
+                                        group-hover:-translate-x-0.75
+                                        group-hover:opacity-100
+                                        group-focus-visible:-translate-x-0.75
+                                        group-focus-visible:opacity-100
+                                        xl:block
+                                    `}
+                                >
+                                    {item.label}
+                                </span>
                                 {item.icon}
+                                <span
+                                    aria-hidden="true"
+                                    className={`
+                                        absolute -right-0.75 hidden h-4.5
+                                        w-0.75 rounded-full bg-accent
+                                        transition-[opacity,transform]
+                                        xl:block
+                                        ${
+                                            isActive
+                                                ? "opacity-100"
+                                                : "translate-x-0.75 opacity-0"
+                                        }
+                                    `}
+                                />
                             </Link>
                         )
                     })}

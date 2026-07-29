@@ -3,6 +3,7 @@ import type {
     DiscordAuthorizationResponse,
     DiscordConnection,
     UpdateNotificationPreferencesRequest,
+    BackgroundMotion,
     Theme,
     UserSettings,
 } from "../types"
@@ -11,11 +12,14 @@ export const settingsService = {
     getSettings: () =>
         apiRequest<UserSettings>("/api/settings", { cache: "no-store" }),
 
-    updateTheme: (theme: Theme) =>
+    updateAppearance: (
+        theme: Theme,
+        backgroundMotion: BackgroundMotion,
+    ) =>
         apiRequest<UserSettings>("/api/settings/theme", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ theme }),
+            body: JSON.stringify({ theme, backgroundMotion }),
         }),
 
     updateNotificationPreferences: (
@@ -38,4 +42,9 @@ export const settingsService = {
             "/api/notifications/discord/connection",
             { method: "POST" },
         ),
+
+    disconnectDiscordConnection: () =>
+        apiRequest<void>("/api/notifications/discord/connection", {
+            method: "DELETE",
+        }),
 }

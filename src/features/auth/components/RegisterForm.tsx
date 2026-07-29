@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PasswordField from "@/components/forms/PasswordField"
 import { requestErrorMessage } from "@/lib/api"
+import AuthWelcome from "./AuthWelcome"
 import { validatePasswordConfirmation } from "../password-validation"
 import { authService } from "../services/auth.service"
 
@@ -12,6 +13,7 @@ export default function RegisterForm() {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [welcomeName, setWelcomeName] = useState<string | null>(null)
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -24,6 +26,7 @@ export default function RegisterForm() {
         const confirmPassword = String(
             formData.get("confirmPassword") ?? "",
         )
+        const acceptedTerms = formData.get("acceptedTerms") === "on"
         const validationError = validatePasswordConfirmation(
             password,
             confirmPassword,
@@ -39,20 +42,41 @@ export default function RegisterForm() {
             return
         }
 
+        if (!acceptedTerms) {
+            setError(
+                "Debes aceptar las condiciones de participación en la beta.",
+            )
+            return
+        }
+
         setIsPending(true)
         setError(null)
 
         try {
-            await authService.register({ name, email, password })
-            router.replace(
-                `/verify-email?email=${encodeURIComponent(email)}`,
-            )
+            const response = await authService.register({
+                name,
+                email,
+                password,
+                acceptedTerms,
+            })
+            setWelcomeName(response.user.name)
+            const delay = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches
+                ? 0
+                : 1100
+
+            window.setTimeout(() => {
+                router.replace(
+                    `/verify-email?email=${encodeURIComponent(email)}`,
+                )
+            }, delay)
         } catch (requestError: unknown) {
             setError(requestErrorMessage(
                 requestError,
                 "No pudimos crear tu cuenta.",
                 {
-                    400: "Revisa los datos ingresados.",
+                    400: "Revisa los datos y confirma la aceptación del aviso de la beta.",
                     409: "Ya existe una cuenta con este email.",
                     429: "Creaste varias cuentas en poco tiempo. Espera un momento.",
                 },
@@ -60,6 +84,10 @@ export default function RegisterForm() {
         } finally {
             setIsPending(false)
         }
+    }
+
+    if (welcomeName) {
+        return <AuthWelcome mode="register" name={welcomeName} />
     }
 
     return (
@@ -132,6 +160,56 @@ export default function RegisterForm() {
                         minLength={8}
                         disabled={isPending}
                     />
+                    <div className="rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.5 transition-colors hover:border-primary/35 hover:bg-card/50">
+                        <label
+                            htmlFor="register-beta-terms"
+                            className="group flex cursor-pointer items-start gap-2.5 has-disabled:cursor-not-allowed has-disabled:opacity-60"
+                        >
+                            <input
+                                required
+                                id="register-beta-terms"
+                                name="acceptedTerms"
+                                type="checkbox"
+                                disabled={isPending}
+                                className="peer absolute h-px w-px overflow-hidden opacity-0"
+                            />
+                            <span
+                                aria-hidden="true"
+                                className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-md border border-border bg-background/65 text-transparent shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-[background-color,border-color,color,box-shadow] peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-[3px] peer-focus-visible:ring-primary/25"
+                            >
+                                <svg
+                                    viewBox="0 0 20 20"
+                                    className="h-3.25 w-3.25"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m4.75 10.25 3.25 3.25 7.25-7.25"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span className="text-[11px] leading-4.25 text-text-secondary">
+                                Confirmo que tengo al menos 16 años y acepto
+                                participar en la beta privada.
+                            </span>
+                        </label>
+                        <p className="mt-1.25 pl-7.5 text-[10px] leading-4 text-text-secondary">
+                            He leído el{" "}
+                            <Link
+                                href="/beta"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-medium text-accent hover:underline"
+                            >
+                                aviso de privacidad y participación
+                            </Link>
+                            .
+                        </p>
+                    </div>
                     {error && (
                         <p role="alert" className="text-[12px] leading-4.5 text-error">
                             {error}

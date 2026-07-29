@@ -131,7 +131,7 @@ function ZoomControls({
         <div
             className={`flex shrink-0 items-center p-1 ${
                 floating
-                    ? "rounded-xl border border-border/70 bg-surface/95 shadow-lg backdrop-blur"
+                    ? "rounded-xl border border-border/65 bg-surface/96 shadow-[0_12px_30px_rgb(0_0_0/18%)] backdrop-blur"
                     : ""
             }`}
         >
@@ -190,11 +190,11 @@ export default function ToolWhiteboardButton({
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
     const [hexInput, setHexInput] = useState(color.toUpperCase())
     const toolClass = (value: WhiteboardTool) => `
-        grid size-9 shrink-0 place-items-center rounded-lg transition-colors
+        grid size-9 shrink-0 place-items-center rounded-[9px] transition-colors
         ${
             tool === value
-                ? "bg-primary/15 text-primary"
-                : "text-text-secondary hover:bg-card-hover hover:text-text-primary"
+                ? "bg-primary/12 text-accent ring-1 ring-primary/24"
+                : "text-text-secondary hover:bg-card/80 hover:text-text-primary"
         }
     `
     const range =
@@ -263,7 +263,7 @@ export default function ToolWhiteboardButton({
             )}
 
             {isSettingsOpen && (
-                <div className="absolute bottom-[calc(100%+12px)] left-1/2 max-h-[calc(100dvh-128px)] w-[min(304px,calc(100dvw-16px))] -translate-x-1/2 overflow-y-auto rounded-2xl border border-border/70 bg-surface/95 p-4 shadow-xl backdrop-blur">
+                <div className="calm-panel absolute bottom-[calc(100%+12px)] left-1/2 max-h-[calc(100dvh-128px)] w-[min(304px,calc(100dvw-16px))] -translate-x-1/2 overflow-y-auto p-4 backdrop-blur">
                     <div className="mb-3 flex items-center justify-between">
                         <span className="text-xs font-semibold text-text-primary">
                             Apariencia
@@ -302,7 +302,7 @@ export default function ToolWhiteboardButton({
                         ))}
                     </div>
 
-                    <div className="mt-3 rounded-xl border border-border/70 bg-card/55 p-3">
+                    <div className="mt-3 rounded-[11px] border border-border/55 bg-card/45 p-3">
                         <div className="mb-3 flex items-center gap-3">
                             <span
                                 className="size-8 rounded-lg border border-white/15 shadow-inner"
@@ -414,13 +414,13 @@ export default function ToolWhiteboardButton({
                                         event.currentTarget.blur()
                                     }
                                 }}
-                                className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-2.5 py-2 font-mono text-[10px] uppercase text-text-primary outline-none focus:border-primary"
+                                className="calm-input min-h-9.5 min-w-0 flex-1 px-2.5 py-2 font-mono text-[10px] uppercase"
                                 placeholder="#A78BFA"
                             />
                             <button
                                 type="button"
                                 onClick={saveCurrentColor}
-                                className="rounded-lg bg-primary/15 px-3 text-[10px] font-semibold text-primary transition-colors hover:bg-primary/25"
+                                className="rounded-[9px] border border-primary/30 bg-primary/10 px-3 text-[10px] font-semibold text-primary hover:bg-primary/18"
                             >
                                 Guardar
                             </button>
@@ -455,7 +455,7 @@ export default function ToolWhiteboardButton({
             )}
 
             {range && !isSettingsOpen && (
-                <div className="absolute bottom-[calc(100%+10.4px)] left-1/2 w-[min(384px,calc(100dvw-16px))] -translate-x-1/2 space-y-2 rounded-xl border border-border/70 bg-surface/95 px-3 py-2 shadow-lg backdrop-blur">
+                <div className="calm-panel absolute bottom-[calc(100%+10px)] left-1/2 w-[min(384px,calc(100dvw-16px))] -translate-x-1/2 space-y-2 px-3 py-2.25 backdrop-blur">
                     <label className="flex items-center gap-3">
                         <span className="min-w-20 text-[10px] font-medium text-text-secondary">
                             {range.label}
@@ -565,7 +565,7 @@ export default function ToolWhiteboardButton({
                 </div>
             )}
 
-            <div className="no-scrollbar flex max-w-full items-center gap-0.5 overflow-x-auto rounded-xl border border-border/70 bg-surface/95 p-1 shadow-lg backdrop-blur">
+            <div className="no-scrollbar flex max-w-full items-center gap-0.5 overflow-x-auto rounded-[13px] border border-border/65 bg-surface/96 p-1.25 shadow-[0_14px_36px_rgb(0_0_0/20%)] backdrop-blur">
                 <button
                     type="button"
                     aria-label="Mover lienzo"

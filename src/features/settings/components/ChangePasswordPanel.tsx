@@ -155,12 +155,12 @@ export default function ChangePasswordPanel({
                 />
 
                 {error && (
-                    <p role="alert" className="text-xs text-error">
+                    <p role="alert" className="calm-feedback text-error">
                         {error}
                     </p>
                 )}
                 {message && (
-                    <p role="status" className="text-xs text-success">
+                    <p role="status" className="calm-feedback text-success">
                         {message}
                     </p>
                 )}
@@ -168,7 +168,7 @@ export default function ChangePasswordPanel({
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="h-11.75 rounded-sm border border-border bg-linear-to-r from-primary via-accent to-secondary text-sm text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                    className="calm-button disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     {isPending
                         ? "Guardando…"

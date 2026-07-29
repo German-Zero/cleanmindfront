@@ -557,7 +557,7 @@ export default function Whiteboard() {
             "
         >
             {isEmpty && (
-                <h1 className="pointer-events-none absolute inset-0 z-0 grid place-items-center px-16 text-center text-lg font-semibold tracking-wider text-text-secondary/60 sm:text-2xl">
+                <h1 className="pointer-events-none absolute inset-0 z-0 grid place-items-center px-[64px] text-center text-[18px] font-medium text-text-secondary/60 sm:text-[22px]">
                     ¿Qué dibujaremos hoy?
                 </h1>
             )}
@@ -611,7 +611,7 @@ export default function Whiteboard() {
                             event.currentTarget.blur()
                         }
                     }}
-                    className="absolute z-30 min-h-9 resize-none overflow-hidden border-b border-primary bg-surface/85 px-2 py-1 outline-none backdrop-blur"
+                    className="absolute z-30 min-h-[36px] resize-none overflow-hidden rounded-[7px] border border-primary/45 bg-surface/90 px-[8px] py-[5px] outline-none backdrop-blur"
                     style={{
                         left: textEditorScreen.x,
                         top: textEditorScreen.y - textSize * zoom,
@@ -650,7 +650,7 @@ export default function Whiteboard() {
             {error && (
                 <p
                     role="alert"
-                    className="absolute top-4 left-1/2 z-30 -translate-x-1/2 rounded-lg bg-surface px-3 py-2 text-xs text-error ring ring-border"
+                    className="calm-feedback absolute top-[16px] left-1/2 z-30 -translate-x-1/2 bg-surface text-error"
                 >
                     {error}
                 </p>

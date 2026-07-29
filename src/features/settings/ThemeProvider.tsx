@@ -9,96 +9,118 @@ import {
 } from "react"
 import { requestErrorMessage } from "@/lib/api"
 import { settingsService } from "./services/settings.service"
-import type { Theme } from "./types"
-
-const defaultTheme: Theme = "LUNAR_MIND"
+import type { BackgroundMotion, Theme } from "./types"
 
 interface ThemeContextValue {
     theme: Theme
+    backgroundMotion: BackgroundMotion
     isLoading: boolean
     pendingTheme: Theme | null
+    pendingMotion: BackgroundMotion | null
     error: string | null
     selectTheme: (theme: Theme) => Promise<void>
+    selectBackgroundMotion: (motion: BackgroundMotion) => Promise<void>
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
-function applyTheme(theme: Theme) {
+function applyAppearance(theme: Theme, motion: BackgroundMotion) {
     document.documentElement.dataset.theme = theme
+    document.documentElement.dataset.motion = motion
 }
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>(defaultTheme)
-    const [isLoading, setIsLoading] = useState(true)
+export function ThemeProvider({
+    children,
+    initialTheme,
+    initialBackgroundMotion,
+}: {
+    children: ReactNode
+    initialTheme: Theme
+    initialBackgroundMotion: BackgroundMotion
+}) {
+    const [theme, setTheme] = useState<Theme>(initialTheme)
+    const [backgroundMotion, setBackgroundMotion] =
+        useState<BackgroundMotion>(initialBackgroundMotion)
     const [pendingTheme, setPendingTheme] = useState<Theme | null>(null)
+    const [pendingMotion, setPendingMotion] =
+        useState<BackgroundMotion | null>(null)
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
-        let isCurrent = true
+        applyAppearance(initialTheme, initialBackgroundMotion)
+    }, [initialBackgroundMotion, initialTheme])
 
-        void settingsService
-            .getSettings()
-            .then((settings) => {
-                if (!isCurrent) return
-                setTheme(settings.theme)
-                applyTheme(settings.theme)
-            })
-            .catch((requestError: unknown) => {
-                if (!isCurrent) return
-                setError(requestErrorMessage(
-                    requestError,
-                    "No pudimos cargar tu tema.",
-                    {
-                        401: "Tu sesión venció. Inicia sesión nuevamente.",
-                    },
-                ))
-            })
-            .finally(() => {
-                if (isCurrent) setIsLoading(false)
-            })
-
-        return () => {
-            isCurrent = false
-        }
-    }, [])
-
-    const selectTheme = async (nextTheme: Theme) => {
-        if (nextTheme === theme || pendingTheme) return
-
+    const saveAppearance = async (
+        nextTheme: Theme,
+        nextMotion: BackgroundMotion,
+    ) => {
         const previousTheme = theme
-        setPendingTheme(nextTheme)
+        const previousMotion = backgroundMotion
         setError(null)
         setTheme(nextTheme)
-        applyTheme(nextTheme)
+        setBackgroundMotion(nextMotion)
+        applyAppearance(nextTheme, nextMotion)
 
         try {
-            const updated = await settingsService.updateTheme(nextTheme)
+            const updated = await settingsService.updateAppearance(
+                nextTheme,
+                nextMotion,
+            )
             setTheme(updated.theme)
-            applyTheme(updated.theme)
+            setBackgroundMotion(updated.backgroundMotion)
+            applyAppearance(updated.theme, updated.backgroundMotion)
         } catch (requestError: unknown) {
             setTheme(previousTheme)
-            applyTheme(previousTheme)
+            setBackgroundMotion(previousMotion)
+            applyAppearance(previousTheme, previousMotion)
             setError(requestErrorMessage(
                 requestError,
-                "No pudimos guardar el tema.",
+                "No pudimos guardar tu apariencia.",
                 {
-                    400: "El tema seleccionado no es válido.",
+                    400: "La apariencia seleccionada no es válida.",
                     401: "Tu sesión venció. Inicia sesión nuevamente.",
                 },
             ))
-        } finally {
-            setPendingTheme(null)
         }
+    }
+
+    const selectTheme = async (nextTheme: Theme) => {
+        if (
+            nextTheme === theme ||
+            pendingTheme ||
+            pendingMotion
+        ) return
+
+        setPendingTheme(nextTheme)
+        await saveAppearance(nextTheme, backgroundMotion)
+        setPendingTheme(null)
+    }
+
+    const selectBackgroundMotion = async (
+        nextMotion: BackgroundMotion,
+    ) => {
+        if (
+            nextMotion === backgroundMotion ||
+            pendingTheme ||
+            pendingMotion
+        ) return
+
+        setPendingMotion(nextMotion)
+        await saveAppearance(theme, nextMotion)
+        setPendingMotion(null)
     }
 
     return (
         <ThemeContext
             value={{
                 theme,
-                isLoading,
+                backgroundMotion,
+                isLoading: false,
                 pendingTheme,
+                pendingMotion,
                 error,
                 selectTheme,
+                selectBackgroundMotion,
             }}
         >
             {children}

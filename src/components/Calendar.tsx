@@ -24,10 +24,10 @@ const weekdays = [
 ]
 
 const taskColors: Record<TaskQuadrant, string> = {
-    DO: "bg-now text-white font-medium",
-    PLAN: "bg-plan text-white",
-    DELEGATE: "bg-delegate text-white",
-    DELETE: "bg-delete text-white",
+    DO: "bg-now/82 text-white font-medium",
+    PLAN: "bg-plan/82 text-white",
+    DELEGATE: "bg-delegate/82 text-white",
+    DELETE: "bg-delete/72 text-white",
 }
 
 interface TaskPreview {
@@ -95,7 +95,7 @@ export function Calendar() {
 
     return (
         <div className="h-full min-h-144 w-full min-w-0 max-w-7xl xl:h-auto xl:min-h-0">
-            <div className="flex h-full w-full flex-col bg-transparent px-1 sm:px-2 xl:h-auto xl:rounded-2xl xl:bg-surface xl:px-10 xl:py-6 2xl:px-14 2xl:py-7.5">
+            <div className="flex h-full w-full flex-col bg-transparent px-1 sm:px-2 xl:h-auto xl:rounded-2xl xl:border xl:border-border/65 xl:bg-surface/94 xl:px-8 xl:py-6 xl:shadow-[0_18px_48px_rgb(0_0_0/14%)] 2xl:px-10.5 2xl:py-7">
                 <div className="mx-auto flex h-full min-h-0 w-full flex-col gap-1 sm:gap-2 xl:h-auto xl:gap-4">
                     <div className="flex h-16 shrink-0 items-center justify-between px-1 py-2 xl:h-auto">
                         <div className="flex items-center gap-1 pl-14 sm:gap-3 sm:pl-16 xl:pl-0">
@@ -107,13 +107,13 @@ export function Calendar() {
                                         shiftMonth(month, -1),
                                     )
                                 }
-                                className="grid size-9 place-items-center"
+                                className="calm-icon-button"
                             >
                                 <IconLeftArrow />
                             </button>
                             <h1
                                 aria-live="polite"
-                                className="min-w-20 text-center text-lg font-bold text-text-primary xl:min-w-40 xl:text-2xl"
+                                className="min-w-24 text-center text-[18px] font-semibold text-text-primary xl:min-w-42.5 xl:text-[24px]"
                             >
                                 <span className="xl:hidden">
                                     {mobileMonth}
@@ -130,18 +130,18 @@ export function Calendar() {
                                         shiftMonth(month, 1),
                                     )
                                 }
-                                className="grid size-9 place-items-center"
+                                className="calm-icon-button"
                             >
                                 <IconRigthArrow />
                             </button>
                         </div>
-                        <NewTaskButton className="grid size-11 place-items-center" />
+                        <NewTaskButton className="calm-icon-button bg-card text-text-primary" />
                     </div>
 
                     {(isLoading || error) && (
                         <p
                             role={error ? "alert" : "status"}
-                            className={`text-center text-[10px] ${
+                            className={`calm-feedback text-center ${
                                 error ? "text-error" : "text-text-secondary"
                             }`}
                         >
@@ -156,10 +156,9 @@ export function Calendar() {
                                     key={weekday}
                                     aria-label={weekday}
                                     className="
-                                        py-1 text-center text-[8px] font-semibold text-text-secondary
+                                        py-1.25 text-center text-[8px] font-semibold text-text-secondary
                                         sm:text-[10px]
-                                        xl:rounded-xs xl:bg-card xl:text-xs xl:text-text-primary
-                                        xl:ring xl:ring-border
+                                        xl:text-[11px] xl:text-text-secondary
                                     "
                                 >
                                     <span
@@ -184,16 +183,18 @@ export function Calendar() {
                                     key={day.dateKey}
                                     className={`
                                         relative flex min-h-0 min-w-0 flex-col justify-start overflow-hidden
-                                        rounded-[3px] p-1 ring ring-border sm:p-1.5
-                                        xl:justify-between xl:rounded-sm xl:p-2
-                                        ${day.isCurrentMonth ? "bg-card" : "bg-card/10"}
+                                        rounded-md border border-border/55 p-1 sm:p-1.5
+                                        xl:justify-between xl:rounded-[10px] xl:p-2
+                                        ${day.isCurrentMonth ? "bg-card/62" : "bg-card/14"}
                                     `}
                                 >
                                     <div className="flex items-start justify-center xl:justify-between">
                                         <span
                                             className={`
-                                                inline-grid h-5 min-w-5 place-items-center px-1
-                                                text-[10px] sm:h-6 sm:min-w-6 sm:text-xs
+                                                inline-grid h-5.5 min-w-5.5 place-items-center px-1
+                                                text-[12px] font-medium
+                                                sm:h-6 sm:min-w-6 sm:text-[13px]
+                                                xl:text-[12px]
                                                 ${day.isCurrentMonth ? "text-secondary" : "text-text-secondary"}
                                                 ${day.isToday ? "rounded-full bg-primary text-text-primary" : ""}
                                             `}
@@ -249,13 +250,13 @@ export function Calendar() {
                                                         }
                                                     }}
                                                     className={`
-                                                        w-full truncate rounded-sm px-0.5 py-0.5
+                                                w-full truncate rounded-sm px-0.5 py-0.5
                                                         text-left focus-visible:outline-2
                                                         focus-visible:outline-offset-1 focus-visible:outline-accent
-                                                        text-[6px] leading-none
-                                                        sm:px-1 sm:text-[8px]
-                                                        xl:rounded-md xl:px-1.5 xl:text-[9px] xl:leading-normal
-                                                        2xl:px-2 2xl:py-1 2xl:text-[10px]
+                                                        text-[8px] leading-2.5
+                                                        sm:px-1 sm:text-[9px] sm:leading-2.75
+                                                xl:rounded-md xl:px-1.5 xl:text-[9px] xl:leading-normal
+                                                2xl:px-2 2xl:py-1 2xl:text-[10px]
                                                         ${taskColors[task.quadrant]}
                                                         ${task.status === "COMPLETED" ? "line-through opacity-60" : ""}
                                                     `}

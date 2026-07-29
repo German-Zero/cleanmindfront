@@ -3,6 +3,7 @@ import type {
     FinishPomodoroSessionRequest,
     PomodoroSession,
     PomodoroSettings,
+    PomodoroState,
     PomodoroSummary,
     StartPomodoroSessionRequest,
     UpdatePomodoroSettingsRequest,
@@ -11,8 +12,8 @@ import type {
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const pomodoroService = {
-    getSettings: () =>
-        apiRequest<PomodoroSettings>("/api/pomodoro/settings", {
+    getState: (days = 7) =>
+        apiRequest<PomodoroState>(`/api/pomodoro/state?days=${days}`, {
             cache: "no-store",
         }),
 
@@ -22,12 +23,6 @@ export const pomodoroService = {
             headers: jsonHeaders,
             body: JSON.stringify(request),
         }),
-
-    getActiveSession: async () =>
-        (await apiRequest<PomodoroSession | null | undefined>(
-            "/api/pomodoro/sessions/active",
-            { cache: "no-store" },
-        )) ?? null,
 
     startSession: (request: StartPomodoroSessionRequest) =>
         apiRequest<PomodoroSession>("/api/pomodoro/sessions", {

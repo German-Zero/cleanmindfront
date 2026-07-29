@@ -44,7 +44,7 @@ export default function RegisterForm() {
 
         if (!acceptedTerms) {
             setError(
-                "Debes aceptar los términos y la política de privacidad.",
+                "Debes aceptar las condiciones de participación en la beta.",
             )
             return
         }
@@ -76,7 +76,7 @@ export default function RegisterForm() {
                 requestError,
                 "No pudimos crear tu cuenta.",
                 {
-                    400: "Revisa los datos y confirma la aceptación de los términos.",
+                    400: "Revisa los datos y confirma la aceptación del aviso de la beta.",
                     409: "Ya existe una cuenta con este email.",
                     429: "Creaste varias cuentas en poco tiempo. Espera un momento.",
                 },
@@ -160,45 +160,56 @@ export default function RegisterForm() {
                         minLength={8}
                         disabled={isPending}
                     />
-                    <label className="group relative flex cursor-pointer items-start gap-2.5 rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.75 transition-colors hover:border-primary/35 hover:bg-card/50 has-disabled:cursor-not-allowed has-disabled:opacity-60">
-                        <input
-                            required
-                            name="acceptedTerms"
-                            type="checkbox"
-                            disabled={isPending}
-                            className="peer absolute size-px overflow-hidden opacity-0"
-                        />
-                        <span
-                            aria-hidden="true"
-                            className="mt-px grid size-5 shrink-0 place-items-center rounded-md border border-border bg-background/65 text-transparent shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-[background-color,border-color,color,box-shadow] peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-[3px] peer-focus-visible:ring-primary/25"
+                    <div className="rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.5 transition-colors hover:border-primary/35 hover:bg-card/50">
+                        <label
+                            htmlFor="register-beta-terms"
+                            className="group flex cursor-pointer items-start gap-2.5 has-disabled:cursor-not-allowed has-disabled:opacity-60"
                         >
-                            <svg
-                                viewBox="0 0 20 20"
-                                className="size-3.25"
-                                fill="none"
+                            <input
+                                required
+                                id="register-beta-terms"
+                                name="acceptedTerms"
+                                type="checkbox"
+                                disabled={isPending}
+                                className="peer absolute h-px w-px overflow-hidden opacity-0"
+                            />
+                            <span
                                 aria-hidden="true"
+                                className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-md border border-border bg-background/65 text-transparent shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-[background-color,border-color,color,box-shadow] peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-[3px] peer-focus-visible:ring-primary/25"
                             >
-                                <path
-                                    d="m4.75 10.25 3.25 3.25 7.25-7.25"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                        </span>
-                        <span className="text-[11px] leading-4.25 text-text-secondary">
-                            Acepto los{" "}
-                            <strong className="font-medium text-text-primary">
-                                Términos y condiciones
-                            </strong>{" "}
-                            y la{" "}
-                            <strong className="font-medium text-text-primary">
-                                Política de privacidad
-                            </strong>
+                                <svg
+                                    viewBox="0 0 20 20"
+                                    className="h-3.25 w-3.25"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m4.75 10.25 3.25 3.25 7.25-7.25"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span className="text-[11px] leading-4.25 text-text-secondary">
+                                Confirmo que tengo al menos 16 años y acepto
+                                participar en la beta privada.
+                            </span>
+                        </label>
+                        <p className="mt-1.25 pl-7.5 text-[10px] leading-4 text-text-secondary">
+                            He leído el{" "}
+                            <Link
+                                href="/beta"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-medium text-accent hover:underline"
+                            >
+                                aviso de privacidad y participación
+                            </Link>
                             .
-                        </span>
-                    </label>
+                        </p>
+                    </div>
                     {error && (
                         <p role="alert" className="text-[12px] leading-4.5 text-error">
                             {error}

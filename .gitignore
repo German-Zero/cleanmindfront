@@ -44,5 +44,5 @@ CLAUDE.md
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env.example
 THIRD_PARTY_NOTICES.md
+.env.example

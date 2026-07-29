@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PasswordField from "@/components/forms/PasswordField"
 import { requestErrorMessage } from "@/lib/api"
+import AuthWelcome from "./AuthWelcome"
 import { validatePasswordConfirmation } from "../password-validation"
 import { authService } from "../services/auth.service"
 
@@ -12,6 +13,7 @@ export default function RegisterForm() {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [welcomeName, setWelcomeName] = useState<string | null>(null)
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -51,15 +53,24 @@ export default function RegisterForm() {
         setError(null)
 
         try {
-            await authService.register({
+            const response = await authService.register({
                 name,
                 email,
                 password,
                 acceptedTerms,
             })
-            router.replace(
-                `/verify-email?email=${encodeURIComponent(email)}`,
-            )
+            setWelcomeName(response.user.name)
+            const delay = window.matchMedia(
+                "(prefers-reduced-motion: reduce)",
+            ).matches
+                ? 0
+                : 1100
+
+            window.setTimeout(() => {
+                router.replace(
+                    `/verify-email?email=${encodeURIComponent(email)}`,
+                )
+            }, delay)
         } catch (requestError: unknown) {
             setError(requestErrorMessage(
                 requestError,
@@ -73,6 +84,10 @@ export default function RegisterForm() {
         } finally {
             setIsPending(false)
         }
+    }
+
+    if (welcomeName) {
+        return <AuthWelcome mode="register" name={welcomeName} />
     }
 
     return (
@@ -145,14 +160,33 @@ export default function RegisterForm() {
                         minLength={8}
                         disabled={isPending}
                     />
-                    <label className="flex cursor-pointer items-start gap-2.5 rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.75 transition-colors hover:bg-card/50">
+                    <label className="group relative flex cursor-pointer items-start gap-2.5 rounded-[10px] border border-border/70 bg-card/35 px-3 py-2.75 transition-colors hover:border-primary/35 hover:bg-card/50 has-disabled:cursor-not-allowed has-disabled:opacity-60">
                         <input
                             required
                             name="acceptedTerms"
                             type="checkbox"
                             disabled={isPending}
-                            className="mt-px size-4.5 shrink-0 cursor-pointer rounded-[5px] border-border accent-primary disabled:cursor-not-allowed"
+                            className="peer absolute size-px overflow-hidden opacity-0"
                         />
+                        <span
+                            aria-hidden="true"
+                            className="mt-px grid size-5 shrink-0 place-items-center rounded-md border border-border bg-background/65 text-transparent shadow-[inset_0_1px_0_rgb(255_255_255/0.05)] transition-[background-color,border-color,color,box-shadow] peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-[3px] peer-focus-visible:ring-primary/25"
+                        >
+                            <svg
+                                viewBox="0 0 20 20"
+                                className="size-3.25"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="m4.75 10.25 3.25 3.25 7.25-7.25"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </span>
                         <span className="text-[11px] leading-4.25 text-text-secondary">
                             Acepto los{" "}
                             <strong className="font-medium text-text-primary">

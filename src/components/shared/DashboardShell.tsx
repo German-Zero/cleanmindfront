@@ -15,25 +15,21 @@ const navigation = [
     {
         href: "/dashboard/calendar",
         label: "Calendario",
-        position: "top-0 left-0",
         icon: <CalendarButton />,
     },
     {
         href: "/dashboard/matriz",
         label: "Matriz",
-        position: "top-0 right-0",
         icon: <MatrizButton />,
     },
     {
         href: "/dashboard/pomodoro",
         label: "Pomodoro",
-        position: "bottom-0 left-0",
         icon: <PomodoroButton />,
     },
     {
         href: "/dashboard/whiteboard",
         label: "Pizarra",
-        position: "bottom-0 right-0",
         icon: <WhiteboardButton />,
     },
 ]
@@ -167,7 +163,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
 
             <main
                 className={`
-                    no-scrollbar relative z-[1] h-dvh min-w-0 flex-1
+                    no-scrollbar relative z-1 h-dvh min-w-0 flex-1
                     bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)]
                     pb-20 xl:pb-0
                     ${
@@ -196,7 +192,12 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                         flex max-w-95 items-center justify-around
                         rounded-2xl border border-border/70 bg-surface/94 p-1.5
                         shadow-[0_16px_42px_rgb(0_0_0/28%)] backdrop-blur-xl
-                        xl:contents
+                        xl:top-1/2 xl:right-5.5 xl:bottom-auto xl:left-auto
+                        xl:mx-0 xl:max-w-none xl:-translate-y-1/2
+                        xl:flex-col xl:justify-center xl:gap-1.5
+                        xl:rounded-[20px] xl:border-border/65
+                        xl:bg-surface/82 xl:p-1.75
+                        xl:shadow-[0_20px_60px_rgb(0_0_0/34%),inset_0_1px_0_rgb(255_255_255/4%)]
                     "
                 >
                     {navigation.map((item) => {
@@ -209,17 +210,52 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                                 aria-label={item.label}
                                 aria-current={isActive ? "page" : undefined}
                                 className={`
-                                    grid size-12 place-items-center rounded-[11px]
-                                    xl:absolute xl:z-10 xl:size-auto xl:rounded-none xl:ring-0
-                                    ${item.position}
+                                    group relative grid size-12 place-items-center
+                                    rounded-xl transition-[background-color,color,box-shadow,transform]
+                                    xl:rounded-[13px]
                                     ${
                                         isActive
-                                            ? "bg-primary/14 text-accent ring-1 ring-primary/35 xl:hidden"
-                                            : "text-text-secondary hover:bg-card hover:text-text-primary xl:block"
+                                            ? "bg-primary/14 text-accent ring-1 ring-primary/35 xl:bg-primary/16 xl:shadow-[0_8px_22px_rgb(0_0_0/18%)]"
+                                            : "text-text-secondary hover:bg-card hover:text-text-primary xl:hover:-translate-x-0.5 xl:hover:bg-card/85"
                                     }
                                 `}
                             >
+                                <span
+                                    aria-hidden="true"
+                                    className={`
+                                        absolute top-1/2 right-14.25 hidden
+                                        -translate-y-1/2 rounded-[9px]
+                                        border border-border/65 bg-surface/96
+                                        px-2.5 py-1.5 text-[10px]
+                                        font-medium whitespace-nowrap
+                                        text-text-primary opacity-0
+                                        shadow-[0_10px_28px_rgb(0_0_0/28%)]
+                                        backdrop-blur-md
+                                        transition-[opacity,transform]
+                                        group-hover:-translate-x-0.75
+                                        group-hover:opacity-100
+                                        group-focus-visible:-translate-x-0.75
+                                        group-focus-visible:opacity-100
+                                        xl:block
+                                    `}
+                                >
+                                    {item.label}
+                                </span>
                                 {item.icon}
+                                <span
+                                    aria-hidden="true"
+                                    className={`
+                                        absolute -right-0.75 hidden h-4.5
+                                        w-0.75 rounded-full bg-accent
+                                        transition-[opacity,transform]
+                                        xl:block
+                                        ${
+                                            isActive
+                                                ? "opacity-100"
+                                                : "translate-x-0.75 opacity-0"
+                                        }
+                                    `}
+                                />
                             </Link>
                         )
                     })}

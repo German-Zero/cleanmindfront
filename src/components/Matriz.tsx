@@ -52,7 +52,7 @@ export default function Matriz() {
         <section
             aria-labelledby="eisenhower-matrix-title"
             className="
-                calm-panel flex w-full max-w-375 flex-col gap-4.5
+                calm-panel flex w-full max-w-250 flex-col gap-4.5
                 p-3.5 text-text-primary sm:p-5.5
                 xl:h-187.5 xl:min-h-0 xl:shrink-0
             "

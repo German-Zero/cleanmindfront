@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import IconGoogle from "@/components/forms/IconGoogle"
 import PasswordField from "@/components/forms/PasswordField"
 import { requestErrorMessage } from "@/lib/api"
+import AuthWelcome from "./AuthWelcome"
 import { isMfaCodeValid, normalizeMfaCode } from "../mfa-code"
 import { authService } from "../services/auth.service"
 import type { MfaRequiredResponse } from "../types"
@@ -22,6 +23,20 @@ export default function LoginForm({
         useState<MfaRequiredResponse | null>(initialChallenge)
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [welcomeName, setWelcomeName] = useState<string | null>(null)
+
+    const finishLogin = (name: string) => {
+        setWelcomeName(name)
+        const delay = window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? 0
+            : 1100
+
+        window.setTimeout(() => {
+            router.replace("/dashboard/calendar")
+            router.refresh()
+        }, delay)
+    }
 
     const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -41,8 +56,7 @@ export default function LoginForm({
                 return
             }
 
-            router.replace("/dashboard/calendar")
-            router.refresh()
+            finishLogin(response.user.name)
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(
@@ -82,12 +96,11 @@ export default function LoginForm({
         setError(null)
 
         try {
-            await authService.verifyMfa({
+            const response = await authService.verifyMfa({
                 challengeToken: challenge.challengeToken,
                 code,
             })
-            router.replace("/dashboard/calendar")
-            router.refresh()
+            finishLogin(response.user.name)
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(
@@ -103,6 +116,10 @@ export default function LoginForm({
         } finally {
             setIsPending(false)
         }
+    }
+
+    if (welcomeName) {
+        return <AuthWelcome mode="login" name={welcomeName} />
     }
 
     if (challenge) {

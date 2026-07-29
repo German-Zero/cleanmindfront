@@ -1,3 +1,5 @@
+import CopyrightFooter from "@/components/shared/CopyrightFooter"
+
 const calmSteps = [
     "Elige qué importa hoy",
     "Avanza en un bloque de enfoque",
@@ -83,6 +85,7 @@ export default function AuthIntroPanel() {
                     </div>
                 </div>
             </div>
+            <CopyrightFooter className="absolute bottom-3 left-1/2 w-max max-w-[calc(100%-32px)] -translate-x-1/2 text-center xl:bottom-5.5 xl:left-[clamp(64px,8vw,140px)] xl:translate-x-0 xl:text-left" />
         </section>
     )
 }

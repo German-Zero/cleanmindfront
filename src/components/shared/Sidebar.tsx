@@ -2,6 +2,7 @@
 
 import { useTasks } from "@/features/tasks/TasksProvider";
 import type { TaskQuadrant } from "@/features/tasks/types";
+import CopyrightFooter from "./CopyrightFooter";
 import Task from "./Task";
 import UserCard from "./UserCard";
 
@@ -89,7 +90,10 @@ export default function Sidebar({ onOpenSettings }: SidebarProps) {
                     </div>
                 ))}
             </div>
-            <UserCard onOpenSettings={onOpenSettings} />
+            <div className="flex shrink-0 flex-col gap-2.25">
+                <UserCard onOpenSettings={onOpenSettings} />
+                <CopyrightFooter className="px-2 text-center" />
+            </div>
         </aside>
     )
 }

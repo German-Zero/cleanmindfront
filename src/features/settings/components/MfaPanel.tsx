@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
+import { QRCodeSVG } from "qrcode.react"
 import PasswordField from "@/components/forms/PasswordField"
 import IconPhone from "@/components/ui/icons/IconPhone"
 import IconShield from "@/components/ui/icons/IconShield"
@@ -392,32 +393,60 @@ export default function MfaPanel({
                     onSubmit={handleEnable}
                     className="flex flex-col gap-4"
                 >
+                    <div className="flex flex-col items-center gap-3 rounded-2xl border border-primary/25 bg-primary/6 p-4">
+                        <div className="overflow-hidden rounded-xl bg-white shadow-[0_12px_32px_rgb(0_0_0/22%)]">
+                            <QRCodeSVG
+                                value={setup.otpauthUri}
+                                size={184}
+                                level="M"
+                                marginSize={4}
+                                bgColor="#FFFFFF"
+                                fgColor="#111827"
+                                title="Código QR para configurar la verificación en dos pasos"
+                                className="h-auto w-full max-w-46"
+                            />
+                        </div>
+                        <div className="text-center">
+                            <p className="text-[12px] font-medium text-text-primary">
+                                Escanea el código con tu autenticador
+                            </p>
+                            <p className="mt-1 text-[10px] leading-4 text-text-secondary">
+                                Compatible con Google Authenticator,
+                                Microsoft Authenticator y Authy.
+                            </p>
+                        </div>
+                    </div>
                     <a
                         href={setup.otpauthUri}
-                        className="rounded-sm border border-border bg-card px-3 py-2 text-center text-xs text-text-primary hover:bg-card-hover"
+                        className="calm-button-secondary flex min-h-11 items-center justify-center text-center text-[11px]"
                     >
                         Abrir en mi aplicación de autenticación
                     </a>
-                    <div className="rounded-lg border border-border bg-card/60 p-3">
-                        <p className="mb-1 text-[10px] text-text-secondary">
-                            Clave para ingreso manual
-                        </p>
-                        <code className="block break-all text-xs">
-                            {setup.secret}
-                        </code>
-                        <button
-                            type="button"
-                            onClick={() =>
-                                copyText(
-                                    setup.secret,
-                                    "Clave copiada.",
-                                )
-                            }
-                            className="mt-2 min-h-10 rounded-sm border border-border px-3 text-xs"
-                        >
-                            Copiar clave
-                        </button>
-                    </div>
+                    <details className="rounded-[11px] border border-border/70 bg-card/55 px-3.25 py-2.75">
+                        <summary className="cursor-pointer text-[11px] font-medium text-text-secondary">
+                            No puedo escanear el código
+                        </summary>
+                        <div className="mt-3 border-t border-border/60 pt-3">
+                            <p className="mb-1.25 text-[10px] text-text-secondary">
+                                Clave para ingreso manual
+                            </p>
+                            <code className="block break-all text-[11px] leading-4.5 text-text-primary">
+                                {setup.secret}
+                            </code>
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    copyText(
+                                        setup.secret,
+                                        "Clave copiada.",
+                                    )
+                                }
+                                className="calm-button-secondary mt-2.5 min-h-10 w-full text-[11px]"
+                            >
+                                Copiar clave
+                            </button>
+                        </div>
+                    </details>
                     <div className="flex flex-col gap-1">
                         <label htmlFor="mfa-enable-code" className="text-sm">
                             Código de seis dígitos

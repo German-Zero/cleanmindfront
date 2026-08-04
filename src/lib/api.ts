@@ -8,6 +8,32 @@ export class ApiError extends Error {
     }
 }
 
+const sessionEntryPaths = new Set([
+    "/api/auth/login",
+    "/api/auth/register",
+    "/api/auth/mfa/verify",
+    "/api/auth/refresh",
+    "/api/auth/forgot-password",
+    "/api/auth/reset-password",
+    "/api/auth/verify-email",
+])
+
+let refreshRequest: Promise<boolean> | null = null
+
+function refreshSession(): Promise<boolean> {
+    refreshRequest ??= fetch("/api/auth/refresh", {
+        method: "POST",
+        credentials: "include",
+    })
+        .then((response) => response.ok)
+        .catch(() => false)
+        .finally(() => {
+            refreshRequest = null
+        })
+
+    return refreshRequest
+}
+
 export function requestErrorMessage(
     error: unknown,
     fallback: string,
@@ -23,10 +49,19 @@ export async function apiRequest<T>(
     path: string,
     init: RequestInit = {},
 ): Promise<T> {
-    const response = await fetch(path, {
+    const request = () => fetch(path, {
         ...init,
         credentials: "include",
     })
+    let response = await request()
+
+    if (
+        response.status === 401 &&
+        !sessionEntryPaths.has(path) &&
+        await refreshSession()
+    ) {
+        response = await request()
+    }
 
     const isJson = response.headers
         .get("content-type")

@@ -28,7 +28,7 @@ interface ToolWhiteboardButtonProps {
     font: WhiteboardFont
     rectangleStrokeStyle: WhiteboardStrokeStyle
     cornerRadius: number
-    zoom: number
+    canUndo: boolean
     savedColors: string[]
     onToolChange: (tool: WhiteboardTool) => void
     onColorChange: (color: string) => void
@@ -40,7 +40,7 @@ interface ToolWhiteboardButtonProps {
         style: WhiteboardStrokeStyle,
     ) => void
     onCornerRadiusChange: (radius: number) => void
-    onZoomChange: (zoom: number) => void
+    onUndo: () => void
     onSavedColorsChange: (colors: string[]) => void
 }
 
@@ -118,50 +118,22 @@ function HandIcon() {
     )
 }
 
-function ZoomControls({
-    zoom,
-    onZoomChange,
-    floating = false,
-}: {
-    zoom: number
-    onZoomChange: (zoom: number) => void
-    floating?: boolean
-}) {
+function UndoIcon() {
     return (
-        <div
-            className={`flex shrink-0 items-center p-1 ${
-                floating
-                    ? "rounded-xl border border-border/65 bg-surface/96 shadow-[0_12px_30px_rgb(0_0_0/18%)] backdrop-blur"
-                    : ""
-            }`}
+        <svg
+            aria-hidden="true"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
         >
-            <button
-                type="button"
-                aria-label="Alejar"
-                disabled={zoom <= 0.1}
-                onClick={() => onZoomChange(zoom - 0.1)}
-                className="grid size-8 place-items-center rounded-lg text-lg text-text-secondary hover:bg-card-hover disabled:opacity-35"
-            >
-                −
-            </button>
-            <button
-                type="button"
-                title="Restablecer a 100%"
-                onClick={() => onZoomChange(1)}
-                className="min-w-12 rounded-lg px-1 py-2 text-[10px] font-semibold text-text-secondary hover:bg-card-hover"
-            >
-                {Math.round(zoom * 100)}%
-            </button>
-            <button
-                type="button"
-                aria-label="Acercar"
-                disabled={zoom >= 1.5}
-                onClick={() => onZoomChange(zoom + 0.1)}
-                className="grid size-8 place-items-center rounded-lg text-lg text-text-secondary hover:bg-card-hover disabled:opacity-35"
-            >
-                +
-            </button>
-        </div>
+            <path d="M9 8 5 12l4 4" />
+            <path d="M5 12h8a6 6 0 0 1 6 6" />
+        </svg>
     )
 }
 
@@ -174,7 +146,7 @@ export default function ToolWhiteboardButton({
     font,
     rectangleStrokeStyle,
     cornerRadius,
-    zoom,
+    canUndo,
     savedColors,
     onToolChange,
     onColorChange,
@@ -184,7 +156,7 @@ export default function ToolWhiteboardButton({
     onFontChange,
     onRectangleStrokeStyleChange,
     onCornerRadiusChange,
-    onZoomChange,
+    onUndo,
     onSavedColorsChange,
 }: ToolWhiteboardButtonProps) {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
@@ -239,29 +211,6 @@ export default function ToolWhiteboardButton({
 
     return (
         <div className="relative min-w-0 max-w-full">
-            {!isSettingsOpen && (
-                <div
-                    className="absolute left-0 sm:hidden"
-                    style={{
-                        bottom: `calc(100% + ${
-                            tool === "rectangle"
-                                ? 150
-                                : tool === "text"
-                                  ? 104
-                                  : range
-                                    ? 72
-                                    : 12
-                        }px)`,
-                    }}
-                >
-                    <ZoomControls
-                        zoom={zoom}
-                        onZoomChange={onZoomChange}
-                        floating
-                    />
-                </div>
-            )}
-
             {isSettingsOpen && (
                 <div className="calm-panel absolute bottom-[calc(100%+12px)] left-1/2 max-h-[calc(100dvh-128px)] w-[min(304px,calc(100dvw-16px))] -translate-x-1/2 overflow-y-auto p-4 backdrop-blur">
                     <div className="mb-3 flex items-center justify-between">
@@ -568,6 +517,16 @@ export default function ToolWhiteboardButton({
             <div className="no-scrollbar flex max-w-full items-center gap-0.5 overflow-x-auto rounded-[13px] border border-border/65 bg-surface/96 p-1.25 shadow-[0_14px_36px_rgb(0_0_0/20%)] backdrop-blur">
                 <button
                     type="button"
+                    aria-label="Deshacer última acción"
+                    title="Deshacer"
+                    disabled={!canUndo}
+                    onClick={onUndo}
+                    className="grid size-9 shrink-0 place-items-center rounded-[9px] text-text-secondary transition-colors hover:bg-card/80 hover:text-text-primary disabled:pointer-events-none disabled:opacity-30"
+                >
+                    <UndoIcon />
+                </button>
+                <button
+                    type="button"
                     aria-label="Mover lienzo"
                     aria-pressed={tool === "hand"}
                     onClick={() => onToolChange("hand")}
@@ -659,12 +618,6 @@ export default function ToolWhiteboardButton({
                     />
                 </button>
 
-                <div className="hidden sm:block">
-                    <ZoomControls
-                        zoom={zoom}
-                        onZoomChange={onZoomChange}
-                    />
-                </div>
             </div>
         </div>
     )

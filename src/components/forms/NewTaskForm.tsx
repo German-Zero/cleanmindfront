@@ -147,7 +147,7 @@ export default function NewTaskForm({
                                     type="date"
                                     disabled={isPending}
                                     defaultValue={taskDueDateKey(task?.dueDate ?? null) ?? ""}
-                                    className="calm-input hide-date-icon pl-16 pr-4 text-[13px]"
+                                    className="calm-input hide-date-icon block min-w-0 max-w-full appearance-none pl-16 pr-4 text-[16px] sm:text-[13px]"
                                 />
                             </div>
                         </div>

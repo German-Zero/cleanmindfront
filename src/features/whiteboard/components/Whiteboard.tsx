@@ -142,8 +142,22 @@ export default function Whiteboard() {
     const containerRef = useRef<HTMLDivElement>(null)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const draftRef = useRef<WhiteboardElement | null>(null)
+    const elementsRef = useRef<WhiteboardElement[]>([])
+    const historyRef = useRef<WhiteboardElement[][]>([])
     const panGestureRef = useRef<WhiteboardPoint | null>(null)
+    const touchPointsRef = useRef(
+        new Map<number, WhiteboardPoint>(),
+    )
+    const pinchGestureRef = useRef<{
+        distance: number
+        zoom: number
+        worldAnchor: WhiteboardPoint
+    } | null>(null)
     const erasingRef = useRef(false)
+    const eraserSnapshotRef = useRef<WhiteboardElement[] | null>(
+        null,
+    )
+    const erasedDuringGestureRef = useRef(false)
     const spacePressedRef = useRef(false)
     const backgroundRef = useRef<HTMLImageElement | null>(null)
     const skipInitialSaveRef = useRef(true)
@@ -154,6 +168,7 @@ export default function Whiteboard() {
     const [backgroundVersion, setBackgroundVersion] = useState(0)
     const [savedColors, setSavedColors] = useState<string[]>([])
     const [isHydrated, setIsHydrated] = useState(false)
+    const [canUndo, setCanUndo] = useState(false)
     const [viewport, setViewport] = useState({ width: 1, height: 1 })
     const [pan, setPan] = useState<WhiteboardPoint>({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
@@ -186,7 +201,10 @@ export default function Whiteboard() {
             .get()
             .then((document) => {
                 if (!isCurrent) return
+                elementsRef.current = document.elements
+                historyRef.current = []
                 setElements(document.elements)
+                setCanUndo(false)
                 setBackgroundImage(document.backgroundImage)
                 setSavedColors(document.savedColors)
                 setIsHydrated(true)
@@ -342,24 +360,88 @@ export default function Whiteboard() {
 
     const eraseAt = useCallback(
         (point: WhiteboardPoint) => {
-            setElements((current) =>
-                current.filter(
+            setElements((current) => {
+                const next = current.filter(
                     (element) =>
                         !elementIntersectsEraser(
                             element,
                             point,
                             eraserWidth / (2 * zoom),
                         ),
-                ),
-            )
+                )
+                if (next.length !== current.length) {
+                    erasedDuringGestureRef.current = true
+                    elementsRef.current = next
+                }
+                return next
+            })
         },
         [eraserWidth, zoom],
     )
+
+    const remember = (snapshot: WhiteboardElement[]) => {
+        historyRef.current.push(snapshot)
+        setCanUndo(true)
+    }
+
+    const undo = () => {
+        const previous = historyRef.current.pop()
+        if (!previous) return
+
+        elementsRef.current = previous
+        setElements(previous)
+        setCanUndo(historyRef.current.length > 0)
+        updateDraft(null)
+        setTextEditor(null)
+    }
 
     const handlePointerDown = (
         event: React.PointerEvent<HTMLCanvasElement>,
     ) => {
         const { screen, world } = eventPoints(event)
+
+        if (event.pointerType === "touch") {
+            touchPointsRef.current.set(event.pointerId, screen)
+            event.currentTarget.setPointerCapture(event.pointerId)
+
+            if (touchPointsRef.current.size >= 2) {
+                if (
+                    erasingRef.current &&
+                    erasedDuringGestureRef.current &&
+                    eraserSnapshotRef.current
+                ) {
+                    elementsRef.current = eraserSnapshotRef.current
+                    setElements(eraserSnapshotRef.current)
+                }
+
+                updateDraft(null)
+                panGestureRef.current = null
+                erasingRef.current = false
+                erasedDuringGestureRef.current = false
+                eraserSnapshotRef.current = null
+
+                const [first, second] = [
+                    ...touchPointsRef.current.values(),
+                ]
+                const anchor = {
+                    x: (first.x + second.x) / 2,
+                    y: (first.y + second.y) / 2,
+                }
+                pinchGestureRef.current = {
+                    distance: Math.max(
+                        1,
+                        Math.hypot(
+                            second.x - first.x,
+                            second.y - first.y,
+                        ),
+                    ),
+                    zoom,
+                    worldAnchor: screenToWorld(anchor, pan, zoom),
+                }
+                return
+            }
+        }
+
         const shouldPan =
             tool === "hand" ||
             event.button === 1 ||
@@ -373,6 +455,8 @@ export default function Whiteboard() {
 
         if (tool === "eraser") {
             erasingRef.current = true
+            eraserSnapshotRef.current = elementsRef.current
+            erasedDuringGestureRef.current = false
             eraseAt(world)
             event.currentTarget.setPointerCapture(event.pointerId)
             return
@@ -419,6 +503,37 @@ export default function Whiteboard() {
         const { screen, world } = eventPoints(event)
         setEraserCursor(screen)
 
+        if (
+            event.pointerType === "touch" &&
+            touchPointsRef.current.has(event.pointerId)
+        ) {
+            touchPointsRef.current.set(event.pointerId, screen)
+            const pinch = pinchGestureRef.current
+            if (pinch && touchPointsRef.current.size >= 2) {
+                const [first, second] = [
+                    ...touchPointsRef.current.values(),
+                ]
+                const anchor = {
+                    x: (first.x + second.x) / 2,
+                    y: (first.y + second.y) / 2,
+                }
+                const distance = Math.hypot(
+                    second.x - first.x,
+                    second.y - first.y,
+                )
+                const nextZoom = clampZoom(
+                    pinch.zoom * (distance / pinch.distance),
+                )
+
+                setZoom(nextZoom)
+                setPan({
+                    x: anchor.x - pinch.worldAnchor.x * nextZoom,
+                    y: anchor.y - pinch.worldAnchor.y * nextZoom,
+                })
+                return
+            }
+        }
+
         if (panGestureRef.current) {
             const previous = panGestureRef.current
             setPan((current) => ({
@@ -450,8 +565,39 @@ export default function Whiteboard() {
     const handlePointerUp = (
         event: React.PointerEvent<HTMLCanvasElement>,
     ) => {
+        const wasPinching = pinchGestureRef.current !== null
+        if (event.pointerType === "touch") {
+            touchPointsRef.current.delete(event.pointerId)
+            if (touchPointsRef.current.size < 2) {
+                pinchGestureRef.current = null
+            }
+        }
+
+        if (wasPinching) {
+            panGestureRef.current = null
+            erasingRef.current = false
+            if (
+                event.currentTarget.hasPointerCapture(event.pointerId)
+            ) {
+                event.currentTarget.releasePointerCapture(
+                    event.pointerId,
+                )
+            }
+            return
+        }
+
         panGestureRef.current = null
+
+        if (
+            erasingRef.current &&
+            erasedDuringGestureRef.current &&
+            eraserSnapshotRef.current
+        ) {
+            remember(eraserSnapshotRef.current)
+        }
         erasingRef.current = false
+        erasedDuringGestureRef.current = false
+        eraserSnapshotRef.current = null
 
         const current = draftRef.current
         if (current) {
@@ -463,7 +609,10 @@ export default function Whiteboard() {
                       current.start.y !== current.end.y
 
             if (shouldKeep) {
-                setElements((elements) => [...elements, current])
+                remember(elementsRef.current)
+                const next = [...elementsRef.current, current]
+                elementsRef.current = next
+                setElements(next)
             }
             updateDraft(null)
         }
@@ -493,20 +642,11 @@ export default function Whiteboard() {
         event: React.WheelEvent<HTMLCanvasElement>,
     ) => {
         event.preventDefault()
-
-        if (event.ctrlKey || event.metaKey) {
-            const rect = event.currentTarget.getBoundingClientRect()
-            changeZoom(zoom - event.deltaY * 0.001, {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top,
-            })
-            return
-        }
-
-        setPan((current) => ({
-            x: current.x - event.deltaX,
-            y: current.y - event.deltaY,
-        }))
+        const rect = event.currentTarget.getBoundingClientRect()
+        changeZoom(zoom - event.deltaY * 0.001, {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+        })
     }
 
     const cursor =
@@ -526,8 +666,9 @@ export default function Whiteboard() {
 
         const text = textEditor.text.trim()
         if (text) {
-            setElements((current) => [
-                ...current,
+            remember(elementsRef.current)
+            const next: WhiteboardElement[] = [
+                ...elementsRef.current,
                 {
                     id: crypto.randomUUID(),
                     type: "text",
@@ -537,7 +678,9 @@ export default function Whiteboard() {
                     font,
                     size: textSize,
                 },
-            ])
+            ]
+            elementsRef.current = next
+            setElements(next)
         }
         setTextEditor(null)
     }
@@ -557,7 +700,7 @@ export default function Whiteboard() {
             "
         >
             {isEmpty && (
-                <h1 className="pointer-events-none absolute inset-0 z-0 grid place-items-center px-[64px] text-center text-[18px] font-medium text-text-secondary/60 sm:text-[22px]">
+                <h1 className="pointer-events-none absolute inset-0 z-0 grid place-items-center px-16 text-center text-[18px] font-medium text-text-secondary/60 sm:text-[22px]">
                     ¿Qué dibujaremos hoy?
                 </h1>
             )}
@@ -611,7 +754,7 @@ export default function Whiteboard() {
                             event.currentTarget.blur()
                         }
                     }}
-                    className="absolute z-30 min-h-[36px] resize-none overflow-hidden rounded-[7px] border border-primary/45 bg-surface/90 px-[8px] py-[5px] outline-none backdrop-blur"
+                    className="absolute z-30 min-h-9 resize-none overflow-hidden rounded-[7px] border border-primary/45 bg-surface/90 px-2 py-1.25 outline-none backdrop-blur"
                     style={{
                         left: textEditorScreen.x,
                         top: textEditorScreen.y - textSize * zoom,
@@ -650,7 +793,7 @@ export default function Whiteboard() {
             {error && (
                 <p
                     role="alert"
-                    className="calm-feedback absolute top-[16px] left-1/2 z-30 -translate-x-1/2 bg-surface text-error"
+                    className="calm-feedback absolute top-4 left-1/2 z-30 -translate-x-1/2 bg-surface text-error"
                 >
                     {error}
                 </p>
@@ -668,7 +811,7 @@ export default function Whiteboard() {
                         rectangleStrokeStyle
                     }
                     cornerRadius={cornerRadius}
-                    zoom={zoom}
+                    canUndo={canUndo}
                     savedColors={savedColors}
                     onToolChange={setTool}
                     onColorChange={setColor}
@@ -680,7 +823,7 @@ export default function Whiteboard() {
                         setRectangleStrokeStyle
                     }
                     onCornerRadiusChange={setCornerRadius}
-                    onZoomChange={changeZoom}
+                    onUndo={undo}
                     onSavedColorsChange={setSavedColors}
                 />
             </div>

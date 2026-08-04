@@ -25,7 +25,10 @@ export default function LoginForm({
     const [error, setError] = useState<string | null>(null)
     const [welcomeName, setWelcomeName] = useState<string | null>(null)
 
-    const finishLogin = (name: string) => {
+    const finishLogin = (
+        name: string,
+        requiresTermsAcceptance: boolean,
+    ) => {
         setWelcomeName(name)
         const delay = window.matchMedia("(prefers-reduced-motion: reduce)")
             .matches
@@ -33,7 +36,11 @@ export default function LoginForm({
             : 1100
 
         window.setTimeout(() => {
-            router.replace("/dashboard/calendar")
+            router.replace(
+                requiresTermsAcceptance
+                    ? "/terms"
+                    : "/dashboard/calendar",
+            )
             router.refresh()
         }, delay)
     }
@@ -56,7 +63,10 @@ export default function LoginForm({
                 return
             }
 
-            finishLogin(response.user.name)
+            finishLogin(
+                response.user.name,
+                response.user.requiresTermsAcceptance,
+            )
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(
@@ -100,7 +110,10 @@ export default function LoginForm({
                 challengeToken: challenge.challengeToken,
                 code,
             })
-            finishLogin(response.user.name)
+            finishLogin(
+                response.user.name,
+                response.user.requiresTermsAcceptance,
+            )
         } catch (requestError: unknown) {
             setError(
                 requestErrorMessage(

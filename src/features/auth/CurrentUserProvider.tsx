@@ -12,6 +12,7 @@ interface CurrentUserContextValue {
     user: CurrentUser | null
     isLoading: boolean
     markPasswordCreated: () => void
+    markOnboardingCompleted: () => void
 }
 
 const CurrentUserContext = createContext<CurrentUserContextValue | null>(
@@ -36,6 +37,12 @@ export function CurrentUserProvider({
                     setUser((currentUser) =>
                         currentUser
                             ? { ...currentUser, hasPassword: true }
+                            : currentUser,
+                    ),
+                markOnboardingCompleted: () =>
+                    setUser((currentUser) =>
+                        currentUser
+                            ? { ...currentUser, needsOnboarding: false }
                             : currentUser,
                     ),
             }}

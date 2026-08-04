@@ -43,10 +43,42 @@ export function buildCalendarDays(
     })
 }
 
+export function buildWeekDays(
+    visibleDate: Date,
+    today = new Date(),
+): CalendarDay[] {
+    const firstDay = new Date(
+        visibleDate.getFullYear(),
+        visibleDate.getMonth(),
+        visibleDate.getDate() - visibleDate.getDay(),
+    )
+    const todayKey = toDateKey(today)
+
+    return Array.from({ length: 7 }, (_, index) => {
+        const date = new Date(
+            firstDay.getFullYear(),
+            firstDay.getMonth(),
+            firstDay.getDate() + index,
+        )
+        const dateKey = toDateKey(date)
+
+        return {
+            dateKey,
+            dayNumber: date.getDate(),
+            isCurrentMonth: date.getMonth() === visibleDate.getMonth(),
+            isToday: dateKey === todayKey,
+        }
+    })
+}
+
 export function shiftMonth(visibleMonth: Date, amount: number): Date {
     return new Date(
         visibleMonth.getFullYear(),
         visibleMonth.getMonth() + amount,
         1,
     )
+}
+
+export function shiftDate(date: Date, amount: number): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + amount)
 }

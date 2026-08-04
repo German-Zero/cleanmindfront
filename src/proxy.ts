@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-const privateRoutes = ["/dashboard", "/settings"]
+const privateRoutes = ["/dashboard", "/settings", "/terms"]
 const authRoutes = ["/login", "/register"]
 
 export function proxy(request: NextRequest) {
@@ -38,5 +38,6 @@ export const config = {
         "/register",
         "/dashboard/:path*",
         "/settings/:path*",
+        "/terms",
     ],
 }

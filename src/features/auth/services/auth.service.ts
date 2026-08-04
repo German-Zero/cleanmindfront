@@ -64,4 +64,9 @@ export const authService = {
         apiRequest<void>("/api/auth/logout", {
             method: "POST",
         }),
+
+    completeOnboarding: () =>
+        apiRequest<void>("/api/auth/onboarding/complete", {
+            method: "PATCH",
+        }),
 }

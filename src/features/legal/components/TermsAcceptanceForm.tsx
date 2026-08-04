@@ -91,13 +91,13 @@ export default function TermsAcceptanceForm() {
     return (
         <div className="calm-panel mx-auto w-full max-w-130 px-5.5 py-7 sm:px-8.5 sm:py-9">
             <div className="flex flex-col gap-2.5">
-                <span className="calm-eyebrow self-start">Antes de continuar</span>
+                <span className="calm-eyebrow self-start">Actualización importante</span>
                 <h1 className="text-[27px] leading-8.5 font-semibold text-text-primary">
                     Revisa las condiciones de CleanMind
                 </h1>
                 <p className="text-[13px] leading-5 text-text-secondary">
-                    Necesitamos tu aceptación para terminar de preparar tu cuenta.
-                    Si las condiciones cambian, volveremos a mostrártelas.
+                    Publicamos una nueva versión. Para seguir usando CleanMind,
+                    revísala y confirma que estás de acuerdo.
                 </p>
             </div>
 
@@ -138,8 +138,8 @@ export default function TermsAcceptanceForm() {
                         className="themed-checkbox mt-px shrink-0"
                     />
                     <span className="text-[12px] leading-4.5 text-text-secondary">
-                        Confirmo que leí y acepto esta versión de los términos,
-                        condiciones y política de privacidad.
+                        Confirmo que leí y acepto esta nueva versión de los
+                        términos, condiciones y política de privacidad.
                     </span>
                 </label>
             )}

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"
+import OnboardingTutorial from "@/features/onboarding/components/OnboardingTutorial"
 import SettingsModal from "@/features/settings/components/SettingsModal"
 import NewTaskButton from "@/features/tasks/components/NewTaskButton"
 import CalendarButton from "../ui/CalendarButton"
@@ -298,6 +299,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     onCloseLockChange={setIsSettingsCloseLocked}
                 />
             </dialog>
+
+            <OnboardingTutorial />
         </div>
     )
 }

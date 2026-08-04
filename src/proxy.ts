@@ -6,7 +6,9 @@ const authRoutes = ["/login", "/register"]
 
 export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl
-    const hasSession = request.cookies.has("accessToken")
+    const hasSession =
+        request.cookies.has("accessToken") ||
+        request.cookies.has("refreshToken")
     const isPrivateRoute = privateRoutes.some(
         (route) => pathname === route || pathname.startsWith(`${route}/`),
     )

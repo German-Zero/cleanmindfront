@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import PasswordField from "@/components/forms/PasswordField"
@@ -8,12 +8,33 @@ import { requestErrorMessage } from "@/lib/api"
 import AuthWelcome from "./AuthWelcome"
 import { validatePasswordConfirmation } from "../password-validation"
 import { authService } from "../services/auth.service"
+import type { RegistrationStatus } from "../types"
 
 export default function RegisterForm() {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [welcomeName, setWelcomeName] = useState<string | null>(null)
+    const [registrationStatus, setRegistrationStatus] =
+        useState<RegistrationStatus | null>(null)
+    const [registrationStatusError, setRegistrationStatusError] =
+        useState(false)
+
+    useEffect(() => {
+        let cancelled = false
+
+        authService.getRegistrationStatus()
+            .then((status) => {
+                if (!cancelled) setRegistrationStatus(status)
+            })
+            .catch(() => {
+                if (!cancelled) setRegistrationStatusError(true)
+            })
+
+        return () => {
+            cancelled = true
+        }
+    }, [])
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -77,6 +98,7 @@ export default function RegisterForm() {
                 "No pudimos crear tu cuenta.",
                 {
                     400: "Revisa los datos y confirma la aceptación del aviso de la beta.",
+                    403: "El registro está disponible únicamente para testers autorizados y mientras queden cupos.",
                     409: "Ya existe una cuenta con este email.",
                     429: "Creaste varias cuentas en poco tiempo. Espera un momento.",
                 },
@@ -90,6 +112,40 @@ export default function RegisterForm() {
         return <AuthWelcome mode="register" name={welcomeName} />
     }
 
+    if (!registrationStatus && !registrationStatusError) {
+        return (
+            <div className="flex w-full max-w-100 flex-col gap-3 text-center">
+                <h2 className="text-[24px] font-semibold text-text-primary">
+                    Consultando disponibilidad
+                </h2>
+                <p className="text-[12px] leading-5 text-text-secondary">
+                    Estamos comprobando los cupos de la beta privada.
+                </p>
+            </div>
+        )
+    }
+
+    if (registrationStatusError || !registrationStatus?.acceptsNewUsers) {
+        return (
+            <div className="flex w-full max-w-100 flex-col gap-4 text-center">
+                <h2 className="text-[24px] font-semibold text-text-primary">
+                    Registro cerrado
+                </h2>
+                <p className="text-[12px] leading-5 text-text-secondary">
+                    {registrationStatusError
+                        ? "No pudimos comprobar la disponibilidad. Recarga la página para volver a intentarlo."
+                        : "El registro de la beta está cerrado por ahora. Las cuentas existentes pueden seguir ingresando."}
+                </p>
+                <Link
+                    href="/login"
+                    className="calm-button inline-flex min-h-11 items-center justify-center"
+                >
+                    Ir al inicio de sesión
+                </Link>
+            </div>
+        )
+    }
+
     return (
         <div className="flex w-full max-w-100 flex-col">
             <div className="mb-7 flex flex-col gap-2">
@@ -98,6 +154,11 @@ export default function RegisterForm() {
                 </h2>
                 <p className="text-[13px] leading-5 text-text-secondary">
                     Organiza tus tareas y recupera espacio mental.
+                </p>
+                <p className="text-[11px] leading-4 text-text-secondary">
+                    Beta privada para correos autorizados. Quedan{" "}
+                    {registrationStatus.remaining} de{" "}
+                    {registrationStatus.maxUsers} cupos.
                 </p>
             </div>
             <div className="flex w-full flex-col gap-6">

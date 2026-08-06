@@ -13,16 +13,18 @@ import type { MfaRequiredResponse } from "../types"
 
 interface LoginFormProps {
     initialChallenge?: MfaRequiredResponse | null
+    initialError?: string | null
 }
 
 export default function LoginForm({
     initialChallenge = null,
+    initialError = null,
 }: LoginFormProps) {
     const router = useRouter()
     const [challenge, setChallenge] =
         useState<MfaRequiredResponse | null>(initialChallenge)
     const [isPending, setIsPending] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(initialError)
     const [welcomeName, setWelcomeName] = useState<string | null>(null)
 
     const finishLogin = (

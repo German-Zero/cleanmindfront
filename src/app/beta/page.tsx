@@ -54,7 +54,7 @@ export default function BetaNoticePage() {
                         esta etapa limitada a veinte participantes.
                     </p>
                     <p className="mt-3.5 text-[10px] text-text-secondary/75">
-                        Última actualización: 4 de agosto de 2026
+                        Última actualización: 6 de agosto de 2026
                     </p>
                 </header>
 

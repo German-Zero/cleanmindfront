@@ -33,6 +33,13 @@ export interface RegisterRequest {
     acceptedTerms: boolean
 }
 
+export interface RegistrationStatus {
+    privateBeta: true
+    acceptsNewUsers: boolean
+    maxUsers: number
+    remaining: number
+}
+
 export interface VerifyEmailRequest {
     code: string
 }

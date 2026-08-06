@@ -51,10 +51,10 @@ export default function BetaNoticePage() {
                     <p className="mt-3 max-w-180 text-[13px] leading-5.25 text-text-secondary">
                         Este documento explica qué implica probar CleanMind,
                         qué información trataremos y qué puedes esperar durante
-                        esta etapa limitada a diez participantes.
+                        esta etapa limitada a veinte participantes.
                     </p>
                     <p className="mt-3.5 text-[10px] text-text-secondary/75">
-                        Última actualización: 4 de agosto de 2026
+                        Última actualización: 6 de agosto de 2026
                     </p>
                 </header>
 

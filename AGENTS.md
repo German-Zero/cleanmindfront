@@ -18,3 +18,4 @@ Rules for frontend API work:
 - Treat `null`, optional fields, dates, seconds, and minutes exactly as declared in the snapshot. Do not silently convert Pomodoro duration units.
 - For Pomodoro, keep the visible countdown in the frontend, calculate remaining time from backend timestamps, and use the backend lifecycle endpoints as the persistent source of truth.
 - If the snapshot and a live backend response disagree, stop and refresh the backend context before changing the frontend contract.
+- Do not make commits or changes to production.

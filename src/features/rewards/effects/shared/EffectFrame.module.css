@@ -1,0 +1,14 @@
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dashboard {
+  z-index: 0;
+}
+
+.preview {
+  z-index: 1;
+}

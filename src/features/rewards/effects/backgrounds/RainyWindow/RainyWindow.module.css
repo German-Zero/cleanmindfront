@@ -1,0 +1,88 @@
+.background {
+  background:
+    radial-gradient(circle at 72% 16%, rgb(103 169 205 / 20%), transparent 34%),
+    radial-gradient(circle at 18% 86%, rgb(68 126 164 / 15%), transparent 30%),
+    linear-gradient(160deg, rgb(8 18 29 / 94%), rgb(17 38 55 / 72%));
+}
+
+.rain,
+.glass,
+.reflection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rain {
+  overflow: hidden;
+  filter: drop-shadow(0 0 3px rgb(169 216 232 / 26%));
+}
+
+.drop {
+  position: absolute;
+  top: -160px;
+  left: var(--rain-left);
+  width: 1px;
+  height: var(--rain-length);
+  opacity: var(--rain-opacity);
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, rgb(205 235 245 / 88%));
+  animation-duration: var(--rain-duration);
+  animation-delay: var(--rain-delay);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.drop:nth-child(3n) {
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgb(130 193 219 / 66%));
+}
+
+.drop:nth-child(5n) {
+  filter: blur(0.45px);
+}
+
+.fullscreen .drop {
+  animation-name: rainfall;
+}
+
+.preview .drop {
+  top: -72px;
+  animation-name: preview-rainfall;
+}
+
+.glass {
+  opacity: 0.28;
+  background-image:
+    radial-gradient(ellipse, rgb(205 235 245 / 42%) 0 1px, transparent 1.8px),
+    radial-gradient(ellipse, rgb(116 180 211 / 34%) 0 1.5px, transparent 2.4px);
+  background-position: 16px 22px, 58px 74px;
+  background-size: 73px 97px, 109px 131px;
+  mask-image: linear-gradient(180deg, black, rgb(0 0 0 / 48%) 58%, transparent 96%);
+}
+
+.reflection {
+  opacity: 0.38;
+  background:
+    radial-gradient(ellipse at 24% 92%, transparent 0 28px, rgb(101 171 205 / 20%) 30px, transparent 34px),
+    radial-gradient(ellipse at 72% 86%, transparent 0 42px, rgb(169 216 232 / 16%) 44px, transparent 49px),
+    linear-gradient(180deg, transparent 52%, rgb(76 143 184 / 9%));
+  filter: blur(1px);
+  animation: reflection 8s ease-in-out infinite alternate;
+}
+
+@keyframes rainfall {
+  from { transform: translate3d(0, -8vh, 0) rotate(4deg); }
+  to { transform: translate3d(18px, calc(100dvh + 260px), 0) rotate(4deg); }
+}
+
+@keyframes preview-rainfall {
+  from { transform: translate3d(0, -40px, 0) rotate(4deg); }
+  to { transform: translate3d(8px, 430px, 0) rotate(4deg); }
+}
+
+@keyframes reflection {
+  from { opacity: 0.2; }
+  to { opacity: 0.46; }
+}

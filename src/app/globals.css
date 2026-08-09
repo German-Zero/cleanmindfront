@@ -756,6 +756,252 @@ select:focus-visible {
   }
 }
 
+[data-reward-palette="PALETTE_LAVENDER_NIGHT"] {
+  --background: #0A1820;
+  --surface: #10242D;
+  --card: #193846;
+  --card-hover: #214858;
+  --border: #326172;
+  --primary: #D98645;
+  --secondary: #E39A58;
+  --accent: #F0A35C;
+  --text-primary: #F4FAFC;
+  --text-secondary: #A6C0C9;
+  --error: #FF7B7F;
+  --success: #63C49A;
+  --warning: #E6B85F;
+  --now: #E28B4B;
+  --plan: #4F9AAF;
+  --delegate: #8A7EB1;
+  --delete: #78909A;
+}
+
+[data-reward-palette="PALETTE_CLEAR_SAGE"] {
+  --background: #FFF5EC;
+  --surface: #FFFAF5;
+  --card: #F6E3D5;
+  --card-hover: #EFD6C4;
+  --border: #DFBCA6;
+  --primary: #B7654A;
+  --secondary: #C67A5D;
+  --accent: #9E4F39;
+  --text-primary: #3D2922;
+  --text-secondary: #7A5E53;
+  --error: #B33A52;
+  --success: #327A58;
+  --warning: #9A681C;
+  --now: #B7654A;
+  --plan: #A57A52;
+  --delegate: #936D85;
+  --delete: #8B746A;
+}
+
+[data-reward-palette="PALETTE_ABYSS_CORAL"] {
+  --background: #0A1220;
+  --surface: #111D2D;
+  --card: #263B52;
+  --card-hover: #304A64;
+  --border: #45627D;
+  --primary: #E6656B;
+  --secondary: #CA7182;
+  --accent: #FF7A7A;
+  --text-primary: #F2F7FC;
+  --text-secondary: #A8BED0;
+  --error: #FF6B78;
+  --success: #58C99C;
+  --warning: #EDBF62;
+  --now: #E6656B;
+  --plan: #5C9BC4;
+  --delegate: #9A7DCC;
+  --delete: #8294A6;
+}
+
+[data-reward-palette="PALETTE_COFFEE_BLOOM"] {
+  --background: #17110F;
+  --surface: #211916;
+  --card: #382823;
+  --card-hover: #46322B;
+  --border: #684B40;
+  --primary: #B97759;
+  --secondary: #C98A6D;
+  --accent: #D89A76;
+  --text-primary: #FFF4EC;
+  --text-secondary: #C8AAA0;
+  --error: #F2787D;
+  --success: #72BE8C;
+  --warning: #DDB563;
+  --now: #C5795F;
+  --plan: #A58B62;
+  --delegate: #A87991;
+  --delete: #947A70;
+}
+
+[data-reward-palette="PALETTE_ARCTIC_BERRY"] {
+  --background: #F4F7FB;
+  --surface: #FCFDFF;
+  --card: #E5ECF5;
+  --card-hover: #D9E4F2;
+  --border: #BBCBDD;
+  --primary: #B05A8C;
+  --secondary: #8B6FA0;
+  --accent: #91456F;
+  --text-primary: #263647;
+  --text-secondary: #62768B;
+  --error: #B43F56;
+  --success: #2F795E;
+  --warning: #91641A;
+  --now: #B05A8C;
+  --plan: #5E83A3;
+  --delegate: #80699B;
+  --delete: #738396;
+}
+
+[data-reward-palette="PALETTE_CITRUS_PAPER"] {
+  --background: #FFF9E8;
+  --surface: #FFFCF2;
+  --card: #F7EBC7;
+  --card-hover: #F3E1A6;
+  --border: #DDC982;
+  --primary: #D8793B;
+  --secondary: #C58B42;
+  --accent: #A85B2E;
+  --text-primary: #44331F;
+  --text-secondary: #79684D;
+  --error: #B43D4F;
+  --success: #347858;
+  --warning: #946119;
+  --now: #D8793B;
+  --plan: #A58A3C;
+  --delegate: #8D718F;
+  --delete: #83745E;
+}
+
+[data-reward-background="BACKGROUND_FIREFLY_GARDEN"] .ambient-background {
+  display: block;
+  opacity: 0.72;
+  background:
+    radial-gradient(circle at 20% 18%, rgb(119 232 181 / 18%), transparent 30%),
+    radial-gradient(circle at 82% 72%, rgb(255 217 120 / 14%), transparent 34%),
+    linear-gradient(145deg, rgb(11 16 32 / 74%), transparent 72%);
+}
+
+[data-reward-background="BACKGROUND_FIREFLY_GARDEN"] .ambient-background::before {
+  inset: -8%;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  border-radius: 0;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle, #FFD978 0 1.5px, transparent 2.4px),
+    radial-gradient(circle, #77E8B5 0 1.2px, transparent 2px),
+    radial-gradient(circle, rgb(255 255 255 / 72%) 0 0.8px, transparent 1.5px);
+  background-position: 12px 22px, 74px 48px, 42px 86px;
+  background-size: 108px 96px, 142px 128px, 84px 112px;
+  filter: none;
+  mask-image: none;
+  transform: none;
+  animation: reward-fireflies-drift 16s ease-in-out infinite alternate;
+}
+
+[data-reward-background="BACKGROUND_FIREFLY_GARDEN"] .ambient-background::after {
+  inset: 8% 6%;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  border-radius: 0;
+  opacity: 0.32;
+  background:
+    radial-gradient(circle at 22% 36%, #FFD978 0 2px, transparent 14px),
+    radial-gradient(circle at 66% 22%, #77E8B5 0 2px, transparent 16px),
+    radial-gradient(circle at 78% 74%, #FFD978 0 1.5px, transparent 13px);
+  filter: blur(1px);
+  mask-image: none;
+  transform: none;
+  animation: reward-fireflies-glow 7s ease-in-out infinite alternate;
+}
+
+[data-reward-effect="EFFECT_SERENE_GLASS"] .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 72%, transparent);
+  background: var(--reward-panel-fill);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 15%),
+    0 22px 58px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(22px) saturate(124%);
+}
+
+[data-reward-effect="EFFECT_SERENE_GLASS"] .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 58%, transparent);
+  background: var(--reward-panel-fill);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 14%),
+    0 14px 34px rgb(0 0 0 / 14%);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+[data-reward-border="BORDER_AURORA"] {
+  --reward-border-gradient: linear-gradient(135deg, #68D5C8, #9B8CFF, #E993C8);
+  --reward-border-glow: rgb(155 140 255 / 16%);
+}
+
+[data-reward-border="BORDER_SUNSET"] {
+  --reward-border-gradient: linear-gradient(135deg, #FFB36B, #F073A6, #7768E8);
+  --reward-border-glow: rgb(240 115 166 / 16%);
+}
+
+[data-reward-border] .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 96%, transparent);
+  border-color: transparent;
+  background:
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)) padding-box,
+    var(--reward-border-gradient) border-box;
+  box-shadow:
+    0 18px 52px rgb(0 0 0 / 18%),
+    0 0 26px var(--reward-border-glow);
+}
+
+[data-reward-border] .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 84%, var(--surface));
+  border-color: transparent;
+  background:
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)) padding-box,
+    var(--reward-border-gradient) border-box;
+  box-shadow:
+    0 12px 32px rgb(0 0 0 / 13%),
+    0 0 18px var(--reward-border-glow);
+}
+
+[data-reward-effect="EFFECT_SERENE_GLASS"][data-reward-border] .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+[data-reward-effect="EFFECT_SERENE_GLASS"][data-reward-border] .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 58%, transparent);
+}
+
+.reward-firefly {
+  width: 5px;
+  height: 5px;
+  background: #FFF0A8;
+  box-shadow: 0 0 14px rgb(255 217 120 / 92%);
+  animation: reward-firefly-preview 4.8s ease-in-out infinite alternate;
+}
+
+@keyframes reward-fireflies-drift {
+  from { transform: translate3d(-1.5%, 1%, 0) scale(1); }
+  to { transform: translate3d(2%, -2.5%, 0) scale(1.04); }
+}
+
+@keyframes reward-fireflies-glow {
+  from { opacity: 0.18; transform: translateY(1.5%); }
+  to { opacity: 0.46; transform: translateY(-2%); }
+}
+
+@keyframes reward-firefly-preview {
+  from { opacity: 0.35; transform: translate3d(-4px, 5px, 0) scale(0.75); }
+  to { opacity: 1; transform: translate3d(6px, -7px, 0) scale(1.12); }
+}
+
 @supports (-webkit-touch-callout: none) {
   input,
   textarea,
@@ -776,5 +1022,385 @@ select:focus-visible {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* Recompensas visuales ampliadas */
+[data-reward-background] .ambient-background::before,
+[data-reward-background] .ambient-background::after {
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  border-radius: 0;
+  mask-image: none;
+  transform: none;
+}
+
+[data-reward-background="BACKGROUND_COSMIC_RIBBONS"] .ambient-background {
+  display: block;
+  opacity: 0.68;
+  background:
+    radial-gradient(circle at 18% 24%, rgb(111 99 255 / 18%), transparent 34%),
+    radial-gradient(circle at 82% 68%, rgb(228 111 216 / 14%), transparent 38%),
+    #090D1F;
+}
+
+[data-reward-background="BACKGROUND_COSMIC_RIBBONS"] .ambient-background::before {
+  inset: -24%;
+  background: conic-gradient(from 110deg at 50% 50%, transparent 0 20%, rgb(111 99 255 / 34%) 28%, transparent 37% 52%, rgb(228 111 216 / 28%) 62%, transparent 72%);
+  filter: blur(42px) saturate(1.2);
+  animation: reward-cosmic-ribbons 30s linear infinite;
+}
+
+[data-reward-background="BACKGROUND_COSMIC_RIBBONS"] .ambient-background::after {
+  inset: -10%;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 70%) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgb(178 190 255 / 60%) 0 1.2px, transparent 1.9px);
+  background-position: 18px 28px, 72px 86px;
+  background-size: 110px 124px, 156px 142px;
+  animation: reward-cosmic-dust 24s ease-in-out infinite alternate;
+}
+
+[data-reward-background="BACKGROUND_RAINY_WINDOW"] .ambient-background {
+  display: block;
+  opacity: 0.72;
+  background:
+    radial-gradient(circle at 72% 16%, rgb(103 169 205 / 20%), transparent 34%),
+    radial-gradient(circle at 18% 86%, rgb(68 126 164 / 15%), transparent 30%),
+    linear-gradient(160deg, rgb(8 18 29 / 94%), rgb(17 38 55 / 72%));
+}
+
+[data-reward-background="BACKGROUND_RAINY_WINDOW"] .ambient-background::before {
+  inset: -160px -40px;
+  opacity: 0.68;
+  background-image:
+    linear-gradient(176deg, transparent 0 72%, rgb(169 216 232 / 72%) 73% 76%, transparent 77%),
+    linear-gradient(177deg, transparent 0 76%, rgb(105 169 204 / 58%) 77% 80%, transparent 81%),
+    linear-gradient(175deg, transparent 0 68%, rgb(211 239 248 / 44%) 69% 72%, transparent 73%);
+  background-position: 7px -34px, 28px -82px, 52px -126px;
+  background-size: 43px 134px, 67px 188px, 91px 242px;
+  filter: drop-shadow(0 0 3px rgb(169 216 232 / 22%));
+  animation: reward-rain-fall 3.8s linear infinite;
+}
+
+[data-reward-background="BACKGROUND_RAINY_WINDOW"] .ambient-background::after {
+  inset: 0;
+  opacity: 0.38;
+  background:
+    radial-gradient(ellipse at 24% 92%, transparent 0 28px, rgb(101 171 205 / 20%) 30px, transparent 34px),
+    radial-gradient(ellipse at 72% 86%, transparent 0 42px, rgb(169 216 232 / 16%) 44px, transparent 49px),
+    linear-gradient(180deg, transparent 52%, rgb(76 143 184 / 9%));
+  filter: blur(1px);
+  animation: reward-rain-glow 8s ease-in-out infinite alternate;
+}
+
+[data-reward-background="BACKGROUND_FLOATING_BLOOMS"] .ambient-background {
+  display: block;
+  opacity: 0.64;
+  background:
+    radial-gradient(circle at 18% 22%, rgb(229 138 174 / 20%), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgb(246 201 184 / 16%), transparent 36%),
+    #1B1020;
+}
+
+[data-reward-background="BACKGROUND_FLOATING_BLOOMS"] .ambient-background::before {
+  inset: -12%;
+  opacity: 0.62;
+  background-image:
+    radial-gradient(ellipse, rgb(229 138 174 / 58%) 0 4px, transparent 5px),
+    radial-gradient(ellipse, rgb(246 201 184 / 48%) 0 5px, transparent 6px);
+  background-position: 18px 34px, 92px 76px;
+  background-size: 138px 126px, 176px 158px;
+  filter: blur(0.3px);
+  animation: reward-blooms-float 20s ease-in-out infinite alternate;
+}
+
+[data-reward-background="BACKGROUND_FLOATING_BLOOMS"] .ambient-background::after {
+  inset: 8%;
+  opacity: 0.26;
+  background: conic-gradient(from 45deg at 50% 50%, transparent, rgb(229 138 174 / 24%), transparent 24%, rgb(246 201 184 / 18%), transparent 54%);
+  filter: blur(38px);
+  animation: reward-bloom-light 18s linear infinite;
+}
+
+[data-reward-border="BORDER_OCEAN_PULSE"] {
+  --reward-border-gradient: linear-gradient(135deg, #3B82F6, #22D3EE, #5EEAD4);
+  --reward-border-glow: rgb(34 211 238 / 17%);
+}
+
+[data-reward-border="BORDER_GILDED_MOSS"] {
+  --reward-border-gradient: linear-gradient(135deg, #2F6B55, #8DAA65, #E4C76A);
+  --reward-border-glow: rgb(228 199 106 / 16%);
+}
+
+[data-reward-effect="EFFECT_SOFT_GLOW"] .calm-panel {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 8%),
+    0 18px 54px rgb(0 0 0 / 18%),
+    0 0 34px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+[data-reward-effect="EFFECT_SOFT_GLOW"] .calm-card {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 7%),
+    0 12px 34px rgb(0 0 0 / 14%),
+    0 0 22px color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+[data-reward-effect="EFFECT_PAPER_GRAIN"] .calm-panel,
+[data-reward-effect="EFFECT_PAPER_GRAIN"] .calm-card {
+  background-color: var(--reward-panel-fill, var(--surface));
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-secondary) 11%, transparent) 0 0.7px, transparent 0.9px),
+    linear-gradient(color-mix(in srgb, var(--reward-panel-fill, var(--surface)) 96%, transparent), color-mix(in srgb, var(--reward-panel-fill, var(--surface)) 96%, transparent));
+  background-size: 5px 5px, auto;
+}
+
+[data-reward-effect="EFFECT_PAPER_GRAIN"][data-reward-border] .calm-panel,
+[data-reward-effect="EFFECT_PAPER_GRAIN"][data-reward-border] .calm-card {
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-secondary) 11%, transparent) 0 0.7px, transparent 0.9px) padding-box,
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)) padding-box,
+    var(--reward-border-gradient) border-box;
+  background-size: 5px 5px, auto, auto;
+}
+
+[data-reward-pomodoro="POMODORO_BLOOM_RING"] .pomodoro-timer-decoration {
+  isolation: isolate;
+}
+
+[data-reward-pomodoro="POMODORO_BLOOM_RING"] .pomodoro-timer-decoration::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20px;
+  content: "";
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 2%, #F3A6C8 0 6px, transparent 7px),
+    radial-gradient(circle at 86% 18%, #BFA8FF 0 5px, transparent 6px),
+    radial-gradient(circle at 98% 52%, #82D8C2 0 6px, transparent 7px),
+    radial-gradient(circle at 78% 88%, #F3A6C8 0 5px, transparent 6px),
+    radial-gradient(circle at 48% 99%, #BFA8FF 0 6px, transparent 7px),
+    radial-gradient(circle at 13% 82%, #82D8C2 0 5px, transparent 6px),
+    radial-gradient(circle at 1% 46%, #F3A6C8 0 6px, transparent 7px),
+    radial-gradient(circle at 18% 14%, #BFA8FF 0 5px, transparent 6px);
+  filter: drop-shadow(0 0 8px rgb(191 168 255 / 28%));
+  animation: reward-pomodoro-bloom 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+[data-reward-pomodoro="POMODORO_BLOOM_RING"] .pomodoro-timer-decoration::after {
+  position: absolute;
+  z-index: -1;
+  inset: -8px;
+  content: "";
+  border: 1px solid rgb(243 166 200 / 28%);
+  border-radius: 50%;
+  box-shadow: 0 0 28px rgb(130 216 194 / 14%);
+  pointer-events: none;
+}
+
+.reward-preview-ribbon,
+.reward-preview-raindrop,
+.reward-preview-petal {
+  position: absolute;
+  display: block;
+}
+
+.reward-preview-ribbon {
+  left: -18%;
+  width: 136%;
+  height: 22%;
+  border-radius: 50%;
+  filter: blur(5px);
+  transform: rotate(-12deg);
+  animation: reward-preview-ribbon 7s ease-in-out infinite alternate;
+}
+
+.reward-preview-ribbon--one {
+  top: 18%;
+  background: linear-gradient(90deg, transparent, rgb(111 99 255 / 75%), transparent);
+}
+
+.reward-preview-ribbon--two {
+  top: 44%;
+  background: linear-gradient(90deg, transparent, rgb(228 111 216 / 65%), transparent);
+  animation-delay: -2.4s;
+}
+
+.reward-preview-ribbon--three {
+  top: 68%;
+  height: 14%;
+  background: linear-gradient(90deg, transparent, rgb(120 214 255 / 48%), transparent);
+  animation-delay: -4.2s;
+}
+
+.reward-preview-raindrop {
+  top: -36%;
+  width: 1px;
+  height: 34%;
+  background: linear-gradient(transparent, rgb(169 216 232 / 82%));
+  transform: rotate(8deg);
+  animation: reward-preview-rain 2.2s linear infinite;
+}
+
+.reward-preview-petal {
+  width: 13px;
+  height: 8px;
+  border-radius: 70% 30% 65% 35%;
+  background: linear-gradient(135deg, #E58AAE, #F6C9B8);
+  box-shadow: 0 0 12px rgb(229 138 174 / 30%);
+  animation: reward-preview-petal 5.4s ease-in-out infinite alternate;
+}
+
+.reward-paper-preview::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.42;
+  background-image: radial-gradient(circle at 1px 1px, rgb(117 106 91 / 32%) 0 0.6px, transparent 0.8px);
+  background-size: 4px 4px;
+  pointer-events: none;
+}
+
+.reward-pomodoro-flower {
+  box-shadow:
+    4px 0 0 color-mix(in srgb, currentColor 55%, transparent),
+    -4px 0 0 color-mix(in srgb, currentColor 55%, transparent),
+    0 4px 0 color-mix(in srgb, currentColor 55%, transparent),
+    0 -4px 0 color-mix(in srgb, currentColor 55%, transparent);
+}
+
+@keyframes reward-cosmic-ribbons {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.06); }
+}
+
+@keyframes reward-cosmic-dust {
+  from { transform: translate3d(-2%, 1%, 0); }
+  to { transform: translate3d(3%, -2%, 0); }
+}
+
+@keyframes reward-rain-fall {
+  from { background-position: 7px -34px, 28px -82px, 52px -126px; }
+  to { background-position: 2px 502px, 22px 482px, 46px 600px; }
+}
+
+@keyframes reward-rain-glow {
+  from { opacity: 0.2; }
+  to { opacity: 0.46; }
+}
+
+@keyframes reward-blooms-float {
+  from { transform: translate3d(-2%, 3%, 0) rotate(-2deg); }
+  to { transform: translate3d(4%, -4%, 0) rotate(4deg); }
+}
+
+@keyframes reward-bloom-light {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes reward-pomodoro-bloom {
+  from { opacity: 0.7; transform: scale(0.97) rotate(-2deg); }
+  to { opacity: 1; transform: scale(1.03) rotate(2deg); }
+}
+
+@keyframes reward-preview-ribbon {
+  from { transform: translateX(-3%) rotate(-12deg) scaleY(0.9); }
+  to { transform: translateX(4%) rotate(-8deg) scaleY(1.12); }
+}
+
+@keyframes reward-preview-rain {
+  to { transform: translate3d(8px, 460%, 0) rotate(8deg); }
+}
+
+@keyframes reward-preview-petal {
+  from { transform: translate3d(-4px, 4px, 0) rotate(-18deg); }
+  to { transform: translate3d(9px, -10px, 0) rotate(24deg); }
+}
+
+.calendar-tidal-wave {
+  display: none;
+}
+
+[data-reward-calendar="CALENDAR_TIDAL_WAVE"] .calendar-tidal-wave {
+  position: absolute;
+  z-index: 0;
+  top: -18%;
+  bottom: -18%;
+  left: -38%;
+  display: block;
+  width: 34%;
+  overflow: hidden;
+  opacity: 0;
+  border-radius: 48%;
+  background: linear-gradient(90deg, transparent 0%, rgb(79 195 215 / 8%) 24%, rgb(91 141 239 / 22%) 58%, rgb(166 227 240 / 12%) 78%, transparent 100%);
+  filter: blur(4px) drop-shadow(0 0 18px rgb(79 195 215 / 16%));
+  transform: translate3d(0, 0, 0) skewX(-10deg);
+  animation: calendar-tidal-wave 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+[data-reward-calendar="CALENDAR_TIDAL_WAVE"] .calendar-tidal-wave::before,
+[data-reward-calendar="CALENDAR_TIDAL_WAVE"] .calendar-tidal-wave::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  content: "";
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+[data-reward-calendar="CALENDAR_TIDAL_WAVE"] .calendar-tidal-wave::before {
+  right: 8%;
+  width: 14px;
+  background: linear-gradient(180deg, transparent, rgb(166 227 240 / 58%), transparent);
+  box-shadow: 0 0 20px rgb(166 227 240 / 30%);
+}
+
+[data-reward-calendar="CALENDAR_TIDAL_WAVE"] .calendar-tidal-wave::after {
+  right: 22%;
+  width: 5px;
+  background: linear-gradient(180deg, transparent, rgb(255 255 255 / 34%), transparent);
+}
+
+.reward-calendar-preview-wave {
+  position: absolute;
+  z-index: 2;
+  top: -22%;
+  bottom: -22%;
+  left: -42%;
+  width: 38%;
+  opacity: 0.42;
+  border-radius: 48%;
+  filter: blur(3px);
+  animation: reward-calendar-preview-wave 4.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes calendar-tidal-wave {
+  0%, 66% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) skewX(-10deg);
+  }
+  70% { opacity: 0.22; }
+  84% { opacity: 0.46; }
+  94%, 100% {
+    opacity: 0;
+    transform: translate3d(440%, 0, 0) skewX(-10deg);
+  }
+}
+
+@keyframes reward-calendar-preview-wave {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) skewX(-10deg);
+  }
+  18%, 70% { opacity: 0.46; }
+  100% {
+    opacity: 0;
+    transform: translate3d(430%, 0, 0) skewX(-10deg);
   }
 }

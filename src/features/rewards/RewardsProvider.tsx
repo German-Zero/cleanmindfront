@@ -8,7 +8,14 @@ import {
     useState,
     type ReactNode,
 } from "react"
-import type { RewardGrant, RewardSummary } from "./types"
+import { rewardsService } from "./services/rewards.service"
+import type {
+    RewardGrant,
+    RewardSummary,
+    StorefrontResponse,
+    StoreItem,
+    StoreItemId,
+} from "./types"
 
 interface RewardFeedback {
     title: string
@@ -22,10 +29,14 @@ interface RewardNotice extends RewardFeedback {
 
 interface RewardsContextValue {
     summary: RewardSummary
-    registerReward: (
-        reward: RewardGrant,
-        feedback: RewardFeedback,
-    ) => void
+    updateSummary: (summary: RewardSummary) => void
+    storeItems: StoreItem[]
+    updateStore: (store: StorefrontResponse) => void
+    setStoreItemEquipped: (
+        itemId: StoreItemId,
+        equipped: boolean,
+    ) => Promise<void>
+    registerReward: (reward: RewardGrant, feedback: RewardFeedback) => void
 }
 
 const RewardsContext = createContext<RewardsContextValue | null>(null)
@@ -33,12 +44,65 @@ const RewardsContext = createContext<RewardsContextValue | null>(null)
 export function RewardsProvider({
     children,
     initialSummary,
+    initialItems,
 }: {
     children: ReactNode
     initialSummary: RewardSummary
+    initialItems: StoreItem[]
 }) {
     const [summary, setSummary] = useState(initialSummary)
+    const [storeItems, setStoreItems] = useState(initialItems)
     const [notice, setNotice] = useState<RewardNotice | null>(null)
+
+    const applyStoreAppearance = useCallback((items: StoreItem[]) => {
+        const root = document.documentElement
+        const attributes = {
+            PALETTE: "data-reward-palette",
+            BACKGROUND: "data-reward-background",
+            BORDER: "data-reward-border",
+            EFFECT: "data-reward-effect",
+            POMODORO: "data-reward-pomodoro",
+            CALENDAR: "data-reward-calendar",
+        } as const
+
+        Object.values(attributes).forEach((attribute) => {
+            root.removeAttribute(attribute)
+        })
+        items
+            .filter((item) => item.equipped)
+            .forEach((item) => {
+                root.setAttribute(attributes[item.category], item.id)
+            })
+    }, [])
+
+    useEffect(() => {
+        applyStoreAppearance(storeItems)
+    }, [applyStoreAppearance, storeItems])
+
+    const updateSummary = useCallback((nextSummary: RewardSummary) => {
+        setSummary(nextSummary)
+        setStoreItems((items) =>
+            items.map((item) => ({
+                ...item,
+                canAfford: item.owned || nextSummary.balance >= item.cost,
+            })),
+        )
+    }, [])
+
+    const updateStore = useCallback((store: StorefrontResponse) => {
+        setSummary(store.summary)
+        setStoreItems(store.items)
+    }, [])
+
+    const setStoreItemEquipped = useCallback(
+        async (itemId: StoreItemId, equipped: boolean) => {
+            const store = equipped
+                ? await rewardsService.equip(itemId)
+                : await rewardsService.unequip(itemId)
+            updateStore(store)
+        },
+        [updateStore],
+    )
 
     useEffect(() => {
         if (!notice) return
@@ -49,14 +113,14 @@ export function RewardsProvider({
 
     const registerReward = useCallback(
         (reward: RewardGrant, feedback: RewardFeedback) => {
-            setSummary(reward)
+            updateSummary(reward)
             setNotice({
                 id: Date.now(),
                 reward,
                 ...feedback,
             })
         },
-        [],
+        [updateSummary],
     )
 
     const rewardLabel = notice
@@ -68,7 +132,16 @@ export function RewardsProvider({
         : ""
 
     return (
-        <RewardsContext value={{ summary, registerReward }}>
+        <RewardsContext
+            value={{
+                summary,
+                updateSummary,
+                storeItems,
+                updateStore,
+                setStoreItemEquipped,
+                registerReward,
+            }}
+        >
             {children}
             {notice && (
                 <aside

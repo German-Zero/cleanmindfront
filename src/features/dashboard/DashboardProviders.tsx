@@ -78,7 +78,10 @@ export function DashboardProviders({ children }: { children: ReactNode }) {
                     bootstrap.settings.backgroundMotion
                 }
             >
-                <RewardsProvider initialSummary={bootstrap.rewards}>
+                <RewardsProvider
+                    initialSummary={bootstrap.rewards}
+                    initialItems={bootstrap.rewardStore.items}
+                >
                     <TasksProvider initialTasks={bootstrap.tasks}>
                         {children}
                     </TasksProvider>

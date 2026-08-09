@@ -245,7 +245,7 @@ export default function Pomodoro() {
                             {visiblePhaseLabel}
                         </span>
 
-                        <div className="relative mt-3 flex h-44 w-44 items-center justify-center sm:h-48 sm:w-48">
+                        <div className="pomodoro-timer-decoration relative mt-3 flex h-44 w-44 items-center justify-center sm:h-48 sm:w-48">
                             <svg
                                 className="h-full w-full -rotate-90"
                                 viewBox="0 0 100 100"

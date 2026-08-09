@@ -1,0 +1,46 @@
+.background {
+  background:
+    radial-gradient(circle at 72% 16%, rgb(103 169 205 / 20%), transparent 34%),
+    radial-gradient(circle at 18% 86%, rgb(68 126 164 / 15%), transparent 30%),
+    linear-gradient(160deg, rgb(8 18 29 / 94%), rgb(17 38 55 / 72%));
+}
+
+.rain,
+.reflection {
+  position: absolute;
+  pointer-events: none;
+}
+
+.rain {
+  inset: -160px -40px;
+  opacity: 0.68;
+  background-image:
+    linear-gradient(176deg, transparent 0 72%, rgb(169 216 232 / 72%) 73% 76%, transparent 77%),
+    linear-gradient(177deg, transparent 0 76%, rgb(105 169 204 / 58%) 77% 80%, transparent 81%),
+    linear-gradient(175deg, transparent 0 68%, rgb(211 239 248 / 44%) 69% 72%, transparent 73%);
+  background-position: 7px -34px, 28px -82px, 52px -126px;
+  background-size: 43px 134px, 67px 188px, 91px 242px;
+  filter: drop-shadow(0 0 3px rgb(169 216 232 / 22%));
+  animation: rainfall 3.8s linear infinite;
+}
+
+.reflection {
+  inset: 0;
+  opacity: 0.38;
+  background:
+    radial-gradient(ellipse at 24% 92%, transparent 0 28px, rgb(101 171 205 / 20%) 30px, transparent 34px),
+    radial-gradient(ellipse at 72% 86%, transparent 0 42px, rgb(169 216 232 / 16%) 44px, transparent 49px),
+    linear-gradient(180deg, transparent 52%, rgb(76 143 184 / 9%));
+  filter: blur(1px);
+  animation: reflection 8s ease-in-out infinite alternate;
+}
+
+@keyframes rainfall {
+  from { background-position: 7px -34px, 28px -82px, 52px -126px; }
+  to { background-position: 2px 502px, 22px 482px, 46px 600px; }
+}
+
+@keyframes reflection {
+  from { opacity: 0.2; }
+  to { opacity: 0.46; }
+}

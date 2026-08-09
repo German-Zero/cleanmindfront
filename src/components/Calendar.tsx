@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import CalendarRewardDecoration from "@/features/rewards/effects/CalendarRewardDecoration"
 import ViewTaskCalendarModal from "./modals/ViewTaskCalendar"
 import IconLeftArrow from "./ui/icons/IconLeftArrow"
 import IconRigthArrow from "./ui/icons/IconRigthArrow"
@@ -225,8 +226,8 @@ export function Calendar() {
     return (
         <div className="h-full min-h-144 w-full min-w-0 max-w-7xl xl:h-auto xl:min-h-0">
             <div className="calendar-decoration-surface relative isolate flex h-full w-full flex-col overflow-hidden bg-transparent px-1 sm:px-2 xl:h-auto xl:rounded-2xl xl:border xl:border-border/65 xl:bg-surface/94 xl:px-8 xl:py-6 xl:shadow-[0_18px_48px_rgb(0_0_0/14%)] 2xl:px-10.5 2xl:py-7">
-                <span className="calendar-tidal-wave" aria-hidden="true" />
-                <div className="relative z-[1] mx-auto flex h-full min-h-0 w-full flex-col gap-1 sm:gap-2 xl:h-auto xl:gap-4">
+                <CalendarRewardDecoration />
+                <div className="relative z-1 mx-auto flex h-full min-h-0 w-full flex-col gap-1 sm:gap-2 xl:h-auto xl:gap-4">
                     <header className="grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1.5 px-1 py-2 xl:grid-cols-[1fr_auto_1fr] xl:px-0 xl:py-0">
                         <div className="flex min-w-0 items-center gap-1 pl-13 sm:gap-2 sm:pl-14 xl:pl-0">
                             <button

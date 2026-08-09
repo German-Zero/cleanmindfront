@@ -1,0 +1,40 @@
+.background {
+  background:
+    radial-gradient(circle at 18% 24%, rgb(111 99 255 / 18%), transparent 34%),
+    radial-gradient(circle at 82% 68%, rgb(228 111 216 / 14%), transparent 38%),
+    #090D1F;
+}
+
+.ribbons,
+.dust {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ribbons {
+  inset: -24%;
+  background: conic-gradient(from 110deg at 50% 50%, transparent 0 20%, rgb(111 99 255 / 34%) 28%, transparent 37% 52%, rgb(228 111 216 / 28%) 62%, transparent 72%);
+  filter: blur(42px) saturate(1.2);
+  animation: ribbons 30s linear infinite;
+}
+
+.dust {
+  inset: -10%;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 70%) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgb(178 190 255 / 60%) 0 1.2px, transparent 1.9px);
+  background-position: 18px 28px, 72px 86px;
+  background-size: 110px 124px, 156px 142px;
+  animation: dust 24s ease-in-out infinite alternate;
+}
+
+@keyframes ribbons {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.06); }
+}
+
+@keyframes dust {
+  from { transform: translate3d(-2%, 1%, 0); }
+  to { transform: translate3d(3%, -2%, 0); }
+}

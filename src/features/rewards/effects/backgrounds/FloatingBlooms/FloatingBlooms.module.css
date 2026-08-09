@@ -1,0 +1,41 @@
+.background {
+  background:
+    radial-gradient(circle at 18% 22%, rgb(229 138 174 / 20%), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgb(246 201 184 / 16%), transparent 36%),
+    #1B1020;
+}
+
+.petals,
+.light {
+  position: absolute;
+  pointer-events: none;
+}
+
+.petals {
+  inset: -12%;
+  opacity: 0.62;
+  background-image:
+    radial-gradient(ellipse, rgb(229 138 174 / 58%) 0 4px, transparent 5px),
+    radial-gradient(ellipse, rgb(246 201 184 / 48%) 0 5px, transparent 6px);
+  background-position: 18px 34px, 92px 76px;
+  background-size: 138px 126px, 176px 158px;
+  filter: blur(0.3px);
+  animation: petals 20s ease-in-out infinite alternate;
+}
+
+.light {
+  inset: 8%;
+  opacity: 0.26;
+  background: conic-gradient(from 45deg at 50% 50%, transparent, rgb(229 138 174 / 24%), transparent 24%, rgb(246 201 184 / 18%), transparent 54%);
+  filter: blur(38px);
+  animation: light 18s linear infinite;
+}
+
+@keyframes petals {
+  from { transform: translate3d(-2%, 3%, 0) rotate(-2deg); }
+  to { transform: translate3d(4%, -4%, 0) rotate(4deg); }
+}
+
+@keyframes light {
+  to { transform: rotate(360deg); }
+}

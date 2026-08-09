@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import PomodoroRewardDecoration from "@/features/rewards/effects/PomodoroRewardDecoration"
 import { usePomodoro } from "@/features/pomodoro/hooks/usePomodoro"
 import { usePomodoroSound } from "@/features/pomodoro/hooks/usePomodoroSound"
 import {
@@ -246,8 +247,9 @@ export default function Pomodoro() {
                         </span>
 
                         <div className="pomodoro-timer-decoration relative mt-3 flex h-44 w-44 items-center justify-center sm:h-48 sm:w-48">
+                            <PomodoroRewardDecoration />
                             <svg
-                                className="h-full w-full -rotate-90"
+                                className="relative z-1 h-full w-full -rotate-90"
                                 viewBox="0 0 100 100"
                                 aria-hidden="true"
                             >
@@ -277,7 +279,7 @@ export default function Pomodoro() {
                             </svg>
                             <span
                                 aria-live="polite"
-                                className="absolute text-[31px] font-semibold tracking-[1px]"
+                                className="absolute z-1 text-[31px] font-semibold tracking-[1px]"
                             >
                                 {formatTimer(remainingSeconds)}
                             </span>

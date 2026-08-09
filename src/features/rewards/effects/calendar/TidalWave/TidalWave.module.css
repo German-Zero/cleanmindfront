@@ -1,0 +1,47 @@
+.wave {
+  position: absolute;
+  z-index: 2;
+  top: -22%;
+  bottom: -22%;
+  left: -42%;
+  display: block;
+  width: 38%;
+  overflow: hidden;
+  border-radius: 48%;
+  filter: blur(3px) drop-shadow(0 0 18px rgb(79 195 215 / 16%));
+  transform: skewX(-10deg);
+  pointer-events: none;
+}
+
+.wave::before,
+.wave::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  content: "";
+  border-radius: 50%;
+}
+
+.wave::before {
+  right: 8%;
+  width: 14px;
+  background: linear-gradient(180deg, transparent, rgb(166 227 240 / 58%), transparent);
+  box-shadow: 0 0 20px rgb(166 227 240 / 30%);
+}
+
+.wave::after {
+  right: 22%;
+  width: 5px;
+  background: linear-gradient(180deg, transparent, rgb(255 255 255 / 34%), transparent);
+}
+
+.calendar {
+  z-index: 0;
+  top: -18%;
+  bottom: -18%;
+  left: -38%;
+  width: 34%;
+  filter: blur(4px) drop-shadow(0 0 18px rgb(79 195 215 / 16%));
+}
+
+.preview { z-index: 2; }

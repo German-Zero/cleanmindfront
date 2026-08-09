@@ -3,10 +3,10 @@
 import {
     createContext,
     useContext,
-    useEffect,
     useState,
     type ReactNode,
 } from "react"
+import { useRewards } from "@/features/rewards/RewardsProvider"
 import { tasksService } from "./services/tasks.service"
 import type {
     CreateTaskRequest,
@@ -34,18 +34,8 @@ export function TasksProvider({
     children: ReactNode
     initialTasks: Task[]
 }) {
+    const { registerReward } = useRewards()
     const [tasks, setTasks] = useState<Task[]>(initialTasks)
-    const [completedTask, setCompletedTask] = useState<Task | null>(null)
-
-    useEffect(() => {
-        if (!completedTask) return
-
-        const timeout = window.setTimeout(
-            () => setCompletedTask(null),
-            5000,
-        )
-        return () => window.clearTimeout(timeout)
-    }, [completedTask])
 
     const createTask = async (request: CreateTaskRequest) => {
         const task = await tasksService.create(request)
@@ -77,18 +67,25 @@ export function TasksProvider({
     }
 
     const toggleTaskCompleted = async (task: Task) => {
-        const updated =
-            task.status === "COMPLETED"
-                ? await tasksService.reopen(task.id)
-                : await tasksService.complete(task.id)
+        if (task.status === "COMPLETED") {
+            const reopened = await tasksService.reopen(task.id)
+            setTasks((current) =>
+                current.map((item) =>
+                    item.id === reopened.id ? reopened : item,
+                ),
+            )
+            return
+        }
+
+        const updated = await tasksService.complete(task.id)
 
         setTasks((current) =>
             current.map((item) => (item.id === updated.id ? updated : item)),
         )
-
-        if (task.status !== "COMPLETED") {
-            setCompletedTask(updated)
-        }
+        registerReward(updated.reward, {
+            title: "Tarea completada",
+            description: updated.title,
+        })
     }
 
     return (
@@ -105,28 +102,6 @@ export function TasksProvider({
             }}
         >
             {children}
-            {completedTask && (
-                <aside
-                    role="status"
-                    aria-live="polite"
-                    className="task-complete-toast fixed right-[16px] bottom-[88px] left-[16px] z-[90] flex items-center gap-[12px] rounded-[14px] border border-success/30 bg-surface/95 px-[16px] py-[13px] shadow-[0_16px_40px_rgb(0_0_0/24%)] backdrop-blur sm:right-[24px] sm:bottom-[24px] sm:left-auto sm:w-[320px]"
-                >
-                    <span
-                        aria-hidden="true"
-                        className="grid size-[32px] shrink-0 place-items-center rounded-full bg-success/14 text-[16px] font-semibold text-success"
-                    >
-                        ✓
-                    </span>
-                    <span className="min-w-0">
-                        <strong className="block text-[12px] font-semibold text-text-primary">
-                            Tarea completada
-                        </strong>
-                        <span className="block truncate text-[10px] text-text-secondary">
-                            {completedTask.title}
-                        </span>
-                    </span>
-                </aside>
-            )}
         </TasksContext>
     )
 }

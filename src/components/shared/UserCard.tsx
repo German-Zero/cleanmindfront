@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { authService } from "@/features/auth/services/auth.service"
 import { useCurrentUser } from "@/features/auth/CurrentUserProvider"
+import { useRewards } from "@/features/rewards/RewardsProvider"
 import IconUser from "../ui/icons/IconUser"
 import IconPersonalization from "../ui/icons/IconPersonalization"
 import IconSettings from "../ui/icons/IconSettings"
@@ -18,6 +19,7 @@ interface UserCardProps {
 export default function UserCard({ onOpenSettings }: UserCardProps) {
     const router = useRouter()
     const { user, isLoading } = useCurrentUser()
+    const { summary: rewards } = useRewards()
     const [isLoggingOut, setIsLoggingOut] = useState(false)
     const [logoutError, setLogoutError] = useState<string | null>(null)
 
@@ -56,6 +58,12 @@ export default function UserCard({ onOpenSettings }: UserCardProps) {
                     <h6 className="truncate font-sans text-[14px] font-semibold text-text-primary">
                         {isLoading ? "Cargando…" : user?.name ?? "Usuario"}
                     </h6>
+                    <p
+                        className="truncate text-[10px] font-medium text-accent"
+                        title={`${rewards.earnedThisMonth} de ${rewards.monthlyLimit} puntos obtenidos este mes`}
+                    >
+                        &#10022; {rewards.balance} puntos
+                    </p>
                 </div>
                 <div className="flex shrink-0 items-center justify-center gap-0.5">
                     <Link

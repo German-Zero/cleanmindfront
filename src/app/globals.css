@@ -734,11 +734,11 @@ select:focus-visible {
   }
 }
 
-.task-complete-toast {
-  animation: task-complete-toast 5000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.reward-toast {
+  animation: reward-toast 5000ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes task-complete-toast {
+@keyframes reward-toast {
   from {
     opacity: 0;
     transform: translateY(8px);

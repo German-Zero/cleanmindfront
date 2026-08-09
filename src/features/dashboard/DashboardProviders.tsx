@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import { useRouter } from "next/navigation"
 import { ApiError } from "@/lib/api"
 import { CurrentUserProvider } from "@/features/auth/CurrentUserProvider"
+import { RewardsProvider } from "@/features/rewards/RewardsProvider"
 import { ThemeProvider } from "@/features/settings/ThemeProvider"
 import { TasksProvider } from "@/features/tasks/TasksProvider"
 import { dashboardService } from "./services/dashboard.service"
@@ -77,9 +78,11 @@ export function DashboardProviders({ children }: { children: ReactNode }) {
                     bootstrap.settings.backgroundMotion
                 }
             >
-                <TasksProvider initialTasks={bootstrap.tasks}>
-                    {children}
-                </TasksProvider>
+                <RewardsProvider initialSummary={bootstrap.rewards}>
+                    <TasksProvider initialTasks={bootstrap.tasks}>
+                        {children}
+                    </TasksProvider>
+                </RewardsProvider>
             </ThemeProvider>
         </CurrentUserProvider>
     )

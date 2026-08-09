@@ -5,6 +5,7 @@ import type {
     LoginRequest,
     LoginResponse,
     RegisterRequest,
+    RegistrationStatus,
     ResetPasswordRequest,
     VerifyEmailRequest,
     VerifyMfaLoginRequest,
@@ -13,6 +14,11 @@ import type {
 const jsonHeaders = { "Content-Type": "application/json" }
 
 export const authService = {
+    getRegistrationStatus: () =>
+        apiRequest<RegistrationStatus>("/api/auth/registration-status", {
+            cache: "no-store",
+        }),
+
     register: (request: RegisterRequest) =>
         apiRequest<AuthResponse>("/api/auth/register", {
             method: "POST",
@@ -63,5 +69,10 @@ export const authService = {
     logout: () =>
         apiRequest<void>("/api/auth/logout", {
             method: "POST",
+        }),
+
+    completeOnboarding: () =>
+        apiRequest<void>("/api/auth/onboarding/complete", {
+            method: "PATCH",
         }),
 }

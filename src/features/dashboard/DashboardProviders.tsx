@@ -35,6 +35,15 @@ export function DashboardProviders({ children }: { children: ReactNode }) {
                     return
                 }
 
+                if (
+                    requestError instanceof ApiError &&
+                    requestError.status === 403
+                ) {
+                    router.replace("/terms")
+                    router.refresh()
+                    return
+                }
+
                 setError(
                     requestError instanceof Error
                         ? requestError.message

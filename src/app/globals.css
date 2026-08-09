@@ -734,6 +734,36 @@ select:focus-visible {
   }
 }
 
+.task-complete-toast {
+  animation: task-complete-toast 5000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes task-complete-toast {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  8%,
+  88% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ambient-background {
     display: none;

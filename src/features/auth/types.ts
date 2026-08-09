@@ -7,6 +7,8 @@ export interface AuthUser {
     role: UserRole
     avatarUrl: string | null
     emailVerified: boolean
+    requiresTermsAcceptance: boolean
+    needsOnboarding: boolean
 }
 
 export interface CurrentUser {
@@ -16,6 +18,7 @@ export interface CurrentUser {
     role: UserRole
     avatarUrl: string | null
     hasPassword: boolean
+    needsOnboarding: boolean
 }
 
 export interface LoginRequest {
@@ -28,6 +31,13 @@ export interface RegisterRequest {
     email: string
     password: string
     acceptedTerms: boolean
+}
+
+export interface RegistrationStatus {
+    privateBeta: true
+    acceptsNewUsers: boolean
+    maxUsers: number
+    remaining: number
 }
 
 export interface VerifyEmailRequest {
@@ -48,6 +58,7 @@ export interface AuthResponse {
     accessToken: string
     refreshToken: string
     expiresIn: number
+    refreshExpiresIn: number
     user: AuthUser
 }
 

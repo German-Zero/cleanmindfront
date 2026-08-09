@@ -42,7 +42,7 @@ export default function BetaNoticePage() {
                     <div className="flex flex-wrap items-center gap-2">
                         <span className="calm-eyebrow">Beta privada</span>
                         <span className="rounded-full border border-border bg-card/65 px-2.25 py-1 text-[9px] text-text-secondary">
-                            Versión beta-1
+                            Versión beta-2
                         </span>
                     </div>
                     <h1 className="mt-3 max-w-190 text-[28px] leading-9 font-semibold sm:text-[34px] sm:leading-10.75">
@@ -51,10 +51,10 @@ export default function BetaNoticePage() {
                     <p className="mt-3 max-w-180 text-[13px] leading-5.25 text-text-secondary">
                         Este documento explica qué implica probar CleanMind,
                         qué información trataremos y qué puedes esperar durante
-                        esta etapa limitada a diez participantes.
+                        esta etapa limitada a veinte participantes.
                     </p>
                     <p className="mt-3.5 text-[10px] text-text-secondary/75">
-                        Última actualización: 29 de julio de 2026
+                        Última actualización: 6 de agosto de 2026
                     </p>
                 </header>
 
@@ -163,6 +163,16 @@ export default function BetaNoticePage() {
                                 y tipo de error. La infraestructura también
                                 puede procesar IP, navegador y dispositivo.
                             </li>
+                            <li>
+                                • Datos de sesión: cookies técnicas protegidas
+                                para autenticarte y mantener tu acceso. La cookie
+                                de acceso es de corta duración y la de renovación
+                                puede conservarse hasta 30 días.
+                            </li>
+                            <li>
+                                • Registros legales: versión aceptada y fecha de
+                                aceptación de este documento.
+                            </li>
                         </ul>
                     </section>
 
@@ -200,8 +210,8 @@ export default function BetaNoticePage() {
                             frontend, Fly.io para la API, Supabase para la base
                             de datos, Brevo para emails, Google para el inicio
                             de sesión y Discord para las notificaciones
-                            vinculadas. Fly.io y Supabase se configurarán en São
-                            Paulo cuando sea posible. Los demás proveedores
+                            vinculadas. Fly.io y Supabase operan en São Paulo
+                            según la configuración actual. Los demás proveedores
                             pueden procesar información fuera de Argentina bajo
                             sus propias políticas y medidas de seguridad.
                         </p>
@@ -214,9 +224,17 @@ export default function BetaNoticePage() {
                         <div className="mt-3 space-y-2.5 text-[12px] leading-5 text-text-secondary">
                             <p>
                                 Conservaremos la cuenta y su contenido mientras
-                                participes en la beta. Los registros técnicos
-                                podrán conservarse hasta 7 días y las copias de
-                                seguridad hasta 30 días.
+                                participes en la beta. CleanMind no mantiene
+                                copias de seguridad independientes durante esta
+                                etapa, por lo que no garantizamos la recuperación
+                                de contenido eliminado o perdido.
+                            </p>
+                            <p>
+                                Los proveedores de infraestructura pueden
+                                generar registros operativos o copias técnicas
+                                temporales conforme a sus propias políticas y
+                                configuraciones. No utilizamos esos registros
+                                para publicidad ni perfiles comerciales.
                             </p>
                             <p>
                                 Puedes solicitar acceso, corrección o
@@ -226,6 +244,22 @@ export default function BetaNoticePage() {
                                 información estrictamente necesaria cuando
                                 exista una obligación legal o un incidente de
                                 seguridad pendiente.
+                            </p>
+                            <p>
+                                Las solicitudes de acceso serán respondidas
+                                dentro de 10 días corridos y las de rectificación,
+                                actualización o supresión dentro de 5 días hábiles.
+                                Si la respuesta no resulta satisfactoria, puedes
+                                reclamar ante la{" "}
+                                <a
+                                    href="https://www.argentina.gob.ar/aaip/datospersonales/derechos"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-accent hover:underline"
+                                >
+                                    Agencia de Acceso a la Información Pública
+                                </a>
+                                .
                             </p>
                         </div>
                     </section>
@@ -281,9 +315,15 @@ export default function BetaNoticePage() {
                                 beta.
                             </p>
                             <p>
-                                Al marcar la aceptación en el registro confirmas
-                                que leíste este aviso y aceptas participar bajo
-                                su versión beta-1.
+                                La versión beta-2 reemplaza a beta-1. Para seguir
+                                utilizando CleanMind, las cuentas existentes
+                                deberán revisar y aceptar esta actualización.
+                            </p>
+                            <p>
+                                Al marcar la aceptación en el registro o en la
+                                pantalla de actualización confirmas que leíste
+                                este aviso y aceptas participar bajo su versión
+                                beta-2.
                             </p>
                         </div>
                     </section>

@@ -6,26 +6,63 @@
 }
 
 .rain,
+.glass,
 .reflection {
   position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 
 .rain {
-  inset: -160px -40px;
-  opacity: 0.68;
+  overflow: hidden;
+  filter: drop-shadow(0 0 3px rgb(169 216 232 / 26%));
+}
+
+.drop {
+  position: absolute;
+  top: -160px;
+  left: var(--rain-left);
+  width: 1px;
+  height: var(--rain-length);
+  opacity: var(--rain-opacity);
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, rgb(205 235 245 / 88%));
+  animation-duration: var(--rain-duration);
+  animation-delay: var(--rain-delay);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.drop:nth-child(3n) {
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgb(130 193 219 / 66%));
+}
+
+.drop:nth-child(5n) {
+  filter: blur(0.45px);
+}
+
+.fullscreen .drop {
+  animation-name: rainfall;
+}
+
+.preview .drop {
+  top: -72px;
+  animation-name: preview-rainfall;
+}
+
+.glass {
+  opacity: 0.28;
   background-image:
-    linear-gradient(176deg, transparent 0 72%, rgb(169 216 232 / 72%) 73% 76%, transparent 77%),
-    linear-gradient(177deg, transparent 0 76%, rgb(105 169 204 / 58%) 77% 80%, transparent 81%),
-    linear-gradient(175deg, transparent 0 68%, rgb(211 239 248 / 44%) 69% 72%, transparent 73%);
-  background-position: 7px -34px, 28px -82px, 52px -126px;
-  background-size: 43px 134px, 67px 188px, 91px 242px;
-  filter: drop-shadow(0 0 3px rgb(169 216 232 / 22%));
-  animation: rainfall 3.8s linear infinite;
+    radial-gradient(ellipse, rgb(205 235 245 / 42%) 0 1px, transparent 1.8px),
+    radial-gradient(ellipse, rgb(116 180 211 / 34%) 0 1.5px, transparent 2.4px);
+  background-position: 16px 22px, 58px 74px;
+  background-size: 73px 97px, 109px 131px;
+  mask-image: linear-gradient(180deg, black, rgb(0 0 0 / 48%) 58%, transparent 96%);
 }
 
 .reflection {
-  inset: 0;
   opacity: 0.38;
   background:
     radial-gradient(ellipse at 24% 92%, transparent 0 28px, rgb(101 171 205 / 20%) 30px, transparent 34px),
@@ -36,8 +73,13 @@
 }
 
 @keyframes rainfall {
-  from { background-position: 7px -34px, 28px -82px, 52px -126px; }
-  to { background-position: 2px 502px, 22px 482px, 46px 600px; }
+  from { transform: translate3d(0, -8vh, 0) rotate(4deg); }
+  to { transform: translate3d(18px, calc(100dvh + 260px), 0) rotate(4deg); }
+}
+
+@keyframes preview-rainfall {
+  from { transform: translate3d(0, -40px, 0) rotate(4deg); }
+  to { transform: translate3d(8px, 430px, 0) rotate(4deg); }
 }
 
 @keyframes reflection {

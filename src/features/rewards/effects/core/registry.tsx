@@ -22,7 +22,7 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     BACKGROUND_RAINY_WINDOW: {
         id: "BACKGROUND_RAINY_WINDOW",
         slot: "BACKGROUND",
-        engine: "css",
+        engine: "webgl",
         component: dynamic(() => import("../backgrounds/RainyWindow/RainyWindow"), { ssr: false }),
     },
     BACKGROUND_FLOATING_BLOOMS: {

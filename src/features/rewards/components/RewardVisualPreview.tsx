@@ -1,6 +1,5 @@
 "use client"
 
-import { MotionConfig } from "motion/react"
 import type { ComponentType } from "react"
 import type { StoreItemCategory } from "../types"
 import BackgroundRewardPreview from "./previews/BackgroundRewardPreview"
@@ -22,10 +21,5 @@ const previewByCategory: Record<StoreItemCategory, ComponentType<RewardPreviewPr
 
 export default function RewardVisualPreview(props: RewardPreviewProps) {
     const Preview = previewByCategory[props.item.category]
-
-    return (
-        <MotionConfig reducedMotion="user">
-            <Preview {...props} />
-        </MotionConfig>
-    )
+    return <Preview {...props} />
 }

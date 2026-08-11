@@ -1,0 +1,13 @@
+.canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.canvas :global(canvas) {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}

@@ -5,6 +5,13 @@
   pointer-events: none;
 }
 
+.frame,
+.frame *,
+.frame *::before,
+.frame *::after {
+  animation-play-state: var(--reward-animation-state, running) !important;
+}
+
 .dashboard {
   z-index: 0;
 }

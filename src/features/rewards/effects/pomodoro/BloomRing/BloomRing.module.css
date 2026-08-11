@@ -1,36 +1,42 @@
 .ring {
   position: absolute;
   z-index: 0;
-  inset: -20px;
   display: block;
-  border-radius: 50%;
+  overflow: visible;
   pointer-events: none;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary) 18%, transparent));
 }
 
-.orbit {
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgb(243 166 200 / 28%);
-  border-radius: 50%;
-  box-shadow: 0 0 28px rgb(130 216 194 / 14%);
+.timer {
+  inset: -27px;
+  width: calc(100% + 54px);
+  height: calc(100% + 54px);
+}
+
+.preview {
+  inset: -21px;
+  width: calc(100% + 42px);
+  height: calc(100% + 42px);
+}
+
+.botanicalLayer {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
 }
 
 .flower {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 5px 0 0 color-mix(in srgb, currentColor 58%, transparent), -5px 0 0 color-mix(in srgb, currentColor 58%, transparent), 0 5px 0 color-mix(in srgb, currentColor 58%, transparent), 0 -5px 0 color-mix(in srgb, currentColor 58%, transparent), 0 0 11px color-mix(in srgb, currentColor 34%, transparent);
-  transform: translate(-50%, -50%);
+  fill: currentColor;
+  opacity: 0.86;
+  filter: drop-shadow(0 1px 2px rgb(25 6 23 / 28%));
 }
 
-.flower > span {
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 78%);
+.leaves {
+  opacity: 0.56;
 }
 
-.timer { inset: -20px; }
-.preview { inset: -16px; }
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .botanicalLayer {
+    transform: none !important;
+  }
+}

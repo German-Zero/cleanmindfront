@@ -15,6 +15,7 @@ import {
     type EquippedRewards,
 } from "./appearance/rewardAppearance"
 import RewardToast, { type RewardNotice } from "./components/RewardToast"
+import { useEffectActivity } from "./effects/runtime/useEffectActivity"
 import { rewardsService } from "./services/rewards.service"
 import type {
     RewardGrant,
@@ -49,6 +50,7 @@ export function RewardsProvider({ children, initialSummary, initialItems }: {
     const [summary, setSummary] = useState(initialSummary)
     const [storeItems, setStoreItems] = useState(initialItems)
     const [notice, setNotice] = useState<RewardNotice | null>(null)
+    const { shouldAnimate } = useEffectActivity()
     const equippedRewards = useMemo(
         () => selectEquippedRewards(storeItems),
         [storeItems],
@@ -57,6 +59,17 @@ export function RewardsProvider({ children, initialSummary, initialItems }: {
     useEffect(() => {
         applyRewardAppearance(storeItems)
     }, [storeItems])
+
+    useEffect(() => {
+        const root = document.documentElement
+        root.style.setProperty(
+            "--reward-animation-state",
+            shouldAnimate ? "running" : "paused",
+        )
+        return () => {
+            root.style.removeProperty("--reward-animation-state")
+        }
+    }, [shouldAnimate])
 
     const updateSummary = useCallback((nextSummary: RewardSummary) => {
         setSummary(nextSummary)

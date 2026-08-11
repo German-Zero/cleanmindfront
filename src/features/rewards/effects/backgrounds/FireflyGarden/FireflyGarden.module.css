@@ -1,44 +1,121 @@
 .background {
-  background:
-    radial-gradient(circle at 20% 18%, rgb(119 232 181 / 18%), transparent 30%),
-    radial-gradient(circle at 82% 72%, rgb(255 217 120 / 14%), transparent 34%),
-    linear-gradient(145deg, rgb(11 16 32 / 96%), rgb(11 16 32 / 72%));
+  isolation: isolate;
+  overflow: hidden;
+  background: #08111a;
 }
 
-.fireflies,
-.glow {
+.atmosphere,
+.canopy,
+.gardenFloor,
+.fallback,
+.depthVeil {
   position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 
-.fireflies {
-  inset: -8%;
-  background-image:
-    radial-gradient(circle, #FFD978 0 1.5px, transparent 2.4px),
-    radial-gradient(circle, #77E8B5 0 1.2px, transparent 2px),
-    radial-gradient(circle, rgb(255 255 255 / 72%) 0 0.8px, transparent 1.5px);
-  background-position: 12px 22px, 74px 48px, 42px 86px;
-  background-size: 108px 96px, 142px 128px, 84px 112px;
-  animation: drift 16s ease-in-out infinite alternate;
-}
-
-.glow {
-  inset: 8% 6%;
-  opacity: 0.32;
+.atmosphere {
   background:
-    radial-gradient(circle at 22% 36%, #FFD978 0 2px, transparent 14px),
-    radial-gradient(circle at 66% 22%, #77E8B5 0 2px, transparent 16px),
-    radial-gradient(circle at 78% 74%, #FFD978 0 1.5px, transparent 13px);
+    radial-gradient(ellipse at 16% 94%, color-mix(in srgb, var(--garden-cool) 22%, transparent), transparent 42%),
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--garden-warm) 11%, transparent), transparent 29%),
+    linear-gradient(155deg, #060d18, var(--garden-base) 46%, #071c1a);
+}
+
+.canopy {
+  z-index: 0;
+  opacity: 0.74;
+  background:
+    radial-gradient(ellipse at -8% -4%, rgb(1 10 12 / 92%) 0 17%, transparent 44%),
+    radial-gradient(ellipse at 106% 2%, rgb(2 13 14 / 86%) 0 18%, transparent 45%),
+    radial-gradient(ellipse at 50% -18%, rgb(4 16 18 / 62%) 0 14%, transparent 48%);
+}
+
+.gardenFloor {
+  z-index: 0;
+  opacity: 0.72;
+  background:
+    radial-gradient(ellipse at 15% 112%, color-mix(in srgb, var(--garden-cool) 22%, transparent), transparent 40%),
+    radial-gradient(ellipse at 76% 116%, color-mix(in srgb, var(--garden-warm) 13%, transparent), transparent 37%),
+    linear-gradient(180deg, transparent 53%, rgb(2 22 18 / 58%) 100%);
   filter: blur(1px);
-  animation: glow 7s ease-in-out infinite alternate;
 }
 
-@keyframes drift {
-  from { transform: translate3d(-1.5%, 1%, 0) scale(1); }
-  to { transform: translate3d(2%, -2.5%, 0) scale(1.04); }
+.webgl {
+  z-index: 1;
 }
 
-@keyframes glow {
-  from { opacity: 0.18; transform: translateY(1.5%); }
-  to { opacity: 0.46; transform: translateY(-2%); }
+.fallback {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.fallbackFirefly {
+  position: absolute;
+  top: var(--firefly-y);
+  left: var(--firefly-x);
+  width: var(--firefly-size);
+  height: var(--firefly-size);
+  border-radius: 50%;
+  color: var(--firefly-color);
+  background: currentColor;
+  box-shadow:
+    0 0 5px currentColor,
+    0 0 13px color-mix(in srgb, currentColor 58%, transparent);
+  opacity: 0.5;
+  transform: translate3d(0, 0, 0);
+  animation:
+    firefly-wander var(--firefly-duration) ease-in-out var(--firefly-delay) infinite alternate,
+    firefly-pulse calc(var(--firefly-duration) * 0.43) ease-in-out var(--firefly-delay) infinite alternate;
+  animation-play-state: var(--reward-animation-state, running);
+  will-change: transform, opacity;
+}
+
+.depthVeil {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at center, transparent 48%, rgb(1 7 12 / 28%) 100%),
+    linear-gradient(180deg, rgb(3 10 18 / 12%), transparent 36%, rgb(1 12 11 / 16%));
+}
+
+@keyframes firefly-wander {
+  from {
+    transform: translate3d(calc(var(--firefly-travel-x) * -0.45), calc(var(--firefly-travel-y) * 0.36), 0);
+  }
+
+  to {
+    transform: translate3d(var(--firefly-travel-x), calc(var(--firefly-travel-y) * -1), 0);
+  }
+}
+
+@keyframes firefly-pulse {
+  0%,
+  22% {
+    opacity: 0.18;
+  }
+
+  66% {
+    opacity: 0.78;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 768px) {
+  .canopy {
+    opacity: 0.62;
+  }
+
+  .depthVeil {
+    background: radial-gradient(ellipse at center, transparent 38%, rgb(1 7 12 / 31%) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallbackFirefly {
+    animation: none;
+    opacity: 0.34;
+    transform: none;
+  }
 }

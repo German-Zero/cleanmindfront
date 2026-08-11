@@ -1,88 +1,79 @@
 .background {
+  isolation: isolate;
   background:
-    radial-gradient(circle at 72% 16%, rgb(103 169 205 / 20%), transparent 34%),
-    radial-gradient(circle at 18% 86%, rgb(68 126 164 / 15%), transparent 30%),
-    linear-gradient(160deg, rgb(8 18 29 / 94%), rgb(17 38 55 / 72%));
+    radial-gradient(circle at 74% 14%, rgb(96 160 196 / 12%), transparent 32%),
+    radial-gradient(circle at 14% 88%, rgb(44 103 143 / 14%), transparent 34%),
+    linear-gradient(158deg, rgb(5 12 20 / 99%), rgb(10 28 42 / 94%));
 }
 
-.rain,
-.glass,
-.reflection {
+.atmosphere,
+.cityGlow,
+.glassHighlight,
+.fallback {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.rain {
-  overflow: hidden;
-  filter: drop-shadow(0 0 3px rgb(169 216 232 / 26%));
-}
-
-.drop {
-  position: absolute;
-  top: -160px;
-  left: var(--rain-left);
-  width: 1px;
-  height: var(--rain-length);
-  opacity: var(--rain-opacity);
-  border-radius: 999px;
-  background: linear-gradient(180deg, transparent, rgb(205 235 245 / 88%));
-  animation-duration: var(--rain-duration);
-  animation-delay: var(--rain-delay);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-.drop:nth-child(3n) {
-  width: 2px;
-  background: linear-gradient(180deg, transparent, rgb(130 193 219 / 66%));
-}
-
-.drop:nth-child(5n) {
-  filter: blur(0.45px);
-}
-
-.fullscreen .drop {
-  animation-name: rainfall;
-}
-
-.preview .drop {
-  top: -72px;
-  animation-name: preview-rainfall;
-}
-
-.glass {
-  opacity: 0.28;
-  background-image:
-    radial-gradient(ellipse, rgb(205 235 245 / 42%) 0 1px, transparent 1.8px),
-    radial-gradient(ellipse, rgb(116 180 211 / 34%) 0 1.5px, transparent 2.4px);
-  background-position: 16px 22px, 58px 74px;
-  background-size: 73px 97px, 109px 131px;
-  mask-image: linear-gradient(180deg, black, rgb(0 0 0 / 48%) 58%, transparent 96%);
-}
-
-.reflection {
-  opacity: 0.38;
+.atmosphere {
+  z-index: 0;
   background:
-    radial-gradient(ellipse at 24% 92%, transparent 0 28px, rgb(101 171 205 / 20%) 30px, transparent 34px),
-    radial-gradient(ellipse at 72% 86%, transparent 0 42px, rgb(169 216 232 / 16%) 44px, transparent 49px),
-    linear-gradient(180deg, transparent 52%, rgb(76 143 184 / 9%));
-  filter: blur(1px);
-  animation: reflection 8s ease-in-out infinite alternate;
+    radial-gradient(circle at 76% 18%, color-mix(in srgb, var(--rain-highlight) 15%, transparent), transparent 31%),
+    radial-gradient(circle at 18% 82%, color-mix(in srgb, var(--rain-color) 16%, transparent), transparent 34%),
+    linear-gradient(165deg, color-mix(in srgb, var(--rain-deep) 94%, #02070d), color-mix(in srgb, var(--rain-color) 20%, #07121d));
 }
 
-@keyframes rainfall {
-  from { transform: translate3d(0, -8vh, 0) rotate(4deg); }
-  to { transform: translate3d(18px, calc(100dvh + 260px), 0) rotate(4deg); }
+.cityGlow {
+  z-index: 0;
+  opacity: 0.62;
+  background:
+    radial-gradient(circle at 9% 91%, rgb(113 186 214 / 26%) 0 3px, transparent 12px),
+    radial-gradient(circle at 21% 84%, rgb(226 183 122 / 18%) 0 4px, transparent 15px),
+    radial-gradient(circle at 38% 94%, rgb(95 158 200 / 24%) 0 5px, transparent 18px),
+    radial-gradient(circle at 57% 87%, rgb(181 217 229 / 18%) 0 4px, transparent 16px),
+    radial-gradient(circle at 72% 93%, rgb(87 143 185 / 28%) 0 6px, transparent 20px),
+    radial-gradient(circle at 89% 82%, rgb(221 180 120 / 14%) 0 3px, transparent 14px),
+    linear-gradient(180deg, transparent 60%, rgb(20 59 82 / 18%) 100%);
+  filter: blur(11px) saturate(0.82);
+  transform: scale(1.04);
 }
 
-@keyframes preview-rainfall {
-  from { transform: translate3d(0, -40px, 0) rotate(4deg); }
-  to { transform: translate3d(8px, 430px, 0) rotate(4deg); }
+.webgl {
+  z-index: 1;
 }
 
-@keyframes reflection {
-  from { opacity: 0.2; }
-  to { opacity: 0.46; }
+.glassHighlight {
+  z-index: 2;
+  opacity: 0.42;
+  background:
+    linear-gradient(111deg, transparent 8%, rgb(231 247 255 / 5%) 21%, transparent 34%),
+    linear-gradient(96deg, transparent 68%, rgb(184 221 235 / 4%) 77%, transparent 86%),
+    radial-gradient(ellipse at 70% 88%, transparent 0 54px, rgb(171 215 232 / 8%) 56px, transparent 64px),
+    radial-gradient(ellipse at center, transparent 48%, rgb(1 7 13 / 26%) 100%);
+  mix-blend-mode: screen;
+}
+
+.fallback {
+  z-index: 1;
+  opacity: 0.7;
+  background-image:
+    radial-gradient(ellipse, rgb(218 241 249 / 52%) 0 1px, transparent 2px),
+    radial-gradient(ellipse, rgb(137 195 218 / 38%) 0 1.5px, transparent 3px),
+    linear-gradient(180deg, transparent 2%, rgb(192 226 239 / 48%) 58%, transparent 100%),
+    linear-gradient(180deg, transparent 8%, rgb(110 175 204 / 38%) 66%, transparent 100%);
+  background-position: 21px 13px, 66px 41px, 17px -122px, 73px -185px;
+  background-size: 73px 91px, 109px 127px, 83px 250px, 137px 310px;
+  mask-image: linear-gradient(180deg, rgb(0 0 0 / 82%), #000 74%, rgb(0 0 0 / 68%));
+  animation: rainy-fallback-flow 14s linear infinite;
+}
+
+@keyframes rainy-fallback-flow {
+  from { transform: translate3d(0, -4%, 0); }
+  to { transform: translate3d(0, 6%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallback {
+    animation: none;
+  }
 }

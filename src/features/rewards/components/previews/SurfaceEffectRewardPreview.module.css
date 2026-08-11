@@ -1,9 +1,102 @@
-.paper::before {
+.preview {
+  --surface-gradient: linear-gradient(135deg, #8EE8D3, #A899FF);
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 15%;
+  border-radius: 28px;
+  opacity: 0.38;
+  background: var(--surface-gradient);
+  filter: blur(30px);
+}
+
+.surface {
+  position: relative;
+  display: flex;
+  height: 74%;
+  width: 86%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 15px;
+  padding: 13px;
+}
+
+.surface::before {
   position: absolute;
   inset: 0;
   content: "";
-  opacity: 0.42;
-  background-image: radial-gradient(circle at 1px 1px, rgb(117 106 91 / 32%) 0 0.6px, transparent 0.8px);
-  background-size: 4px 4px;
   pointer-events: none;
+}
+
+.glass {
+  background: #111528;
+}
+
+.glass .surface {
+  border-color: rgb(255 255 255 / 30%);
+  background: rgb(255 255 255 / 11%);
+  box-shadow: 0 20px 48px rgb(0 0 0 / 30%), inset 0 1px 0 rgb(255 255 255 / 28%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.glass .surface::before {
+  background: linear-gradient(112deg, transparent 8%, rgb(255 255 255 / 16%) 30%, transparent 52%);
+  background-position: 100% 0;
+  background-size: 260% 100%;
+}
+
+.glass[data-animated="true"] .surface::before {
+  animation: preview-glass 8s ease-in-out infinite alternate;
+}
+
+.glow {
+  background: #0E1422;
+}
+
+.glow .surface {
+  border-color: rgb(165 243 229 / 28%);
+  background: rgb(20 27 43 / 92%);
+  box-shadow: 0 0 30px rgb(134 231 212 / 28%);
+}
+
+.glow[data-animated="true"] .surface {
+  animation: preview-glow 6s ease-in-out infinite alternate;
+}
+
+.paper {
+  background: #E9DECB;
+}
+
+.paper .atmosphere {
+  opacity: 0.1;
+}
+
+.paper .surface {
+  border-color: rgb(117 106 91 / 24%);
+  background-color: rgb(245 235 216 / 90%);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgb(117 106 91 / 28%) 0 0.6px, transparent 0.8px),
+    repeating-linear-gradient(104deg, transparent 0 8px, rgb(117 106 91 / 4%) 9px, transparent 10px 18px);
+  background-size: 4px 4px, 38px 38px;
+  box-shadow: 0 14px 30px rgb(77 65 51 / 14%);
+}
+
+@keyframes preview-glass {
+  from { background-position: 100% 0; opacity: 0.3; }
+  to { background-position: 0% 0; opacity: 0.72; }
+}
+
+@keyframes preview-glow {
+  from { box-shadow: 0 0 22px rgb(134 231 212 / 20%); }
+  to { box-shadow: 0 0 42px rgb(134 231 212 / 38%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass[data-animated="true"] .surface::before,
+  .glow[data-animated="true"] .surface {
+    animation: none;
+  }
 }

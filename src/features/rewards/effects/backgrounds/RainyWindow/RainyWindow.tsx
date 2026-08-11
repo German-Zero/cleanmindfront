@@ -1,44 +1,32 @@
 "use client"
 
-import type { CSSProperties } from "react"
-import EffectFrame from "../../shared/EffectFrame"
-import type { RewardEffectProps } from "../../types"
+import type { RewardEffectProps } from "../../core/types"
+import EffectFrame from "../../renderers/dom/EffectFrame"
+import WebGLEffectCanvas from "../../renderers/webgl/WebGLEffectCanvas"
 import styles from "./RainyWindow.module.css"
+import RainyWindowScene from "./RainyWindowScene"
 
-const raindrops = Array.from({ length: 30 }, (_, index) => ({
-    left: (index * 37 + 9) % 100,
-    delay: -((index * 0.41) % 4.6),
-    duration: 2.7 + ((index * 17) % 15) / 10,
-    length: 24 + ((index * 19) % 42),
-    opacity: 0.34 + ((index * 13) % 42) / 100,
-}))
-
-export default function RainyWindow({ preview = false }: RewardEffectProps) {
+export default function RainyWindow({
+    item,
+    preview = false,
+    animated = true,
+}: RewardEffectProps) {
     return (
         <EffectFrame
             className={styles.background}
-            opacity={preview ? 0.92 : 0.72}
+            opacity={preview ? 0.95 : 0.78}
             preview={preview}
+            animated={animated}
         >
-            <span
-                className={`${styles.rain} ${preview ? styles.preview : styles.fullscreen}`}
+            <span className={styles.cityGlow} />
+            <WebGLEffectCanvas
+                className={styles.webgl}
+                animated={animated}
+                fallback={<span className={styles.fallback} />}
             >
-                {raindrops.map((drop, index) => (
-                    <span
-                        key={index}
-                        className={styles.drop}
-                        style={{
-                            "--rain-left": `${drop.left}%`,
-                            "--rain-delay": `${drop.delay}s`,
-                            "--rain-duration": `${drop.duration}s`,
-                            "--rain-length": `${drop.length}px`,
-                            "--rain-opacity": drop.opacity,
-                        } as CSSProperties}
-                    />
-                ))}
-            </span>
-            <span className={styles.glass} />
-            <span className={styles.reflection} />
+                <RainyWindowScene colors={item.colors} />
+            </WebGLEffectCanvas>
+            <span className={styles.glassHighlight} />
         </EffectFrame>
     )
 }

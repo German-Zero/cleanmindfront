@@ -1,18 +1,25 @@
 "use client"
 
-import EffectFrame from "../../shared/EffectFrame"
-import type { RewardEffectProps } from "../../types"
+import type { RewardEffectProps } from "../../core/types"
+import EffectFrame from "../../renderers/dom/EffectFrame"
 import styles from "./FloatingBlooms.module.css"
+import PetalField from "./PetalField"
 
-export default function FloatingBlooms({ preview = false }: RewardEffectProps) {
+export default function FloatingBlooms({
+    item,
+    preview = false,
+    animated = true,
+}: RewardEffectProps) {
     return (
         <EffectFrame
             className={styles.background}
-            opacity={preview ? 0.88 : 0.64}
+            opacity={preview ? 0.92 : 0.72}
             preview={preview}
+            animated={animated}
         >
-            <span className={styles.petals} />
             <span className={styles.light} />
+            <PetalField colors={item.colors} />
+            <span className={styles.softFocus} />
         </EffectFrame>
     )
 }

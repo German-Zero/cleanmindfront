@@ -1,44 +1,37 @@
 .background {
   background:
-    radial-gradient(circle at 20% 18%, rgb(119 232 181 / 18%), transparent 30%),
-    radial-gradient(circle at 82% 72%, rgb(255 217 120 / 14%), transparent 34%),
-    linear-gradient(145deg, rgb(11 16 32 / 96%), rgb(11 16 32 / 72%));
+    radial-gradient(ellipse at 18% 92%, rgb(31 102 73 / 28%), transparent 42%),
+    radial-gradient(circle at 82% 18%, rgb(255 217 120 / 10%), transparent 28%),
+    linear-gradient(155deg, rgb(7 14 26 / 98%), rgb(8 28 27 / 88%));
 }
 
-.fireflies,
-.glow {
+.gardenGlow,
+.fallback {
   position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 
-.fireflies {
-  inset: -8%;
+.gardenGlow {
+  opacity: 0.48;
+  background:
+    radial-gradient(ellipse at 16% 106%, rgb(54 150 98 / 28%), transparent 42%),
+    radial-gradient(ellipse at 78% 112%, rgb(104 118 60 / 24%), transparent 38%),
+    linear-gradient(180deg, transparent 55%, rgb(4 24 20 / 48%));
+  filter: blur(1px);
+}
+
+.webgl {
+  z-index: 1;
+}
+
+.fallback {
+  opacity: 0.76;
   background-image:
-    radial-gradient(circle, #FFD978 0 1.5px, transparent 2.4px),
-    radial-gradient(circle, #77E8B5 0 1.2px, transparent 2px),
-    radial-gradient(circle, rgb(255 255 255 / 72%) 0 0.8px, transparent 1.5px);
+    radial-gradient(circle, #FFF6BD 0 1px, #FFD978 1.5px, transparent 5px),
+    radial-gradient(circle, #D9FFF0 0 1px, #77E8B5 1.5px, transparent 5px),
+    radial-gradient(circle, rgb(255 255 255 / 82%) 0 0.7px, transparent 3px);
   background-position: 12px 22px, 74px 48px, 42px 86px;
   background-size: 108px 96px, 142px 128px, 84px 112px;
-  animation: drift 16s ease-in-out infinite alternate;
-}
-
-.glow {
-  inset: 8% 6%;
-  opacity: 0.32;
-  background:
-    radial-gradient(circle at 22% 36%, #FFD978 0 2px, transparent 14px),
-    radial-gradient(circle at 66% 22%, #77E8B5 0 2px, transparent 16px),
-    radial-gradient(circle at 78% 74%, #FFD978 0 1.5px, transparent 13px);
-  filter: blur(1px);
-  animation: glow 7s ease-in-out infinite alternate;
-}
-
-@keyframes drift {
-  from { transform: translate3d(-1.5%, 1%, 0) scale(1); }
-  to { transform: translate3d(2%, -2.5%, 0) scale(1.04); }
-}
-
-@keyframes glow {
-  from { opacity: 0.18; transform: translateY(1.5%); }
-  to { opacity: 0.46; transform: translateY(-2%); }
+  filter: drop-shadow(0 0 5px rgb(255 217 120 / 35%));
 }

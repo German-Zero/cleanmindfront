@@ -1,0 +1,42 @@
+.ring {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--primary) 18%, transparent));
+}
+
+.timer {
+  inset: -27px;
+  width: calc(100% + 54px);
+  height: calc(100% + 54px);
+}
+
+.preview {
+  inset: -21px;
+  width: calc(100% + 42px);
+  height: calc(100% + 42px);
+}
+
+.botanicalLayer {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+}
+
+.flower {
+  fill: currentColor;
+  opacity: 0.86;
+  filter: drop-shadow(0 1px 2px rgb(25 6 23 / 28%));
+}
+
+.leaves {
+  opacity: 0.56;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .botanicalLayer {
+    transform: none !important;
+  }
+}

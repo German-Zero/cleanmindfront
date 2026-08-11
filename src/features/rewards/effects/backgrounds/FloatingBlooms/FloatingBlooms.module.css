@@ -1,0 +1,75 @@
+.background {
+  background:
+    radial-gradient(circle at 18% 22%, rgb(229 138 174 / 18%), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgb(246 201 184 / 15%), transparent 36%),
+    linear-gradient(145deg, #160D1D, #211126 62%, #15101D);
+}
+
+.petalField,
+.light,
+.softFocus {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.light {
+  inset: -18%;
+  opacity: 0.3;
+  background: conic-gradient(from 45deg at 50% 50%, transparent, rgb(229 138 174 / 22%), transparent 24%, rgb(246 201 184 / 16%), transparent 54%);
+  filter: blur(42px);
+  animation: bloom-light 26s linear infinite;
+}
+
+.petalField {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: var(--petal-y);
+  left: var(--petal-x);
+  width: var(--petal-size);
+  height: var(--petal-size);
+  color: var(--petal-color);
+  opacity: 0.54;
+  filter: drop-shadow(0 3px 5px rgb(20 4 22 / 22%));
+  transform: translate3d(0, 0, 0) rotate(var(--petal-rotation));
+  animation: petal-drift var(--petal-duration) ease-in-out var(--petal-delay) infinite alternate;
+  will-change: transform;
+}
+
+.petal svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: currentColor;
+}
+
+.petal:nth-child(3n) {
+  opacity: 0.34;
+  filter: blur(0.45px);
+}
+
+.softFocus {
+  z-index: 2;
+  background:
+    radial-gradient(circle at 12% 84%, rgb(255 235 226 / 11%) 0 8px, transparent 30px),
+    radial-gradient(circle at 88% 26%, rgb(244 184 211 / 9%) 0 10px, transparent 36px);
+  filter: blur(5px);
+}
+
+@keyframes petal-drift {
+  from {
+    transform: translate3d(var(--petal-from-x), var(--petal-from-y), 0) rotate(var(--petal-rotation));
+  }
+  to {
+    transform: translate3d(var(--petal-drift), var(--petal-to-y), 0) rotate(var(--petal-end-rotation));
+  }
+}
+
+@keyframes bloom-light {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,48 @@
+.background {
+  background:
+    radial-gradient(circle at 72% 16%, rgb(103 169 205 / 18%), transparent 34%),
+    radial-gradient(circle at 18% 86%, rgb(68 126 164 / 14%), transparent 30%),
+    linear-gradient(160deg, rgb(6 15 25 / 98%), rgb(13 34 49 / 86%));
+}
+
+.cityGlow,
+.glassHighlight,
+.fallback {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cityGlow {
+  opacity: 0.46;
+  background:
+    radial-gradient(ellipse at 18% 102%, rgb(90 157 191 / 24%), transparent 32%),
+    radial-gradient(ellipse at 66% 108%, rgb(62 105 151 / 22%), transparent 36%),
+    linear-gradient(180deg, transparent 58%, rgb(27 69 94 / 20%));
+  filter: blur(8px);
+}
+
+.webgl {
+  z-index: 1;
+}
+
+.glassHighlight {
+  z-index: 2;
+  opacity: 0.32;
+  background:
+    linear-gradient(112deg, transparent 12%, rgb(230 247 255 / 7%) 24%, transparent 36%),
+    radial-gradient(ellipse at 76% 84%, transparent 0 42px, rgb(169 216 232 / 12%) 44px, transparent 50px);
+  mix-blend-mode: screen;
+}
+
+.fallback {
+  z-index: 1;
+  opacity: 0.74;
+  background-image:
+    linear-gradient(178deg, transparent 0 40%, rgb(205 235 245 / 72%) 82%, transparent 100%),
+    linear-gradient(178deg, transparent 0 32%, rgb(130 193 219 / 56%) 84%, transparent 100%),
+    radial-gradient(ellipse, rgb(205 235 245 / 36%) 0 1px, transparent 2px);
+  background-position: 18px 0, 73px 24px, 38px 52px;
+  background-size: 79px 180px, 121px 230px, 97px 113px;
+  mask-image: linear-gradient(180deg, black, rgb(0 0 0 / 70%) 72%, transparent);
+}

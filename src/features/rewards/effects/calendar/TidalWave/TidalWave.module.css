@@ -1,0 +1,123 @@
+.effect,
+.artwork {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.effect {
+  z-index: 0;
+  mix-blend-mode: normal;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 12%, rgb(0 0 0 / 30%) 46%, #000 70%);
+  mask-image: linear-gradient(to bottom, transparent 12%, rgb(0 0 0 / 30%) 46%, #000 70%);
+}
+
+.calendar {
+  opacity: 0.94;
+}
+
+.preview {
+  z-index: 2;
+  opacity: 0.94;
+}
+
+.fallback {
+  display: block;
+  filter: saturate(1.04);
+}
+
+.artwork {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  shape-rendering: geometricPrecision;
+}
+
+.previewArtwork {
+  z-index: 2;
+  opacity: 0.72;
+}
+
+.calendarArtwork {
+  opacity: 0.46;
+}
+
+.foamRibbon {
+  opacity: 0.16;
+}
+
+.foamFragments {
+  opacity: 0.18;
+}
+
+.glints {
+  opacity: 0.14;
+  stroke-width: 1.8px;
+}
+
+.bubbles {
+  opacity: 0.18;
+  stroke-width: 1.2px;
+}
+
+.frontWave,
+.foamFragments,
+.glints,
+.bubbles {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-play-state: paused;
+}
+
+.artwork[data-animated="true"] .frontWave,
+.artwork[data-animated="true"] .foamFragments,
+.artwork[data-animated="true"] .glints,
+.artwork[data-animated="true"] .bubbles {
+  animation-play-state: var(--reward-animation-state, running);
+}
+
+.frontWave {
+  animation: tidal-front 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.foamFragments {
+  animation: tidal-foam 10s ease-in-out infinite alternate;
+}
+
+.glints {
+  animation: tidal-glints 12s ease-in-out infinite alternate;
+}
+
+.bubbles {
+  animation: tidal-bubbles 14s ease-in-out infinite alternate;
+}
+
+@keyframes tidal-front {
+  from { transform: translate3d(1.2%, 1%, 0) scaleX(1.035); }
+  to { transform: translate3d(-1.8%, -1.4%, 0) scaleX(1.055); }
+}
+
+@keyframes tidal-foam {
+  from { transform: translate3d(-0.6%, 1%, 0); opacity: 0.12; }
+  to { transform: translate3d(0.8%, -1.2%, 0); opacity: 0.22; }
+}
+
+@keyframes tidal-glints {
+  from { transform: translate3d(-0.8%, 0, 0); opacity: 0.08; }
+  to { transform: translate3d(1%, -0.5%, 0); opacity: 0.18; }
+}
+
+@keyframes tidal-bubbles {
+  from { transform: translate3d(-0.4%, 1.4%, 0); opacity: 0.12; }
+  to { transform: translate3d(0.6%, -2.2%, 0); opacity: 0.24; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frontWave,
+  .foamFragments,
+  .glints,
+  .bubbles {
+    animation: none;
+  }
+}

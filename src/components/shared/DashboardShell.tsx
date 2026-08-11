@@ -4,11 +4,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import OnboardingTutorial from "@/features/onboarding/components/OnboardingTutorial"
+import RewardBackgroundLayer from "@/features/rewards/effects/RewardBackgroundLayer"
 import SettingsModal from "@/features/settings/components/SettingsModal"
 import NewTaskButton from "@/features/tasks/components/NewTaskButton"
 import CalendarButton from "../ui/CalendarButton"
 import MatrizButton from "../ui/MatrizButton"
 import PomodoroButton from "../ui/PomodoroButton"
+import StoreButton from "../ui/StoreButton"
 import WhiteboardButton from "../ui/WhiteboardButton"
 import Sidebar from "./Sidebar"
 
@@ -32,6 +34,11 @@ const navigation = [
         href: "/dashboard/whiteboard",
         label: "Pizarra",
         icon: <WhiteboardButton />,
+    },
+    {
+        href: "/dashboard/store",
+        label: "Tienda",
+        icon: <StoreButton />,
     },
 ]
 
@@ -108,7 +115,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
 
     return (
         <div className="relative isolate flex h-dvh w-full overflow-hidden bg-background">
-            <div className="ambient-background" aria-hidden="true" />
+            <RewardBackgroundLayer />
             {isSidebarOpen && (
                 <button
                     type="button"
@@ -168,7 +175,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)]
                     pb-20 xl:pb-0
                     ${
-                        pathname === "/dashboard/personalization"
+                        pathname === "/dashboard/personalization" ||
+                        pathname === "/dashboard/store"
                             ? "overflow-hidden"
                             : "overflow-auto"
                     }
@@ -176,7 +184,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             >
                 {children}
 
-                {pathname !== "/dashboard/calendar" && (
+                {pathname !== "/dashboard/calendar" &&
+                    pathname !== "/dashboard/store" && (
                     <NewTaskButton
                         className="
                             calm-icon-button fixed top-4 right-4 z-30
@@ -190,7 +199,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     aria-label="Navegación del dashboard"
                     className="
                         fixed right-4 bottom-4 left-4 z-30 mx-auto
-                        flex max-w-95 items-center justify-around
+                        flex max-w-105 items-center justify-around
                         rounded-2xl border border-border/70 bg-surface/94 p-1.5
                         shadow-[0_16px_42px_rgb(0_0_0/28%)] backdrop-blur-xl
                         xl:top-1/2 xl:right-5.5 xl:bottom-auto xl:left-auto

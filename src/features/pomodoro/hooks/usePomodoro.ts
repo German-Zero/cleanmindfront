@@ -7,6 +7,7 @@ import {
     useRef,
     useState,
 } from "react"
+import { useRewards } from "@/features/rewards/RewardsProvider"
 import { pomodoroService } from "../services/pomodoro.service"
 import { getPomodoroClock } from "../timer"
 import type {
@@ -43,6 +44,7 @@ function getBreakType(
 export function usePomodoro({
     autoRepeat = false,
 }: UsePomodoroOptions = {}) {
+    const { registerReward } = useRewards()
     const [settings, setSettings] = useState<PomodoroSettings | null>(null)
     const [session, setSession] = useState<PomodoroSession | null>(null)
     const [summary, setSummary] = useState<PomodoroSummary | null>(null)
@@ -117,12 +119,17 @@ export function usePomodoro({
             let completed = false
 
             try {
-                await pomodoroService.completeSession(session.id, {
-                    actualFocusSeconds: session.plannedFocusSeconds,
-                    actualBreakSeconds: session.plannedBreakSeconds,
-                })
+                const completedSession =
+                    await pomodoroService.completeSession(session.id, {
+                        actualFocusSeconds: session.plannedFocusSeconds,
+                        actualBreakSeconds: session.plannedBreakSeconds,
+                    })
                 completed = true
                 setSession(null)
+                registerReward(completedSession.reward, {
+                    title: "Sesi\u00f3n Pomodoro completada",
+                    description: "Tu tiempo de enfoque qued\u00f3 registrado.",
+                })
 
                 const nextSummary = await refreshSummary()
                 if (!autoRepeat || !settings) return
@@ -153,6 +160,7 @@ export function usePomodoro({
     }, [
         autoRepeat,
         clock?.phase,
+        registerReward,
         refreshSummary,
         session,
         settings,

@@ -10,7 +10,7 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     BACKGROUND_FIREFLY_GARDEN: {
         id: "BACKGROUND_FIREFLY_GARDEN",
         slot: "BACKGROUND",
-        engine: "css",
+        engine: "webgl",
         component: dynamic(() => import("../backgrounds/FireflyGarden/FireflyGarden"), { ssr: false }),
     },
     BACKGROUND_COSMIC_RIBBONS: {

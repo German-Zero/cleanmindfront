@@ -16,7 +16,7 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     BACKGROUND_COSMIC_RIBBONS: {
         id: "BACKGROUND_COSMIC_RIBBONS",
         slot: "BACKGROUND",
-        engine: "css",
+        engine: "webgl",
         component: dynamic(() => import("../backgrounds/CosmicRibbons/CosmicRibbons"), { ssr: false }),
     },
     BACKGROUND_RAINY_WINDOW: {

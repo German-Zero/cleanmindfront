@@ -1,12 +1,15 @@
 "use client"
 
+import OrbitalNebula from "@/features/rewards/effects/backgrounds/OrbitalNebula/OrbitalNebula"
 import PrismaticAurora from "@/features/rewards/effects/backgrounds/PrismaticAurora/PrismaticAurora"
 import type { BackgroundMotion, Theme } from "../types"
 
-const previewClassByMotion: Record<Exclude<BackgroundMotion, "SOFT_AURORA">, string> = {
+const previewClassByMotion: Record<
+    Exclude<BackgroundMotion, "SOFT_AURORA" | "ORBITAL_GALAXY">,
+    string
+> = {
     NONE: "none",
     STAR_RAIN: "meteors",
-    ORBITAL_GALAXY: "nebula",
 }
 
 export default function BackgroundMotionPreview({
@@ -20,6 +23,14 @@ export default function BackgroundMotionPreview({
         return (
             <span className="appearance-motion-preview" aria-hidden="true">
                 <PrismaticAurora theme={theme} preview />
+            </span>
+        )
+    }
+
+    if (motion === "ORBITAL_GALAXY") {
+        return (
+            <span className="appearance-motion-preview" aria-hidden="true">
+                <OrbitalNebula theme={theme} preview />
             </span>
         )
     }

@@ -96,14 +96,16 @@
 
 .reward-effect--paper-grain:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) :is(.calm-panel, .calm-card) {
   background-image:
-    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-secondary) 12%, transparent) 0 0.65px, transparent 0.9px),
+    var(--reward-paper-speckle),
+    var(--reward-paper-fibers),
+    var(--reward-paper-crossfibers),
     linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)),
     var(--reward-border-sheen),
     var(--reward-border-gradient);
-  background-origin: padding-box, padding-box, border-box, border-box;
-  background-clip: padding-box, padding-box, border-box, border-box;
-  background-size: 5px 5px, auto, var(--reward-border-sheen-size), var(--reward-border-gradient-size);
-  background-position: 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+  background-origin: padding-box, padding-box, padding-box, padding-box, border-box, border-box;
+  background-clip: padding-box, padding-box, padding-box, padding-box, border-box, border-box;
+  background-size: 4px 4px, 39px 39px, 53px 53px, auto, var(--reward-border-sheen-size), var(--reward-border-gradient-size);
+  background-position: 0 0, 0 0, 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
   animation-name: reward-border-drift-textured;
 }
 
@@ -119,11 +121,11 @@
 
 @keyframes reward-border-drift-textured {
   from {
-    background-position: 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+    background-position: 0 0, 0 0, 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
   }
 
   to {
-    background-position: 0 0, 0 0, var(--reward-border-sheen-to), var(--reward-border-gradient-to);
+    background-position: 0 0, 0 0, 0 0, 0 0, var(--reward-border-sheen-to), var(--reward-border-gradient-to);
   }
 }
 

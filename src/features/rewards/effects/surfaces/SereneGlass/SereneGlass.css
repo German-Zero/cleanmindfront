@@ -1,0 +1,72 @@
+.reward-effect--serene-glass {
+  --reward-glass-border: rgb(255 255 255 / 18%);
+  --reward-glass-highlight: rgb(255 255 255 / 16%);
+  --reward-glass-shadow: rgb(4 7 18 / 24%);
+}
+
+.reward-effect--serene-glass :is(.calm-panel, .calm-card) {
+  position: relative;
+  isolation: isolate;
+  border-color: color-mix(in srgb, var(--reward-glass-border) 78%, var(--border));
+  -webkit-backdrop-filter: blur(24px) saturate(138%) contrast(104%);
+  backdrop-filter: blur(24px) saturate(138%) contrast(104%);
+}
+
+.reward-effect--serene-glass .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 69%, transparent);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 8%), transparent 34%),
+    var(--reward-panel-fill);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 18%),
+    inset 0 -1px 0 rgb(255 255 255 / 5%),
+    0 22px 58px var(--reward-glass-shadow);
+}
+
+.reward-effect--serene-glass .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 57%, transparent);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 7%), transparent 38%),
+    var(--reward-panel-fill);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 15%),
+    inset 0 -1px 0 rgb(255 255 255 / 4%),
+    0 14px 34px rgb(4 7 18 / 17%);
+  -webkit-backdrop-filter: blur(19px) saturate(130%);
+  backdrop-filter: blur(19px) saturate(130%);
+}
+
+.reward-effect--serene-glass :is(.calm-panel, .calm-card)::before,
+.reward-effect--serene-glass :is(.calm-panel, .calm-card)::after {
+  position: absolute;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.reward-effect--serene-glass :is(.calm-panel, .calm-card)::before {
+  inset: 1px;
+  background:
+    radial-gradient(circle at 14% -8%, rgb(255 255 255 / 20%), transparent 34%),
+    linear-gradient(118deg, transparent 10%, rgb(255 255 255 / 8%) 30%, transparent 52%);
+  opacity: 0.72;
+}
+
+.reward-effect--serene-glass :is(.calm-panel, .calm-card)::after {
+  inset: 0;
+  border: 1px solid rgb(255 255 255 / 6%);
+  box-shadow:
+    inset 0 1px 0 var(--reward-glass-highlight),
+    inset 1px 0 0 rgb(255 255 255 / 5%);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .reward-effect--serene-glass .calm-panel {
+    --reward-panel-fill: color-mix(in srgb, var(--surface) 91%, transparent);
+  }
+
+  .reward-effect--serene-glass .calm-card {
+    --reward-panel-fill: color-mix(in srgb, var(--card) 89%, transparent);
+  }
+}
+

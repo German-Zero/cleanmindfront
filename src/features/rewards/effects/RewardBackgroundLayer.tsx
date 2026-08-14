@@ -1,6 +1,7 @@
 "use client"
 
 import { useTheme } from "@/features/settings/ThemeProvider"
+import MeteorShower from "./backgrounds/MeteorShower/MeteorShower"
 import OrbitalNebula from "./backgrounds/OrbitalNebula/OrbitalNebula"
 import PrismaticAurora from "./backgrounds/PrismaticAurora/PrismaticAurora"
 import EquippedEffectSlot from "./runtime/EquippedEffectSlot"
@@ -11,7 +12,9 @@ export default function RewardBackgroundLayer() {
         ? <PrismaticAurora theme={theme} />
         : backgroundMotion === "ORBITAL_GALAXY"
             ? <OrbitalNebula theme={theme} />
-            : <div className="ambient-background" aria-hidden="true" />
+            : backgroundMotion === "STAR_RAIN"
+                ? <MeteorShower theme={theme} />
+                : <div className="ambient-background" aria-hidden="true" />
 
     return (
         <EquippedEffectSlot

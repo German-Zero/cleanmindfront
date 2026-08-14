@@ -1,0 +1,134 @@
+.reward-border--aurora {
+  --reward-border-gradient: linear-gradient(118deg, #3FA89F 0%, #A8E8DC 16%, #7870E6 38%, #D47AB7 61%, #72D8C8 82%, #3FA89F 100%);
+  --reward-border-sheen: radial-gradient(circle at 50% 50%, rgb(228 255 249 / 64%) 0 2%, transparent 18%);
+  --reward-border-gradient-size: 280% 280%;
+  --reward-border-sheen-size: 190% 190%;
+  --reward-border-gradient-from: 0% 48%;
+  --reward-border-gradient-to: 100% 52%;
+  --reward-border-sheen-from: 8% 92%;
+  --reward-border-sheen-to: 92% 8%;
+  --reward-border-glow: rgb(126 117 232 / 17%);
+  --reward-border-duration: 24s;
+  --reward-border-easing: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.reward-border--sunset {
+  --reward-border-gradient: linear-gradient(112deg, #7B385F 0%, #E66082 19%, #FFD18A 41%, #F58B5C 58%, #6C62CE 81%, #7B385F 100%);
+  --reward-border-sheen: linear-gradient(102deg, transparent 32%, rgb(255 240 195 / 58%) 48%, transparent 64%);
+  --reward-border-gradient-size: 250% 180%;
+  --reward-border-sheen-size: 260% 100%;
+  --reward-border-gradient-from: 4% 50%;
+  --reward-border-gradient-to: 96% 50%;
+  --reward-border-sheen-from: 100% 0%;
+  --reward-border-sheen-to: 0% 0%;
+  --reward-border-glow: rgb(230 96 130 / 16%);
+  --reward-border-duration: 20s;
+  --reward-border-easing: cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.reward-border--ocean-pulse {
+  --reward-border-gradient: linear-gradient(104deg, #173B8F 0%, #286FE1 22%, #19BFD6 45%, #BDF8EF 54%, #37D5B5 68%, #286FE1 84%, #173B8F 100%);
+  --reward-border-sheen: linear-gradient(108deg, transparent 37%, rgb(238 255 252 / 88%) 48%, rgb(93 230 245 / 38%) 54%, transparent 65%);
+  --reward-border-gradient-size: 240% 100%;
+  --reward-border-sheen-size: 320% 100%;
+  --reward-border-gradient-from: 0% 50%;
+  --reward-border-gradient-to: 100% 50%;
+  --reward-border-sheen-from: 110% 0%;
+  --reward-border-sheen-to: -10% 0%;
+  --reward-border-glow: rgb(25 191 214 / 18%);
+  --reward-border-duration: 14s;
+  --reward-border-easing: linear;
+}
+
+.reward-border--gilded-moss {
+  --reward-border-gradient: linear-gradient(126deg, #173B31 0%, #4F7547 22%, #C7A845 43%, #FFF0A7 52%, #8CA45C 69%, #315B42 84%, #173B31 100%);
+  --reward-border-sheen: repeating-linear-gradient(112deg, transparent 0 34px, rgb(255 239 166 / 38%) 38px, transparent 43px 82px);
+  --reward-border-gradient-size: 260% 220%;
+  --reward-border-sheen-size: 220% 100%;
+  --reward-border-gradient-from: 2% 54%;
+  --reward-border-gradient-to: 98% 46%;
+  --reward-border-sheen-from: 100% 0%;
+  --reward-border-sheen-to: 0% 0%;
+  --reward-border-glow: rgb(199 168 69 / 14%);
+  --reward-border-duration: 28s;
+  --reward-border-easing: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) :is(.calm-panel, .calm-card) {
+  border-color: transparent;
+  background-origin: padding-box, border-box, border-box;
+  background-clip: padding-box, border-box, border-box;
+  background-size: auto, var(--reward-border-sheen-size), var(--reward-border-gradient-size);
+  background-position: 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+  animation: reward-border-drift var(--reward-border-duration) var(--reward-border-easing) infinite alternate;
+  animation-play-state: var(--reward-animation-state, running);
+}
+
+:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 96%, transparent);
+  background-image:
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)),
+    var(--reward-border-sheen),
+    var(--reward-border-gradient);
+  box-shadow:
+    0 18px 52px rgb(0 0 0 / 17%),
+    0 0 26px var(--reward-border-glow);
+}
+
+:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 84%, var(--surface));
+  background-image:
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)),
+    var(--reward-border-sheen),
+    var(--reward-border-gradient);
+  box-shadow:
+    0 12px 32px rgb(0 0 0 / 12%),
+    0 0 17px var(--reward-border-glow);
+}
+
+.reward-effect--serene-glass:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 68%, transparent);
+}
+
+.reward-effect--serene-glass:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 54%, transparent);
+}
+
+.reward-effect--paper-grain:is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) :is(.calm-panel, .calm-card) {
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-secondary) 12%, transparent) 0 0.65px, transparent 0.9px),
+    linear-gradient(var(--reward-panel-fill), var(--reward-panel-fill)),
+    var(--reward-border-sheen),
+    var(--reward-border-gradient);
+  background-origin: padding-box, padding-box, border-box, border-box;
+  background-clip: padding-box, padding-box, border-box, border-box;
+  background-size: 5px 5px, auto, var(--reward-border-sheen-size), var(--reward-border-gradient-size);
+  background-position: 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+  animation-name: reward-border-drift-textured;
+}
+
+@keyframes reward-border-drift {
+  from {
+    background-position: 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+  }
+
+  to {
+    background-position: 0 0, var(--reward-border-sheen-to), var(--reward-border-gradient-to);
+  }
+}
+
+@keyframes reward-border-drift-textured {
+  from {
+    background-position: 0 0, 0 0, var(--reward-border-sheen-from), var(--reward-border-gradient-from);
+  }
+
+  to {
+    background-position: 0 0, 0 0, var(--reward-border-sheen-to), var(--reward-border-gradient-to);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.reward-border--aurora, .reward-border--sunset, .reward-border--ocean-pulse, .reward-border--gilded-moss) :is(.calm-panel, .calm-card) {
+    animation: none;
+  }
+}

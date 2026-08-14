@@ -5,6 +5,7 @@ import RewardOptionCollection from "@/features/rewards/components/RewardOptionCo
 import RewardPreviewDialog from "@/features/rewards/components/RewardPreviewDialog"
 import { useRewards } from "@/features/rewards/RewardsProvider"
 import type { StoreItem, StoreItemId } from "@/features/rewards/types"
+import BackgroundMotionPreview from "@/features/settings/components/BackgroundMotionPreview"
 import { useTheme } from "@/features/settings/ThemeProvider"
 import type { BackgroundMotion, Theme } from "@/features/settings/types"
 import { requestErrorMessage } from "@/lib/api"
@@ -66,31 +67,26 @@ const motions: Array<{
     id: BackgroundMotion
     name: string
     description: string
-    preview: string
 }> = [
     {
         id: "NONE",
         name: "Sin movimiento",
         description: "Un fondo completamente estable",
-        preview: "none",
     },
     {
         id: "STAR_RAIN",
         name: "Lluvia de meteoros",
         description: "Destellos diagonales sobre un cielo profundo",
-        preview: "meteors",
     },
     {
         id: "ORBITAL_GALAXY",
         name: "Nebulosa orbital",
         description: "Nubes cósmicas que giran lentamente",
-        preview: "nebula",
     },
     {
         id: "SOFT_AURORA",
         name: "Aurora prismática",
         description: "Ondas luminosas que recorren el fondo",
-        preview: "aurora",
     },
 ]
 
@@ -351,9 +347,9 @@ export default function Personalization() {
                                         : "border-border/60 bg-card/48 hover:border-accent/35 hover:bg-card/68"
                                 }`}
                             >
-                                <span
-                                    className={`appearance-motion-preview appearance-motion-preview--${option.preview}`}
-                                    aria-hidden="true"
+                                <BackgroundMotionPreview
+                                    motion={option.id}
+                                    theme={theme}
                                 />
                                 <span className="mt-2.75 flex items-start justify-between gap-2">
                                     <span>

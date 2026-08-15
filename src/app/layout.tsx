@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
-import "@/features/rewards/styles/surfaces.css";
-import "@/features/rewards/effects/borders/borders.css";
+import "@/features/settings/styles/background-motion.css";
 
 const sora = Sora({
   subsets: ["latin"],

@@ -1,7 +1,6 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import PomodoroRewardDecoration from "@/features/rewards/effects/PomodoroRewardDecoration"
 import { usePomodoro } from "@/features/pomodoro/hooks/usePomodoro"
 import { usePomodoroSound } from "@/features/pomodoro/hooks/usePomodoroSound"
 import {
@@ -241,9 +240,8 @@ export default function Pomodoro() {
                 </section>
 
                 <div className="flex min-w-0 flex-col gap-4">
-                    <section className="calm-panel relative isolate overflow-hidden p-4.5 sm:p-6">
-                        <PomodoroRewardDecoration />
-                        <div className="relative z-1 flex w-full flex-col items-center justify-center">
+                    <section className="calm-panel p-4.5 sm:p-6">
+                        <div className="flex w-full flex-col items-center justify-center">
                         <span className="calm-eyebrow text-center">
                             {visiblePhaseLabel}
                         </span>

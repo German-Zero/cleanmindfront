@@ -6,7 +6,6 @@ import {
     useState,
     type ReactNode,
 } from "react"
-import { useRewards } from "@/features/rewards/RewardsProvider"
 import { tasksService } from "./services/tasks.service"
 import type {
     CreateTaskRequest,
@@ -34,7 +33,6 @@ export function TasksProvider({
     children: ReactNode
     initialTasks: Task[]
 }) {
-    const { registerReward } = useRewards()
     const [tasks, setTasks] = useState<Task[]>(initialTasks)
 
     const createTask = async (request: CreateTaskRequest) => {
@@ -82,10 +80,6 @@ export function TasksProvider({
         setTasks((current) =>
             current.map((item) => (item.id === updated.id ? updated : item)),
         )
-        registerReward(updated.reward, {
-            title: "Tarea completada",
-            description: updated.title,
-        })
     }
 
     return (

@@ -1,0 +1,331 @@
+[data-motion="STAR_RAIN"] .ambient-background,
+[data-motion="ORBITAL_GALAXY"] .ambient-background,
+[data-motion="SOFT_AURORA"] .ambient-background {
+    opacity: 0.62;
+}
+
+[data-motion="STAR_RAIN"] .ambient-background {
+    background:
+        radial-gradient(circle at 76% 18%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 28%),
+        linear-gradient(150deg, transparent 30%, color-mix(in srgb, var(--background) 72%, transparent));
+}
+
+[data-motion="STAR_RAIN"] .ambient-background::before {
+    inset: -120px;
+    background-image:
+        radial-gradient(circle, color-mix(in srgb, var(--text-primary) 72%, transparent) 0 1px, transparent 1.6px),
+        radial-gradient(circle, color-mix(in srgb, var(--accent) 66%, transparent) 0 1.2px, transparent 1.8px),
+        radial-gradient(circle, color-mix(in srgb, var(--primary) 56%, transparent) 0 0.8px, transparent 1.4px);
+    background-position:
+        12px 24px,
+        48px 8px,
+        30px 60px;
+    background-size:
+        86px 86px,
+        118px 118px,
+        74px 74px;
+    animation: cleanmind-star-drift 22s linear infinite;
+}
+
+[data-motion="STAR_RAIN"] .ambient-background::after {
+    inset: -140px;
+    background-image:
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--accent) 82%, transparent) 2px, color-mix(in srgb, var(--primary) 26%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--primary) 76%, transparent) 2px, color-mix(in srgb, var(--accent) 22%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--accent) 72%, transparent) 2px, color-mix(in srgb, var(--secondary) 24%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--text-primary) 68%, transparent) 2px, color-mix(in srgb, var(--primary) 20%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--primary) 70%, transparent) 2px, color-mix(in srgb, var(--accent) 20%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--accent) 74%, transparent) 2px, color-mix(in srgb, var(--secondary) 22%, transparent) 8px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--text-primary) 64%, transparent) 2px, color-mix(in srgb, var(--primary) 18%, transparent) 8px, transparent 72%);
+    background-position:
+        8% 16%,
+        31% 38%,
+        58% 12%,
+        82% 31%,
+        17% 72%,
+        52% 62%,
+        89% 78%;
+    background-repeat: no-repeat;
+    background-size: 54px 20px;
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 24%, transparent));
+    opacity: 0;
+    transform: rotate(-18deg);
+    will-change: transform, opacity;
+    animation: cleanmind-meteor-pass 9s ease-in-out infinite;
+}
+
+[data-motion="ORBITAL_GALAXY"] .ambient-background::before {
+    width: min(900px, 78vw);
+    height: min(900px, 78vw);
+    top: -280px;
+    right: -180px;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at 38% 42%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 18%),
+        radial-gradient(ellipse at 64% 58%, color-mix(in srgb, var(--primary) 34%, transparent), transparent 24%),
+        radial-gradient(ellipse at 48% 50%, color-mix(in srgb, var(--secondary) 18%, transparent), transparent 58%);
+    filter: blur(28px);
+    animation: cleanmind-orbit 24s ease-in-out infinite alternate;
+}
+
+[data-motion="ORBITAL_GALAXY"] .ambient-background::after {
+    width: min(720px, 66vw);
+    height: min(720px, 66vw);
+    bottom: -340px;
+    left: -180px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 44% 45%, color-mix(in srgb, var(--primary) 26%, transparent), transparent 20%),
+        conic-gradient(
+            from 40deg,
+            transparent,
+            color-mix(in srgb, var(--accent) 18%, transparent),
+            transparent 34%,
+            color-mix(in srgb, var(--secondary) 16%, transparent),
+            transparent 68%
+        );
+    filter: blur(38px);
+    animation: cleanmind-orbit-reverse 30s linear infinite;
+}
+
+[data-motion="SOFT_AURORA"] .ambient-background::before {
+    width: 130%;
+    height: 52%;
+    top: -12%;
+    left: -15%;
+    border-radius: 45%;
+    background:
+        linear-gradient(
+            100deg,
+            transparent 8%,
+            color-mix(in srgb, var(--primary) 38%, transparent) 28%,
+            color-mix(in srgb, var(--accent) 30%, transparent) 46%,
+            color-mix(in srgb, var(--secondary) 34%, transparent) 64%,
+            transparent 88%
+        );
+    filter: blur(46px);
+    opacity: 0.72;
+    transform: rotate(-5deg);
+    animation: cleanmind-aurora-wave 13s ease-in-out infinite alternate;
+}
+
+[data-motion="SOFT_AURORA"] .ambient-background::after {
+    width: 118%;
+    height: 38%;
+    top: 9%;
+    left: -9%;
+    border-radius: 48%;
+    background:
+        linear-gradient(
+            94deg,
+            transparent 4%,
+            color-mix(in srgb, var(--secondary) 24%, transparent) 24%,
+            color-mix(in srgb, var(--primary) 34%, transparent) 52%,
+            color-mix(in srgb, var(--accent) 20%, transparent) 72%,
+            transparent 96%
+        );
+    filter: blur(34px);
+    opacity: 0.56;
+    transform: rotate(4deg);
+    animation: cleanmind-aurora-wave-secondary 17s ease-in-out infinite alternate;
+}
+
+.appearance-motion-preview--star-rain::before {
+    inset: 0;
+    background-image:
+        radial-gradient(circle, color-mix(in srgb, var(--text-primary) 76%, transparent) 0 1px, transparent 1.5px),
+        radial-gradient(circle, color-mix(in srgb, var(--accent) 70%, transparent) 0 1px, transparent 1.5px);
+    background-position:
+        10px 9px,
+        32px 22px;
+    background-size:
+        38px 30px,
+        49px 36px;
+    animation: cleanmind-preview-stars 7s linear infinite;
+}
+
+.appearance-motion-preview--star-rain::after {
+    inset: -10px;
+    background-image:
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--accent) 80%, transparent) 2px, color-mix(in srgb, var(--primary) 25%, transparent) 7px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--primary) 72%, transparent) 2px, color-mix(in srgb, var(--accent) 22%, transparent) 7px, transparent 72%),
+        radial-gradient(ellipse at 76% 28%, white 0 1px, color-mix(in srgb, var(--text-primary) 64%, transparent) 2px, color-mix(in srgb, var(--primary) 18%, transparent) 7px, transparent 72%);
+    background-position:
+        18% 22%,
+        62% 12%,
+        82% 68%;
+    background-repeat: no-repeat;
+    background-size: 38px 15px;
+    filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent) 22%, transparent));
+    transform: rotate(-28deg);
+    animation: cleanmind-preview-meteor 3.8s ease-in-out infinite;
+}
+
+.appearance-motion-preview--orbital-galaxy::before,
+.appearance-motion-preview--orbital-galaxy::after {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    filter: blur(9px);
+}
+
+.appearance-motion-preview--orbital-galaxy::before {
+    top: -28px;
+    right: 10px;
+    background:
+        radial-gradient(circle at 42% 40%, var(--accent), transparent 28%),
+        conic-gradient(from 30deg, transparent, var(--primary), transparent 64%);
+    opacity: 0.62;
+    animation: cleanmind-preview-orbit 8s linear infinite;
+}
+
+.appearance-motion-preview--orbital-galaxy::after {
+    bottom: -42px;
+    left: 8px;
+    background: radial-gradient(circle, var(--secondary), transparent 66%);
+    opacity: 0.42;
+    animation: cleanmind-preview-orbit 11s linear infinite reverse;
+}
+
+.appearance-motion-preview--soft-aurora::before,
+.appearance-motion-preview--soft-aurora::after {
+    width: 125%;
+    left: -12%;
+    border-radius: 50%;
+    filter: blur(9px);
+}
+
+.appearance-motion-preview--soft-aurora::before {
+    height: 32px;
+    top: 2px;
+    background: linear-gradient(96deg, transparent, var(--primary), var(--accent), transparent);
+    opacity: 0.62;
+    transform: rotate(-4deg);
+    animation: cleanmind-preview-aurora 5.5s ease-in-out infinite alternate;
+}
+
+.appearance-motion-preview--soft-aurora::after {
+    height: 24px;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, var(--secondary), var(--primary), transparent);
+    opacity: 0.42;
+    transform: rotate(5deg);
+    animation: cleanmind-preview-aurora 7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes cleanmind-star-drift {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-86px, 86px, 0);
+    }
+}
+
+@keyframes cleanmind-meteor-pass {
+    0%,
+    14% {
+        opacity: 0;
+        transform: translate3d(90px, -90px, 0) rotate(-18deg);
+    }
+
+    28% {
+        opacity: 0.68;
+    }
+
+    74% {
+        opacity: 0.46;
+    }
+
+    88%,
+    100% {
+        opacity: 0;
+        transform: translate3d(-150px, 150px, 0) rotate(-18deg);
+    }
+}
+
+@keyframes cleanmind-orbit {
+    from {
+        transform: rotate(-8deg) scale(0.92);
+    }
+
+    to {
+        transform: rotate(18deg) scale(1.08);
+    }
+}
+
+@keyframes cleanmind-orbit-reverse {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes cleanmind-aurora-wave {
+    from {
+        transform: translate3d(-4%, 0, 0) rotate(-6deg) scaleY(0.88);
+    }
+
+    to {
+        transform: translate3d(5%, 42px, 0) rotate(2deg) scaleY(1.14);
+    }
+}
+
+@keyframes cleanmind-aurora-wave-secondary {
+    from {
+        transform: translate3d(5%, 0, 0) rotate(5deg) scaleY(0.9);
+    }
+
+    to {
+        transform: translate3d(-4%, 34px, 0) rotate(-2deg) scaleY(1.1);
+    }
+}
+
+@keyframes cleanmind-preview-stars {
+    to {
+        background-position:
+            -28px 39px,
+            -17px 58px;
+    }
+}
+
+@keyframes cleanmind-preview-meteor {
+    0%,
+    18% {
+        opacity: 0;
+        transform: translate3d(28px, -18px, 0) rotate(-28deg);
+    }
+
+    38%,
+    70% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(-58px, 38px, 0) rotate(-28deg);
+    }
+}
+
+@keyframes cleanmind-preview-orbit {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cleanmind-preview-aurora {
+    from {
+        transform: translateX(-7%) rotate(-4deg) scaleY(0.86);
+    }
+
+    to {
+        transform: translateX(7%) rotate(3deg) scaleY(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .appearance-motion-preview::before,
+    .appearance-motion-preview::after {
+        animation: none;
+    }
+}

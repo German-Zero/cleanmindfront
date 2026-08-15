@@ -4,13 +4,12 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import OnboardingTutorial from "@/features/onboarding/components/OnboardingTutorial"
-import RewardBackgroundLayer from "@/features/rewards/effects/RewardBackgroundLayer"
+import AmbientBackground from "@/features/settings/components/AmbientBackground"
 import SettingsModal from "@/features/settings/components/SettingsModal"
 import NewTaskButton from "@/features/tasks/components/NewTaskButton"
 import CalendarButton from "../ui/CalendarButton"
 import MatrizButton from "../ui/MatrizButton"
 import PomodoroButton from "../ui/PomodoroButton"
-import StoreButton from "../ui/StoreButton"
 import WhiteboardButton from "../ui/WhiteboardButton"
 import Sidebar from "./Sidebar"
 
@@ -34,11 +33,6 @@ const navigation = [
         href: "/dashboard/whiteboard",
         label: "Pizarra",
         icon: <WhiteboardButton />,
-    },
-    {
-        href: "/dashboard/store",
-        label: "Tienda",
-        icon: <StoreButton />,
     },
 ]
 
@@ -115,7 +109,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
 
     return (
         <div className="relative isolate flex h-dvh w-full overflow-hidden bg-background">
-            <RewardBackgroundLayer />
+            <AmbientBackground />
             {isSidebarOpen && (
                 <button
                     type="button"
@@ -175,8 +169,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                     bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--primary)_7%,transparent),transparent_38%)]
                     pb-20 xl:pb-0
                     ${
-                        pathname === "/dashboard/personalization" ||
-                        pathname === "/dashboard/store"
+                        pathname === "/dashboard/personalization"
                             ? "overflow-hidden"
                             : "overflow-auto"
                     }
@@ -184,8 +177,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             >
                 {children}
 
-                {pathname !== "/dashboard/calendar" &&
-                    pathname !== "/dashboard/store" && (
+                {pathname !== "/dashboard/calendar" && (
                     <NewTaskButton
                         className="
                             calm-icon-button fixed top-4 right-4 z-30

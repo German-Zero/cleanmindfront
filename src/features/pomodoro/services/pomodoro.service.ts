@@ -1,5 +1,4 @@
 import { apiRequest } from "@/lib/api"
-import type { RewardedResponse } from "@/features/rewards/types"
 import type {
     FinishPomodoroSessionRequest,
     PomodoroSession,
@@ -48,7 +47,7 @@ export const pomodoroService = {
         id: string,
         request: FinishPomodoroSessionRequest,
     ) =>
-        apiRequest<RewardedResponse<PomodoroSession>>(
+        apiRequest<PomodoroSession>(
             `/api/pomodoro/sessions/${id}/complete`,
             {
                 method: "PATCH",

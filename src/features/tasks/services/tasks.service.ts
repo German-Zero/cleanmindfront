@@ -1,5 +1,4 @@
 import { apiRequest } from "@/lib/api"
-import type { RewardedResponse } from "@/features/rewards/types"
 import type {
     CreateTaskRequest,
     Task,
@@ -34,7 +33,7 @@ export const tasksService = {
         }),
 
     complete: (id: string) =>
-        apiRequest<RewardedResponse<Task>>(`/api/tasks/${id}/complete`, {
+        apiRequest<Task>(`/api/tasks/${id}/complete`, {
             method: "PATCH",
         }),
 

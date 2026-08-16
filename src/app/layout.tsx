@@ -11,7 +11,8 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: "CleanMind",
-  description: "CleanMind frontend",
+  description:
+    "Un espacio para organizar tus tareas, cuidar tu enfoque y reducir la carga mental.",
 };
 
 export default function RootLayout({
@@ -26,9 +27,7 @@ export default function RootLayout({
       data-motion="NONE"
       lang="es"
     >
-      <body>
-        {children}
-        </body>
+      <body>{children}</body>
     </html>
   );
 }

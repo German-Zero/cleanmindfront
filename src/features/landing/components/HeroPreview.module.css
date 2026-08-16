@@ -1,0 +1,652 @@
+.preview {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  min-height: 610px;
+  isolation: isolate;
+  perspective: 1200px;
+}
+
+.ambientLayer,
+.workspaceLayer,
+.focusLayer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.ambientLayer {
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambientLayer::before,
+.ambientLayer::after {
+  position: absolute;
+  content: "";
+  border-radius: 999px;
+  filter: blur(2px);
+}
+
+.ambientLayer::before {
+  top: 12px;
+  right: 20px;
+  width: 310px;
+  height: 310px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 22%, transparent),
+    transparent 68%
+  );
+}
+
+.ambientLayer::after {
+  bottom: 24px;
+  left: 6px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 15%, transparent),
+    transparent 70%
+  );
+}
+
+.orbit,
+.orbitSmall {
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 999px;
+  transform: rotate(-12deg);
+}
+
+.orbit {
+  top: 64px;
+  right: 10px;
+  width: 410px;
+  height: 230px;
+}
+
+.orbitSmall {
+  bottom: 62px;
+  left: 34px;
+  width: 210px;
+  height: 120px;
+}
+
+.workspaceLayer {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workspace {
+  position: relative;
+  display: grid;
+  width: calc(100% - 56px);
+  height: 500px;
+  grid-template-rows: 58px 1fr;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, var(--accent));
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  box-shadow:
+    0 34px 90px rgb(0 0 0 / 32%),
+    inset 0 1px 0 rgb(255 255 255 / 5%);
+  backdrop-filter: blur(22px);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  padding: 0 18px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+
+.brand,
+.topActions,
+.monthNavigation,
+.viewTabs,
+.taskMeta,
+.focusHeader,
+.focusFooter {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 9px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.brandMark {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.brandMark::before,
+.brandMark::after {
+  position: absolute;
+  top: 6px;
+  width: 5px;
+  height: 11px;
+  content: "";
+  border: 1.5px solid var(--accent);
+}
+
+.brandMark::before {
+  left: 6px;
+  border-right: 0;
+  border-radius: 6px 0 0 6px;
+}
+
+.brandMark::after {
+  right: 6px;
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.topActions {
+  gap: 6px;
+}
+
+.topDot,
+.topAvatar {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 74%, transparent);
+  background: color-mix(in srgb, var(--card) 76%, transparent);
+}
+
+.topDot {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.topAvatar {
+  width: 29px;
+  height: 29px;
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.workspaceBody {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: 176px 1fr;
+}
+
+.taskPanel {
+  min-width: 0;
+  border-right: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
+  padding: 17px 13px;
+  background: color-mix(in srgb, var(--background) 35%, transparent);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.taskTitle {
+  margin: 5px 0 13px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taskItem {
+  border: 1px solid color-mix(in srgb, var(--border) 63%, transparent);
+  border-radius: 10px;
+  padding: 9px;
+  background: color-mix(in srgb, var(--card) 58%, transparent);
+}
+
+.taskName {
+  display: block;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 9px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskMeta {
+  justify-content: space-between;
+  gap: 5px;
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 7px;
+}
+
+.taskStatus {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--success) 55%, transparent);
+}
+
+.taskStatusPlan {
+  background: var(--plan);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--plan) 55%, transparent);
+}
+
+.calendarPanel {
+  min-width: 0;
+  padding: 16px 17px 18px;
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.monthNavigation {
+  gap: 8px;
+}
+
+.monthButton {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  border-radius: 7px;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.monthTitle {
+  min-width: 108px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 650;
+  text-align: center;
+}
+
+.viewTabs {
+  gap: 3px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 8px;
+  padding: 3px;
+  background: color-mix(in srgb, var(--background) 30%, transparent);
+}
+
+.viewTab {
+  border-radius: 6px;
+  padding: 5px 8px;
+  color: var(--text-secondary);
+  font-size: 7px;
+}
+
+.viewTabActive {
+  background: var(--primary);
+  color: var(--text-primary);
+}
+
+.weekdays,
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdays {
+  margin-bottom: 5px;
+}
+
+.weekday {
+  color: var(--text-secondary);
+  font-size: 7px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendarGrid {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--border) 52%, transparent);
+  gap: 1px;
+}
+
+.calendarDay {
+  position: relative;
+  min-width: 0;
+  height: 55px;
+  padding: 6px;
+  background: color-mix(in srgb, var(--card) 83%, var(--surface));
+  color: var(--text-secondary);
+  font-size: 7px;
+}
+
+.calendarDayMuted {
+  opacity: 0.42;
+}
+
+.calendarDayToday {
+  background: color-mix(in srgb, var(--primary) 16%, var(--card));
+  color: var(--text-primary);
+}
+
+.todayNumber {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.calendarTask {
+  display: block;
+  overflow: hidden;
+  margin-top: 5px;
+  border-radius: 4px;
+  padding: 3px 4px;
+  background: color-mix(in srgb, var(--now) 68%, transparent);
+  color: #ffffff;
+  font-size: 6px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendarTaskPlan {
+  background: color-mix(in srgb, var(--plan) 68%, transparent);
+}
+
+.focusLayer {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.focusCard {
+  position: absolute;
+  right: -5px;
+  bottom: 29px;
+  width: 218px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: 18px;
+  padding: 15px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow:
+    0 22px 54px rgb(0 0 0 / 38%),
+    inset 0 1px 0 rgb(255 255 255 / 7%);
+  backdrop-filter: blur(20px);
+}
+
+.focusCard::before {
+  position: absolute;
+  top: -48px;
+  right: -32px;
+  width: 130px;
+  height: 130px;
+  content: "";
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 25%, transparent),
+    transparent 68%
+  );
+}
+
+.focusHeader {
+  position: relative;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.focusLabel {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.liveBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 4px 7px;
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  color: var(--success);
+  font-size: 7px;
+  font-weight: 650;
+}
+
+.liveBadge::before {
+  width: 5px;
+  height: 5px;
+  content: "";
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 7px currentColor;
+}
+
+.focusTime {
+  position: relative;
+  margin: 13px 0 2px;
+  color: var(--text-primary);
+  font-size: 34px;
+  font-weight: 650;
+  letter-spacing: -1.5px;
+  line-height: 40px;
+}
+
+.focusTask {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focusProgress {
+  position: relative;
+  height: 4px;
+  margin-top: 13px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 78%, transparent);
+}
+
+.focusProgress::after {
+  display: block;
+  width: 68%;
+  height: 100%;
+  content: "";
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.focusFooter {
+  position: relative;
+  justify-content: space-between;
+  margin-top: 9px;
+  color: var(--text-secondary);
+  font-size: 7px;
+}
+
+.focusControl {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--text-primary);
+  font-size: 9px;
+}
+
+@media (max-width: 780px) {
+  .preview {
+    max-width: 650px;
+    min-height: 550px;
+  }
+
+  .workspace {
+    width: calc(100% - 30px);
+    height: 454px;
+    grid-template-rows: 52px 1fr;
+    border-radius: 20px;
+  }
+
+  .workspaceBody {
+    grid-template-columns: 142px 1fr;
+  }
+
+  .taskPanel {
+    padding: 14px 10px;
+  }
+
+  .calendarPanel {
+    padding: 14px 11px 15px;
+  }
+
+  .calendarDay {
+    height: 48px;
+    padding: 5px;
+  }
+
+  .focusCard {
+    right: 2px;
+    bottom: 17px;
+    width: 204px;
+  }
+}
+
+@media (max-width: 560px) {
+  .preview {
+    min-height: 450px;
+  }
+
+  .workspace {
+    width: calc(100% - 12px);
+    height: 390px;
+    grid-template-rows: 48px 1fr;
+    border-radius: 17px;
+  }
+
+  .topbar {
+    padding: 0 12px;
+  }
+
+  .brand {
+    font-size: 10px;
+  }
+
+  .topDot {
+    display: none;
+  }
+
+  .workspaceBody {
+    grid-template-columns: 1fr;
+  }
+
+  .taskPanel {
+    display: none;
+  }
+
+  .calendarPanel {
+    padding: 12px 9px;
+  }
+
+  .calendarHeader {
+    margin-bottom: 10px;
+  }
+
+  .monthButton {
+    width: 20px;
+    height: 20px;
+  }
+
+  .monthTitle {
+    min-width: 91px;
+    font-size: 11px;
+  }
+
+  .viewTab {
+    padding: 4px 6px;
+  }
+
+  .calendarDay {
+    height: 41px;
+    padding: 4px;
+  }
+
+  .calendarTask {
+    height: 4px;
+    margin-top: 4px;
+    padding: 0;
+    color: transparent;
+  }
+
+  .focusCard {
+    right: -1px;
+    bottom: 0;
+    width: 178px;
+    border-radius: 15px;
+    padding: 12px;
+  }
+
+  .focusTime {
+    margin-top: 9px;
+    font-size: 27px;
+    line-height: 31px;
+  }
+
+  .orbit {
+    top: 48px;
+    right: 0;
+    width: 280px;
+    height: 170px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambientLayer,
+  .workspaceLayer,
+  .focusLayer {
+    transform: none !important;
+    will-change: auto;
+  }
+}

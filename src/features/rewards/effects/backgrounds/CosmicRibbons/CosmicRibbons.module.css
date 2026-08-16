@@ -1,23 +1,33 @@
 .background {
-  background:
-    radial-gradient(circle at 22% 26%, rgb(66 63 148 / 20%), transparent 32%),
-    radial-gradient(circle at 78% 72%, rgb(133 51 128 / 16%), transparent 38%),
-    linear-gradient(145deg, #070A18, #0A1027 58%, #110A20);
+  isolation: isolate;
+  overflow: hidden;
+  background: #070a17;
 }
 
+.cosmos,
 .nebula,
-.fallback {
+.fallback,
+.depthVeil {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.nebula {
-  opacity: 0.38;
+.cosmos {
   background:
-    radial-gradient(ellipse at 28% 56%, rgb(111 99 255 / 20%), transparent 36%),
-    radial-gradient(ellipse at 72% 42%, rgb(228 111 216 / 16%), transparent 34%);
-  filter: blur(28px);
+    radial-gradient(circle at 18% 20%, color-mix(in srgb, var(--cosmic-cool) 22%, transparent), transparent 34%),
+    radial-gradient(circle at 82% 76%, color-mix(in srgb, var(--cosmic-warm) 16%, transparent), transparent 38%),
+    linear-gradient(145deg, #060815, var(--cosmic-base) 54%, #10091d);
+}
+
+.nebula {
+  z-index: 0;
+  opacity: 0.46;
+  background:
+    radial-gradient(ellipse at 26% 64%, color-mix(in srgb, var(--cosmic-cool) 24%, transparent), transparent 38%),
+    radial-gradient(ellipse at 76% 35%, color-mix(in srgb, var(--cosmic-warm) 20%, transparent), transparent 35%);
+  filter: blur(36px) saturate(1.08);
+  transform: scale(1.12);
 }
 
 .webgl {
@@ -25,11 +35,73 @@
 }
 
 .fallback {
-  opacity: 0.72;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.76;
   background:
-    radial-gradient(circle at 18% 28%, rgb(255 255 255 / 62%) 0 1px, transparent 2px),
-    radial-gradient(circle at 76% 68%, rgb(193 215 255 / 54%) 0 1px, transparent 2px),
-    conic-gradient(from 112deg at 50% 52%, transparent 0 19%, rgb(111 99 255 / 28%) 27%, transparent 37% 53%, rgb(228 111 216 / 24%) 62%, transparent 74%);
-  background-size: 104px 118px, 151px 137px, auto;
-  filter: blur(0.2px) saturate(1.15);
+    radial-gradient(circle at 18% 28%, rgb(255 255 255 / 52%) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 76% 68%, rgb(193 215 255 / 44%) 0 1px, transparent 1.6px);
+  background-size: 108px 122px, 157px 143px;
+}
+
+.fallback::before,
+.fallback::after {
+  position: absolute;
+  left: -18%;
+  width: 136%;
+  height: 34%;
+  border-radius: 50%;
+  content: "";
+  filter: blur(18px);
+  animation: cosmic-drift 18s ease-in-out infinite alternate;
+  animation-play-state: var(--reward-animation-state, running);
+}
+
+.fallback::before {
+  top: 27%;
+  border-top: 6px solid color-mix(in srgb, var(--cosmic-warm) 64%, white 12%);
+  box-shadow: 0 -13px 34px color-mix(in srgb, var(--cosmic-warm) 32%, transparent);
+  transform: rotate(-4deg);
+}
+
+.fallback::after {
+  top: 51%;
+  border-top: 8px solid color-mix(in srgb, var(--cosmic-cool) 68%, white 18%);
+  box-shadow: 0 -15px 40px color-mix(in srgb, var(--cosmic-cool) 34%, transparent);
+  transform: rotate(5deg) scaleX(1.08);
+  animation-delay: -7s;
+}
+
+.depthVeil {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at center, transparent 44%, rgb(2 4 13 / 24%) 100%),
+    linear-gradient(180deg, rgb(7 10 23 / 8%), transparent 38%, rgb(4 6 16 / 15%));
+}
+
+@keyframes cosmic-drift {
+  from {
+    transform: translate3d(-2%, -4%, 0) rotate(-4deg) scaleX(0.98);
+  }
+
+  to {
+    transform: translate3d(3%, 5%, 0) rotate(3deg) scaleX(1.04);
+  }
+}
+
+@media (max-width: 768px) {
+  .nebula {
+    filter: blur(24px) saturate(1.04);
+  }
+
+  .depthVeil {
+    background: radial-gradient(ellipse at center, transparent 34%, rgb(2 4 13 / 28%) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallback::before,
+  .fallback::after {
+    animation: none;
+  }
 }

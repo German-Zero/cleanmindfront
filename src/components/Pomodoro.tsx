@@ -241,13 +241,14 @@ export default function Pomodoro() {
                 </section>
 
                 <div className="flex min-w-0 flex-col gap-4">
-                    <section className="calm-panel flex flex-col items-center justify-center p-4.5 sm:p-6">
+                    <section className="calm-panel relative isolate overflow-hidden p-4.5 sm:p-6">
+                        <PomodoroRewardDecoration />
+                        <div className="relative z-1 flex w-full flex-col items-center justify-center">
                         <span className="calm-eyebrow text-center">
                             {visiblePhaseLabel}
                         </span>
 
                         <div className="pomodoro-timer-decoration relative mt-3 flex h-44 w-44 items-center justify-center sm:h-48 sm:w-48">
-                            <PomodoroRewardDecoration />
                             <svg
                                 className="relative z-1 h-full w-full -rotate-90"
                                 viewBox="0 0 100 100"
@@ -476,6 +477,7 @@ export default function Pomodoro() {
                                 Guardando sesión…
                             </p>
                         )}
+                        </div>
                     </section>
 
                     <section className="calm-panel min-h-50 flex-1 p-4.5 sm:p-6">

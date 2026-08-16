@@ -1,0 +1,39 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  role="img"
+  aria-label="CleanMind"
+>
+  <rect width="64" height="64" rx="15" fill="#161420" />
+
+  <path
+    d="M31 16C28 11 21 10 17 15C11 15 8 20 10 25C5 29 7 36 12 38C10 44 15 50 21 49C24 54 31 51 31 46Z"
+    fill="#2B2130"
+    stroke="#C47D97"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M33 16C36 11 43 10 47 15C53 15 56 20 54 25C59 29 57 36 52 38C54 44 49 50 43 49C40 54 33 51 33 46Z"
+    fill="#24233A"
+    stroke="#7C79E8"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M15 25L21 22L19 29L27 25L23 35L29 32"
+    fill="none"
+    stroke="#E6A0B2"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M38 33C42 27 46 39 51 32"
+    fill="none"
+    stroke="#C8C6FF"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+</svg>

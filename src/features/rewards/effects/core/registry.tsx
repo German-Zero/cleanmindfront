@@ -10,13 +10,13 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     BACKGROUND_FIREFLY_GARDEN: {
         id: "BACKGROUND_FIREFLY_GARDEN",
         slot: "BACKGROUND",
-        engine: "css",
+        engine: "webgl",
         component: dynamic(() => import("../backgrounds/FireflyGarden/FireflyGarden"), { ssr: false }),
     },
     BACKGROUND_COSMIC_RIBBONS: {
         id: "BACKGROUND_COSMIC_RIBBONS",
         slot: "BACKGROUND",
-        engine: "css",
+        engine: "webgl",
         component: dynamic(() => import("../backgrounds/CosmicRibbons/CosmicRibbons"), { ssr: false }),
     },
     BACKGROUND_RAINY_WINDOW: {
@@ -40,7 +40,7 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     POMODORO_BLOOM_RING: {
         id: "POMODORO_BLOOM_RING",
         slot: "POMODORO",
-        engine: "motion",
+        engine: "webgl",
         component: dynamic(() => import("../pomodoro/BloomRing/BloomRing"), { ssr: false }),
     },
 }

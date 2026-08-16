@@ -1,0 +1,40 @@
+.reward-effect--paper-grain {
+  --reward-paper-speckle: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-secondary) 19%, transparent) 0 0.55px, transparent 0.8px);
+  --reward-paper-fibers: repeating-linear-gradient(97deg, transparent 0 10px, color-mix(in srgb, #8C7B63 5%, transparent) 11px, transparent 12px 24px);
+  --reward-paper-crossfibers: repeating-linear-gradient(7deg, transparent 0 16px, rgb(255 255 255 / 3%) 17px, transparent 18px 33px);
+}
+
+.reward-effect--paper-grain :is(.calm-panel, .calm-card) {
+  position: relative;
+  border-color: color-mix(in srgb, var(--border) 82%, #8C7B63 18%);
+  background-repeat: repeat, repeat, repeat, no-repeat;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-size: 4px 4px, 39px 39px, 53px 53px, auto;
+  background-blend-mode: soft-light, multiply, soft-light, normal;
+}
+
+.reward-effect--paper-grain .calm-panel {
+  --reward-panel-fill: color-mix(in srgb, var(--surface) 91%, #E7D8BC 9%);
+  background-color: var(--reward-panel-fill);
+  background-image:
+    var(--reward-paper-speckle),
+    var(--reward-paper-fibers),
+    var(--reward-paper-crossfibers),
+    linear-gradient(142deg, rgb(255 255 255 / 5%), transparent 58%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 8%),
+    0 18px 48px rgb(42 32 21 / 16%);
+}
+
+.reward-effect--paper-grain .calm-card {
+  --reward-panel-fill: color-mix(in srgb, var(--card) 90%, #E2D0AE 10%);
+  background-color: var(--reward-panel-fill);
+  background-image:
+    var(--reward-paper-speckle),
+    var(--reward-paper-fibers),
+    var(--reward-paper-crossfibers),
+    linear-gradient(142deg, rgb(255 255 255 / 4%), transparent 62%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 7%),
+    0 12px 30px rgb(42 32 21 / 12%);
+}

@@ -8,7 +8,7 @@ Los efectos visuales son componentes del frontend. La API conserva únicamente l
 - `runtime/`: resolución del efecto equipado, aislamiento de errores y control de actividad.
 - `renderers/`: bases compartidas para DOM/CSS y WebGL.
 - `motion/`: duraciones, curvas y escalas comunes.
-- `backgrounds/`, `calendar/`, `pomodoro/`: catálogo organizado por lugar de aplicación.
+- `backgrounds/`, `borders/`, `surfaces/`, `calendar/`, `pomodoro/`: catálogo organizado por lugar de aplicación.
 
 ## Agregar un efecto
 

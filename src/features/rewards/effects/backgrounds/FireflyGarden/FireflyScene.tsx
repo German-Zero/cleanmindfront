@@ -3,12 +3,8 @@
 import { useFrame } from "@react-three/fiber"
 import { useMemo, useRef } from "react"
 import { AdditiveBlending, Color, ShaderMaterial } from "three"
+import { createFireflyField, FIREFLY_GARDEN_SETTINGS } from "./fireflyField"
 import { fireflyFragmentShader, fireflyVertexShader } from "./shaders"
-
-function seededValue(index: number, salt: number) {
-    const value = Math.sin(index * 9283.31 + salt * 77.13) * 43758.5453
-    return value - Math.floor(value)
-}
 
 export default function FireflyScene({
     colors,
@@ -18,32 +14,26 @@ export default function FireflyScene({
     preview: boolean
 }) {
     const materialRef = useRef<ShaderMaterial>(null)
-    const count = preview ? 34 : 68
-    const geometry = useMemo(() => {
-        const positions = new Float32Array(count * 3)
-        const sizes = new Float32Array(count)
-        const phases = new Float32Array(count)
+    const geometry = useMemo(() => createFireflyField(preview), [preview])
+    const uniforms = useMemo(() => {
+        const cool = new Color(colors[1] ?? "#77E8B5")
+        const warm = new Color(colors[2] ?? "#FFD978")
 
-        for (let index = 0; index < count; index += 1) {
-            positions[index * 3] = seededValue(index, 1) * 2.2 - 1.1
-            positions[index * 3 + 1] = seededValue(index, 2) * 2.2 - 1.1
-            positions[index * 3 + 2] = 0
-            sizes[index] = 3.2 + seededValue(index, 3) * (preview ? 5.5 : 8)
-            phases[index] = seededValue(index, 4) * Math.PI * 2
+        return {
+            uTime: { value: 0 },
+            uColorCool: { value: cool },
+            uColorWarm: { value: warm },
+            uColorSoft: { value: warm.clone().lerp(new Color("#FFFBE1"), 0.58) },
+            uIntensity: { value: preview ? 1.08 : 0.82 },
         }
-
-        return { positions, sizes, phases }
-    }, [count, preview])
-    const uniforms = useMemo(() => ({
-        uTime: { value: 0 },
-        uColorA: { value: new Color(colors[0] ?? "#77E8B5") },
-        uColorB: { value: new Color(colors[1] ?? "#FFD978") },
-    }), [colors])
+    }, [colors, preview])
+    const speed = preview
+        ? FIREFLY_GARDEN_SETTINGS.speed.preview
+        : FIREFLY_GARDEN_SETTINGS.speed.dashboard
 
     useFrame(({ clock }) => {
-        if (materialRef.current) {
-            materialRef.current.uniforms.uTime.value = clock.getElapsedTime()
-        }
+        if (!materialRef.current) return
+        materialRef.current.uniforms.uTime.value = clock.getElapsedTime() * speed
     })
 
     return (
@@ -52,6 +42,10 @@ export default function FireflyScene({
                 <bufferAttribute attach="attributes-position" args={[geometry.positions, 3]} />
                 <bufferAttribute attach="attributes-aSize" args={[geometry.sizes, 1]} />
                 <bufferAttribute attach="attributes-aPhase" args={[geometry.phases, 1]} />
+                <bufferAttribute attach="attributes-aDrift" args={[geometry.drifts, 2]} />
+                <bufferAttribute attach="attributes-aDepth" args={[geometry.depths, 1]} />
+                <bufferAttribute attach="attributes-aColorMix" args={[geometry.colorMixes, 1]} />
+                <bufferAttribute attach="attributes-aPulseRate" args={[geometry.pulseRates, 1]} />
             </bufferGeometry>
             <shaderMaterial
                 ref={materialRef}

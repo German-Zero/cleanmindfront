@@ -19,7 +19,7 @@ export function proxy(request: NextRequest) {
 
     if (hasSession && authRoutes.includes(pathname)) {
         return NextResponse.redirect(
-            new URL("/dashboard/calendar", request.url),
+            new URL("/dashboard", request.url),
         )
     }
 

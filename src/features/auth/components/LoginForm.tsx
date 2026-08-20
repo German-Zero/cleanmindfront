@@ -41,7 +41,7 @@ export default function LoginForm({
             router.replace(
                 requiresTermsAcceptance
                     ? "/terms"
-                    : "/dashboard/calendar",
+                    : "/dashboard",
             )
             router.refresh()
         }, delay)

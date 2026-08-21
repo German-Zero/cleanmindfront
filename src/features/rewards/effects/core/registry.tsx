@@ -40,7 +40,7 @@ export const rewardEffectRegistry: RewardEffectRegistry = {
     POMODORO_BLOOM_RING: {
         id: "POMODORO_BLOOM_RING",
         slot: "POMODORO",
-        engine: "motion",
+        engine: "webgl",
         component: dynamic(() => import("../pomodoro/BloomRing/BloomRing"), { ssr: false }),
     },
 }

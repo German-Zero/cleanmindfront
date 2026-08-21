@@ -17,17 +17,10 @@ export function proxy(request: NextRequest) {
         return NextResponse.redirect(new URL("/login", request.url))
     }
 
-    if (
-        hasSession &&
-        (pathname === "/" || authRoutes.includes(pathname))
-    ) {
+    if (hasSession && authRoutes.includes(pathname)) {
         return NextResponse.redirect(
-            new URL("/dashboard/calendar", request.url),
+            new URL("/dashboard", request.url),
         )
-    }
-
-    if (pathname === "/") {
-        return NextResponse.redirect(new URL("/login", request.url))
     }
 
     return NextResponse.next()
@@ -35,7 +28,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/",
         "/login",
         "/register",
         "/dashboard/:path*",

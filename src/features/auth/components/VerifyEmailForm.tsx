@@ -183,10 +183,10 @@ export default function VerifyEmailForm({
                     </form>
                 ) : (
                     <Link
-                        href="/dashboard/calendar"
+                        href="/dashboard"
                         className="mt-6.5 flex h-11.5 w-full items-center justify-center rounded-[10px] border border-primary bg-primary text-[13px] font-semibold text-text-primary hover:bg-primary/90"
                     >
-                        Continuar al calendario
+                        Ir a mi espacio
                     </Link>
                 )}
 

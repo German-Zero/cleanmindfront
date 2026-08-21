@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
 import "@/features/rewards/styles/surfaces.css";
+import "@/features/rewards/effects/borders/borders.css";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -10,7 +11,8 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: "CleanMind",
-  description: "CleanMind frontend",
+  description:
+    "Un espacio para organizar tus tareas, cuidar tu enfoque y reducir la carga mental.",
 };
 
 export default function RootLayout({
@@ -25,9 +27,7 @@ export default function RootLayout({
       data-motion="NONE"
       lang="es"
     >
-      <body>
-        {children}
-        </body>
+      <body>{children}</body>
     </html>
   );
 }

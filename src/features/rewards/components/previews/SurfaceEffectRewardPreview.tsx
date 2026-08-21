@@ -17,7 +17,6 @@ export default function SurfaceEffectRewardPreview({ item, expanded }: RewardPre
         <div
             className={`${styles.preview} ${variant} relative grid ${previewHeight(expanded)} place-items-center overflow-hidden rounded-[14px] border border-white/10 p-4`}
             style={{ "--surface-gradient": gradient } as CSSProperties}
-            data-animated={Boolean(expanded)}
             aria-hidden="true"
         >
             <span className={styles.atmosphere} />

@@ -8,6 +8,7 @@ import RewardBackgroundLayer from "@/features/rewards/effects/RewardBackgroundLa
 import SettingsModal from "@/features/settings/components/SettingsModal"
 import NewTaskButton from "@/features/tasks/components/NewTaskButton"
 import CalendarButton from "../ui/CalendarButton"
+import DashboardButton from "../ui/DashboardButton"
 import MatrizButton from "../ui/MatrizButton"
 import PomodoroButton from "../ui/PomodoroButton"
 import StoreButton from "../ui/StoreButton"
@@ -15,6 +16,11 @@ import WhiteboardButton from "../ui/WhiteboardButton"
 import Sidebar from "./Sidebar"
 
 const navigation = [
+    {
+        href: "/dashboard",
+        label: "Inicio",
+        icon: <DashboardButton />,
+    },
     {
         href: "/dashboard/calendar",
         label: "Calendario",
@@ -184,7 +190,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             >
                 {children}
 
-                {pathname !== "/dashboard/calendar" &&
+                {pathname !== "/dashboard" &&
+                    pathname !== "/dashboard/calendar" &&
                     pathname !== "/dashboard/store" && (
                     <NewTaskButton
                         className="
@@ -220,9 +227,9 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                                 aria-label={item.label}
                                 aria-current={isActive ? "page" : undefined}
                                 className={`
-                                    group relative grid size-12 place-items-center
+                                    group relative grid size-11 place-items-center
                                     rounded-xl transition-[background-color,color,box-shadow,transform]
-                                    xl:rounded-[13px]
+                                    sm:size-12 xl:rounded-[13px]
                                     ${
                                         isActive
                                             ? "bg-primary/14 text-accent ring-1 ring-primary/35 xl:bg-primary/16 xl:shadow-[0_8px_22px_rgb(0_0_0/18%)]"

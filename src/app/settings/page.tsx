@@ -16,5 +16,5 @@ export default async function SettingsRedirectPage({
         query.set("discord", discord)
     }
 
-    redirect(`/dashboard/calendar?${query.toString()}`)
+    redirect(`/dashboard?${query.toString()}`)
 }

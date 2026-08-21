@@ -24,7 +24,7 @@ export default function TermsAcceptanceForm() {
                 if (!isCurrent) return
 
                 if (status.accepted) {
-                    router.replace('/dashboard/calendar')
+                    router.replace('/dashboard')
                     router.refresh()
                     return
                 }
@@ -53,7 +53,7 @@ export default function TermsAcceptanceForm() {
 
         try {
             await termsService.acceptCurrent()
-            router.replace('/dashboard/calendar')
+            router.replace('/dashboard')
             router.refresh()
         } catch (requestError: unknown) {
             setError(requestErrorMessage(

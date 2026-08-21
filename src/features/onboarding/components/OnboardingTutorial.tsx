@@ -11,10 +11,10 @@ const steps = [
         description:
             "Aquí puedes sacar las tareas de tu cabeza y ver solo lo que necesitas en cada momento.",
         points: [
-            "El calendario ordena tus tareas por fecha.",
+            "El inicio te permite elegir por dónde empezar.",
             "La barra lateral mantiene a mano lo que tienes pendiente.",
         ],
-        tags: ["Calendario", "Tareas", "Vista clara"],
+        tags: ["Inicio", "Secciones", "Vista clara"],
     },
     {
         eyebrow: "Organización",
@@ -128,11 +128,16 @@ export default function OnboardingTutorial() {
                 </div>
 
                 <div
-                    aria-label={`Progreso: paso ${step + 1} de ${steps.length}`}
+                    role="progressbar"
+                    aria-label="Progreso del tutorial"
+                    aria-valuemin={1}
+                    aria-valuemax={steps.length}
+                    aria-valuenow={step + 1}
                     className="relative mt-4.5 grid grid-cols-4 gap-1.5"
                 >
                     {steps.map((item, index) => (
                         <span
+                            aria-hidden="true"
                             key={item.eyebrow}
                             className={`h-0.75 rounded-full transition-colors ${
                                 index <= step
